@@ -6,6 +6,7 @@
 using namespace std;
 
 int main() {
+	setlocale(LC_ALL, "");
 	srand(time(0));
 	cout << "                                          W E L C O M E    T O" << endl;
  	cout << " .----------------.    .----------------.  .----------------.  .-----------------.   .----------------. " << endl << "| .--------------. |  | .--------------. || .--------------. || .--------------. |  | .--------------. |" << endl << "| |              | |  | |     ______   | || |     ____     | || | ____  _____  | |  | |              | |" << endl << "| |              | |  | |   .' ___  |  | || |   .'    `.   | || ||_   \\|_   _| | |  | |              | |" << endl << "| |    ______    | |  | |  / .'   \\_|  | || |  /  .--.  \\  | || |  |   \\ | |   | |  | |    ______    | |" << endl << "| |   |______|   | |  | |  | |         | || |  | |    | |  | || |  | |\\ \\| |   | |  | |   |______|   | |" << endl << "| |              | |  | |  \\ `.___.'\\  | || |  \\  `--'  /  | || | _| |_\\   |_  | |  | |              | |" << endl << "| |              | |  | |   `._____.'  | || |   `.____.'   | || ||_____|\\____| | |  | |              | |" << endl << "| |              | |  | |              | || |              | || |              | |  | |              | |" << endl << "| '--------------' |  | '--------------' || '--------------' || '--------------' |  | '--------------' |" << endl << " '----------------'    '----------------'  '----------------'  '----------------'    '----------------' ";
@@ -19,14 +20,14 @@ int main() {
 	Sleep(1500);
 	cout << " What's your name?" << endl << "  [ENTER YOUR NAME NOW]" << endl << "   ";
 	string playerName;
-	getline(cin, playerName);
+	getline(wcin, playerName);
 	if (!playerName.empty()) {
-		cout << "   Nice to meet you, " << playerName << "!";;
+		wcout << "   Nice to meet you, " << playerName << "!";;
 	} else {
 		cout << "   You"; Sleep(1000); cout << "."; Sleep(500); cout << "."; Sleep(500); cout << "."; Sleep(1000); cout << " Don't have a name?" << endl << "   I will give you one more chance to tell me your name." << endl;
 		getline(cin, playerName);
 		if (!playerName.empty()) {
-		cout << "   At last! Nice to meet you, " << playerName << "!";;
+		wcout << "   At last! Nice to meet you, " << playerName << "!";;
 	} else {
 		cout << "   You sure?" << endl; Sleep(1500);
 		cout << "   That's"; Sleep(1000); cout << "."; Sleep(500); cout << "."; Sleep(500); cout << "."; Sleep(1000); cout << " sad." << endl; Sleep(1000);
