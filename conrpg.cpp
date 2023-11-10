@@ -19,13 +19,13 @@ int main() {
 	cout << " Your name isn't Player, is it?" << endl << "  ";
 	Sleep(1500);
 	cout << " What's your name?" << endl << "  [ENTER YOUR NAME NOW]" << endl << "   ";
-	string playerName;
+	wstring playerName;
 	getline(wcin, playerName);
 	if (!playerName.empty()) {
 		wcout << "   Nice to meet you, " << playerName << "!";;
 	} else {
 		cout << "   You"; Sleep(1000); cout << "."; Sleep(500); cout << "."; Sleep(500); cout << "."; Sleep(1000); cout << " Don't have a name?" << endl << "   I will give you one more chance to tell me your name." << endl;
-		getline(cin, playerName);
+		wcin, playerName;
 		if (!playerName.empty()) {
 		wcout << "   At last! Nice to meet you, " << playerName << "!";;
 	} else {
