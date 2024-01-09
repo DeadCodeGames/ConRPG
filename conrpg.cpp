@@ -137,7 +137,7 @@ int main(){
 	cout << endl << "                                           The C++ Console RPG";
 	cout << endl << "                                         Press [ANY KEY] to Begin";
 	_getch();
-	cout << endl; narrator("Hello Player"); cout << endl;
+	cout << endl; narrator("Hello Player", 100); cout << endl;
 	Sleep(1000);
 	narrator("...", 500); cout << endl; Sleep(1000);
 	narrator("Your name isn't Player, is it?", 80); cout << endl;
@@ -149,16 +149,16 @@ int main(){
 	if (!input.empty()) {
 		narrator("Nice to meet you, "+input+"!", 100);
 	} else {
-		narrator("You...", 500); narratorclean("You..."," don't have a name?", 125); Sleep(500); narratorclean("You... don't have a name?"," I will give you one more chance to give me your name.", 80); cout << endl; 
+		narrator("You...", 500); narratorclean("<<    You..."," don't have a name?", 125); Sleep(500); narratorclean("<<    You... don't have a name?"," I will give you one more chance to give me your name.", 80); cout << endl; 
 		flushInput();
 		getInput();
 		if (!input.empty()) {
 		narrator("At last, nice to meet you, "+input+"!", 80);
 	} else {
 		narrator("You sure?", 125); cout << endl; Sleep(1000);
-		narrator("That's", 225); narratorclean("That's","...", 500); Sleep(500); narratorclean("That's..."," sad.", 200); cout << endl; Sleep(750);
+		narrator("That's", 225); narratorclean("<<    That's","...", 500); Sleep(500); narratorclean("<<    That's..."," sad.", 200); cout << endl; Sleep(750);
 		narrator("I still need something to call you by, though", 80); cout << endl; Sleep(500);
-		narrator("Will Player suffice?", 75); Sleep(500); narratorclean("Will Player suffice?"," I think it will be alright.", 75);
+		narrator("Will Player suffice?", 75); Sleep(500); narratorclean("<<    Will Player suffice?"," I think it will be alright.", 75);
 	}
 }
 	cout << endl << "      [PRESS ANY KEY TO CONTINUE]";
