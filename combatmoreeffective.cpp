@@ -31,6 +31,7 @@ int checktime(){
 		timeleft = ecooldown;
 		attackstate = false;
 		system("CLS");
+		tobreak = true;
 	}
 }
 int savingspace(){
@@ -191,6 +192,7 @@ int main(){
 				Sleep(500);
 				cout << "\n\nYou are attacking...      ";
 				Sleep(250);
+				displaystats = false;
 			}
 			isattackinge();
 			isdefendinge(); 
@@ -225,7 +227,6 @@ int main(){
 				i = 0;
 				x = 0;
 				dmgdealt = 0;
-				displaystats = false;
 				loop();
 			}
 			else{
