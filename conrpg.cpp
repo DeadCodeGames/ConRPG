@@ -137,9 +137,9 @@ int main(){
 	cout << endl << "                                           The C++ Console RPG";
 	cout << endl << "                                         Press [ANY KEY] to Begin";
 	_getch();
-	cout << endl << "      Hello, Player!" << endl;
+	cout << endl; narrator("Hello Player"); cout << endl;
 	Sleep(1000);
-	cout << "      .";  Sleep(500); cout << "."; Sleep(500); cout << "." << endl; Sleep(1000);
+	narrator("...", 500); cout << endl; Sleep(1000);
 	narrator("Your name isn't Player, is it?", 80); cout << endl;
 	Sleep(1500);
 	narrator("What's your name?", 80); cout << endl << "      [ENTER YOUR NAME NOW]" << endl;
