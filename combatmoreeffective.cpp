@@ -1,164 +1,279 @@
 #include <iostream>
-#include <windows.h>
+#include <conio.h>
+#include <Windows.h>
+#include <ctime>
+#include <map>
 #include <string>
 #include <fstream>
-#include <thread>
-#include <chrono>
-#include <conio.h>
-#include <stdlib.h>
-#include <TlHelp32.h>
+#include <io.h>
+#include <fcntl.h>
 using namespace std;
-string input;
-bool noescape = false;
-void clearLine(){
-	cout<<"\r                                              \r";
+bool isfighting = false, isdefeated = false, attackstate = true, keyPressed = false, displaystats = true, gu = true, tobreak = false;
+int enemydmg = 5., lastphp, lastenemyhp, ecooldown, timeleft, maxdmg, blockbonus, easeofuse, tickspeed, x, i, z;
+float cooldown, hp = 20., enemyhp = 20., enemyrage = 1.25, enemyskill = 1., dmgdealt, edmgdealt, plvlbonusdmg, wlvlbonusdmg, enemyblock;
+string lastAttack, lastblock;
+map<int, string> attack_map {
+  {1, "O--|---"},
+  {2, "-O-|---"},
+  {3, "--O|---"},
+  {4, "---I---"},
+  {5, "---|O--"},
+  {6, "---|-O-"}, 
+  {7, "---|--O"},
+  {8, "O--|"},
+  {9, "-O-|"},
+  {10, "--O|"},
+  {11, "---I"},
+  {12, "---X"}
+};
+int checktime(){
+	if(timeleft <= 0){
+		timeleft = ecooldown;
+		attackstate = false;
+		system("CLS");
+		tobreak = true;
+	}
 }
-void narrator(const string& text, int tickspeed) {
-  bool a = false;
-  for (char c : text) {
-      if (!a) {
-          cout << "<<    ";
-          a = true;
-      }
-      if(_kbhit()){
-      	char key = _getch();
-      	if(key=='\r' or key==' '){
-      		clearLine();
-      		cout << "<<    " << text;
-      		break;
-				}
+int savingspace(){
+	string currentattack = attack_map[z];
+	system("CLS");
+	cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+  cout << currentattack;
+  lastAttack = currentattack;
+  Sleep(tickspeed);
+  timeleft -= tickspeed;
+  if(z==7) gu = false;
+  if(z==1) gu = true;
+  if(_kbhit()){
+		char key = _getch();
+		if(key == 'a'){
+			gu = false;
+			tobreak = true;
+		}
+	}
+	checktime();
+}
+int isattackinge(){
+	if(attackstate){
+		tobreak = false;
+		while(true){
+			for(z = 0; z<=7 && gu && attackstate && !tobreak; z++) savingspace();
+			for(z = 6; z>=1 && !gu && attackstate && !tobreak; z--) savingspace();
+			if(tobreak) break;
+		}
+	}
+}
+int savingspace1(){
+	string currentdef = attack_map[z];
+	system("CLS");
+	cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+	cout << "Enemy is attacking you." << endl;
+	cout << currentdef;
+	lastblock = currentdef;
+	Sleep(tickspeed);
+	if(_kbhit()){
+		char key = _getch();
+		if(key == 'b'){
+			tobreak = true;
+		}
+	}
+}
+int isdefendinge(){
+	tobreak = false;
+	if(!attackstate){
+		system("CLS");
+		cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+		cout << "Attack incoming...";
+		Sleep(500);
+		for(z=7; z<13 && !tobreak; z++) savingspace1();
+	}
+
+}
+int dodisatk(){
+	for(cooldown=15; cooldown >= 0 && attackstate; cooldown-=1){
+		system("CLS");
+		cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+		cout << "Last attack: " << lastAttack << endl;
+		if(x==1){
+			enemyblock = i;
+			cout << "\nEnemy blocked " << enemyblock << "% of your dmg";	
+		} 
+		else{
+			enemyblock = 0;
+			cout << "\nEnemy didn't dodge your attack.";
+		} 
+		cout << "\nDamage dealt: " << dmgdealt;
+		cout << "\nCooldown: " << cooldown/10. << "s";
+		Sleep(100);
+		timeleft -= 100;
+		checktime();
+	}
+}
+int checkdef(){
+	if(lastblock=="O--|"){
+		edmgdealt = enemydmg*0.75-(enemydmg*0.75*blockbonus/100);
+		cout << "You blocked 25% of the damage. Enemy dealt " << endl << edmgdealt << " dmg.";
+	}
+	else if(lastblock=="-O-|"){
+		edmgdealt = enemydmg*0.50-(enemydmg*0.50*blockbonus/100);
+		cout << "You blocked 50% of the damage. Enemy dealt " << endl << edmgdealt << " dmg.";
+	}
+	else if(lastblock=="--O|"){
+		edmgdealt = enemydmg*0.25-(enemydmg*0.25*blockbonus/100);
+		cout << "You blocked 75% of the damage. Enemy dealt " << endl << edmgdealt << " dmg.";
+	}
+	else if(lastblock=="---I"){
+		edmgdealt = enemydmg*0.;
+		cout << "You blocked 100% of the damage.";
+	}
+	else{
+		edmgdealt = enemydmg*1.-(enemydmg*1.*blockbonus/100);
+		cout << "You didn't block any of the damage. Enemy dealt " << endl << edmgdealt << "dmg.";
+	}	
+}
+int dodisdef(){
+	for(cooldown=4; cooldown>=0 && !attackstate; cooldown-=1){
+		system("CLS");
+		cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+		cout << "Last block: " << lastblock << endl;
+		checkdef();
+		cout << "\nCooldown: " << cooldown/10. << "s";
+		Sleep(100);
+	}
+}
+int loop(){
+	while(true){
+		Sleep(100);
+		timeleft-=100;
+		if(timeleft <= 0){
+			timeleft = ecooldown;
+			attackstate = false;
+			break;
+		}
+		if(_kbhit()){
+			char key = _getch();
+			if(key=='a'){
+				attackstate = true;
+				break;
 			}
-      cout << c;
-      this_thread::sleep_for(chrono::milliseconds(tickspeed));
-  }
+		}
+	}
 }
-void narratorclean(const string& textbefore,const string& text, int tickspeed) {
-  bool a = false;
-  for (char c : text) {
-      cout << c;
-	      if(_kbhit()){
-	      	char key = _getch();
-	      	if(key=='\r' or key==' '){
-	      		clearLine();
-	      		cout << textbefore << text;
-	      		break;
+int main(){
+	try{
+				ofstream outputFile("testsave.txt");
+	  if (!outputFile.is_open()) {
+	      cerr << "Error opening file for writing!" << endl;
+	      return 1; 
+	  }
+  	outputFile << "2" << endl;
+  	outputFile.close();
+		srand((unsigned)time(0));
+		cout << "Pick max: ";
+		cin >> maxdmg;
+		cout << "Blocking bonus: ";
+		cin >> blockbonus;
+		cout << "Ease of Use: ";
+		cin >> easeofuse;
+		if(easeofuse<1) easeofuse = 1;
+		cout << "Player level dmg bonus: ";
+		cin >> plvlbonusdmg;
+		cout << "Weapon level dmg bonus: ";
+		cin >> wlvlbonusdmg;
+		tickspeed = easeofuse*50;
+		isfighting = true;
+		ecooldown = 5000/enemyrage;
+		timeleft = ecooldown;
+		while(isfighting){
+			if(displaystats){
+				cout << "\nYour stats \n---------------------------- \nYour hp: " << hp << endl << "Your dmg: " << maxdmg << "Ease of use: " << easeofuse << endl << "Dmg bonus from player level: " << plvlbonusdmg << endl << "Dmg bonus from weapon level: " << wlvlbonusdmg << endl << "\nEnemy stats \n---------------------------- \nEnemy hp: " << enemyhp << endl << "Enemy dmg: " << enemydmg << endl;
+				Sleep(3000);
+				cout << "\nPress a to begin the fight.";
+				while(true){
+					if(_kbhit()){
+						char key1 = _getch();
+						if(key1 == 'a') break;
 					}
 				}
-      this_thread::sleep_for(chrono::milliseconds(tickspeed));
-  }
-}
-void skip(int time){
-	for(time; time>0; time-=50){
-	  if(_kbhit()){
-	  	char key = _getch();
-	  	if(key=='\r' or key==' '){
-	  		break;
+				cout << "\nFight begins...";
+				Sleep(500);
+				cout << "\n\nYou are attacking...      ";
+				Sleep(250);
+				displaystats = false;
+			}
+			isattackinge();
+			isdefendinge(); 
+			if(attackstate){
+				system("CLS");
+				cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+				cout << "Last attack: " << lastAttack;    
+				if(lastAttack == "O--|---" || lastAttack == "---|--O") dmgdealt = maxdmg*0.5;
+				else if(lastAttack == "-O-|---" || lastAttack == "---|-O-") dmgdealt = maxdmg*0.75;
+				else if(lastAttack == "--O|---" || lastAttack == "---|O--") dmgdealt = maxdmg;
+				else{
+					dmgdealt = maxdmg+wlvlbonusdmg+plvlbonusdmg;
+				}
+				x = (rand()%2)+1;
+				i = (rand()%15*enemyskill)+1;
+				if(x==1){
+					enemyblock = i;
+					dmgdealt -= dmgdealt*enemyblock/100;
+				} 
+				enemyhp -= dmgdealt;
+				if(enemyhp<=0){
+					system("CLS");
+					enemyhp = 0;
+					cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+					cout << "\nDamage dealt: " << dmgdealt << "\nEnemy has been defeated.";
+					Sleep(3500);
+					break;
+				}
+				dodisatk();
+				if(!attackstate) continue;
+				enemyblock = 0;
+				i = 0;
+				x = 0;
+				dmgdealt = 0;
+				loop();
+			}
+			else{
+				cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+				cout << "Last block: " << lastblock << endl;
+				checkdef();
+				cout << "\nCooldown: 0.5s";
+				hp -= edmgdealt;
+				edmgdealt = 0;
+				if(hp<=0){
+					hp = 0;
+					cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+					cout << "You have been defeated. ";
+					isfighting = false;
+					isdefeated = true;
+					Sleep(1500);
+					break;
+				}
+				dodisdef();
+				timeleft = ecooldown-500; 
+				loop();
 			}
 		}
-		Sleep(50);
+	} catch(...){
+		cout << "Exception";
 	}
-}
-void getInput() {
-	cout << ">>    ";
-	getline(cin, input);
-	Sleep(1000);
-}
-void flushInput() {
-		while(_kbhit()) {
-	    _getch(); 
-	    Sleep(50);
-  }
-}
-int ambush(){
-	string decision;
-  cout << "You are under attack by something. Flee or Fight?" << endl;
-	while(!noescape){
-	  cin >> decision;
-	  for (char &c : decision) {
-        c = tolower(c);
-    }
-	  if(decision=="fight"){
-	  	break;
-	  	cout << endl;
-		}
-		else if(decision=="flee")
-			cout << "Attempting fleeing...";
-		else{
-			cout << "Invalid choice. Try again." << endl;
-		}
+
+	if(!isdefeated){
+		system("CLS");
+		cout << "Gained xp and enemy items.";
 	}
-  Sleep(2000);
-
-  const char *programName = "combatmoreeffective.exe";
-
-  STARTUPINFO si;
-  PROCESS_INFORMATION pi;
-
-  ZeroMemory(&si, sizeof(si));
-  si.cb = sizeof(si);
-  ZeroMemory(&pi, sizeof(pi));
-
-  // Start the child process in a new console window.
-  if (CreateProcess(NULL, const_cast<char*>(programName), NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi)) {
-      cout << "Launching combat program in a new console window..." << endl;
-      WaitForSingleObject(pi.hProcess, INFINITE); 
-  } else {
-      cout << "Error launching program" << endl;
-  }
-
-  ofstream outputFile("testsave.txt");
-
+	else{
+		system("CLS");
+		cout << "Press [placeholder] to load the last save.";
+	}	
+	ofstream outputFile("testsave.txt");
   if (!outputFile.is_open()) {
       cerr << "Error opening file for writing!" << endl;
       return 1; 
   }
-
-  outputFile << "0";
-
+  outputFile << "1" << endl;
   outputFile.close();
-  
-	cout << "ono to funguje...";
-	Sleep(3000);
-}
-int main(){
-	srand(time(0));
-	cout << "                                          W E L C O M E    T O" << endl;
- 	cout << " .----------------.    .----------------.  .----------------.  .-----------------.   .----------------. " << endl << "| .--------------. |  | .--------------. || .--------------. || .--------------. |  | .--------------. |" << endl << "| |              | |  | |     ______   | || |     ____     | || | ____  _____  | |  | |              | |" << endl << "| |              | |  | |   .' ___  |  | || |   .'    `.   | || ||_   \\|_   _| | |  | |              | |" << endl << "| |    ______    | |  | |  / .'   \\_|  | || |  /  .--.  \\  | || |  |   \\ | |   | |  | |    ______    | |" << endl << "| |   |______|   | |  | |  | |         | || |  | |    | |  | || |  | |\\ \\| |   | |  | |   |______|   | |" << endl << "| |              | |  | |  \\ `.___.'\\  | || |  \\  `--'  /  | || | _| |_\\   |_  | |  | |              | |" << endl << "| |              | |  | |   `._____.'  | || |   `.____.'   | || ||_____|\\____| | |  | |              | |" << endl << "| |              | |  | |              | || |              | || |              | |  | |              | |" << endl << "| '--------------' |  | '--------------' || '--------------' || '--------------' |  | '--------------' |" << endl << " '----------------'    '----------------'  '----------------'  '----------------'    '----------------' ";
-	cout << endl << "                                           The C++ Console RPG";
-	cout << endl << "                                         Press [ANY KEY] to Begin";
-	_getch();
-	cout << endl; narrator("Hello Player", 100); cout << endl;
-	skip(1000);
-	narrator("...", 500); cout << endl; skip(1000);
-	narrator("Your name isn't Player, is it?", 80); cout << endl;
-	skip(1500);
-	narrator("What's your name?", 80); cout << endl << "      [ENTER YOUR NAME NOW]" << endl;
-	string playerName;
-	flushInput();
-	getInput();
-	if (!input.empty()) {
-		narrator("Nice to meet you, "+input+"!", 100);
-	} else {
-		narrator("You...", 500); narratorclean("<<    You..."," don't have a name?", 125); skip(500); narratorclean("<<    You... don't have a name?"," I will give you one more chance to give me your name.", 80); cout << endl; 
-		flushInput();
-		getInput();
-		if (!input.empty()) {
-		narrator("At last, nice to meet you, "+input+"!", 80);
-	} else {
-		narrator("You sure?", 125); cout << endl; skip(1000);
-		narrator("That's", 225); narratorclean("<<    That's","...", 500); skip(500); narratorclean("<<    That's..."," sad.", 200); cout << endl; skip(750);
-		narrator("I still need something to call you by, though", 80); cout << endl; skip(500);
-		narrator("Will Player suffice?", 75); skip(500); narratorclean("<<    Will Player suffice?"," I think it will be alright.", 75);
-	}
-}
-	cout << endl << "      [PRESS ANY KEY TO CONTINUE]";
-	while(true){
-		if(_kbhit()){
-			system("cls");
-			break;
-		}
-	}
-	cout << "Now let's test multiple console windows..." << endl; Sleep(3000);
-	ambush();
-	return 0;
 }
