@@ -8,7 +8,6 @@
 #include <stdlib.h>
 using namespace std;
 string input;
-bool noescape = false;
 void clearLine(){
 	cout<<"\r                                              \r";
 }
@@ -71,7 +70,8 @@ void flushInput() {
 int ambush(){
 	string decision;
   cout << "You are under attack by something. Flee or Fight?" << endl;
-	while(!noescape){
+	while(true){
+		flushInput();
 	  cin >> decision;
 	  for (char &c : decision) {
         c = tolower(c);
@@ -80,8 +80,13 @@ int ambush(){
 	  	break;
 	  	cout << endl;
 		}
-		else if(decision=="flee")
+		else if(decision=="flee"){
 			cout << "Attempting fleeing...";
+			Sleep(500);
+			cout << " Fleeing unsuccessful" << endl;
+			continue;
+		}
+
 		else{
 			cout << "Invalid choice. Try again." << endl;
 		}
@@ -104,21 +109,24 @@ int ambush(){
   } else {
       cout << "Error launching program" << endl;
   }
-
-  ofstream outputFile("testsave.txt");
-
-  if (!outputFile.is_open()) {
-      cerr << "Error opening file for writing!" << endl;
-      return 1; 
+  ifstream inputFile("testsave.txt");
+  if (!inputFile.is_open()) {
+    cerr << "Error opening file for reading!" << endl;
+    return 1;
   }
-
-  outputFile << "0";
-
-  outputFile.close();
-  
+  string filecontent;
+  if (getline(inputFile, filecontent)) {
+    if (filecontent == "1") {
+        cout << "You aborted the fight. You automatically die." << endl;
+    }
+		else{
+      cout << "You finished the fight." << endl;
+    }
+  }
 	cout << "ono to funguje...";
 	Sleep(3000);
 }
+
 int main(){
 	srand(time(0));
 	cout << "                                          W E L C O M E    T O" << endl;
