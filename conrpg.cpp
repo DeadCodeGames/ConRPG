@@ -59,7 +59,7 @@ void skip(int time){
 void getInput() {
 	cout << ">>    ";
 	getline(cin, input);
-	Sleep(1000);
+	skip(1000);
 }
 void flushInput() {
 		while(_kbhit()) {
