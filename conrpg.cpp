@@ -8,6 +8,7 @@
 #include <stdlib.h>
 using namespace std;
 string input;
+bool noescape = false;
 void clearLine(){
 	cout<<"\r                                              \r";
 }
@@ -45,19 +46,21 @@ void narratorclean(const string& textbefore,const string& text, int tickspeed) {
       this_thread::sleep_for(chrono::milliseconds(tickspeed));
   }
 }
+void skip(int time){
+	for(time; time>0; time-=50){
+	  if(_kbhit()){
+	  	char key = _getch();
+	  	if(key=='\r' or key==' '){
+	  		break;
+			}
+		}
+		Sleep(50);
+	}
+}
 void getInput() {
 	cout << ">>    ";
 	getline(cin, input);
-  bool typing = true;
-  for(char c : input) {
-    if(typing) {
-      cout << ">>    ";
-      typing = false; 
-    }
-    cout << c;
-    this_thread::sleep_for(chrono::milliseconds(125));
-  }
-  cout << endl;
+	Sleep(1000);
 }
 void flushInput() {
 		while(_kbhit()) {
@@ -66,10 +69,9 @@ void flushInput() {
   }
 }
 int ambush(){
-	bool alpha = true;
 	string decision;
   cout << "You are under attack by something. Flee or Fight?" << endl;
-	while(true){
+	while(!noescape){
 	  cin >> decision;
 	  for (char &c : decision) {
         c = tolower(c);
@@ -98,7 +100,7 @@ int ambush(){
   // Start the child process in a new console window.
   if (CreateProcess(NULL, const_cast<char*>(programName), NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi)) {
       cout << "Launching combat program in a new console window..." << endl;
-      alpha = false;
+      WaitForSingleObject(pi.hProcess, INFINITE); 
   } else {
       cout << "Error launching program" << endl;
   }
@@ -110,23 +112,10 @@ int ambush(){
       return 1; 
   }
 
-  outputFile << (alpha ? "1" : "0") << endl;
+  outputFile << "0";
 
   outputFile.close();
   
-    while (!alpha) {
-      ifstream inputFile("testsave.txt");
-      if (!inputFile.is_open()) {
-          cerr << "Error opening file for reading!" << endl;
-          return 1; 
-      }
-      string fileContent;
-      if (getline(inputFile, fileContent)) {
-          alpha = (fileContent == "1");
-      }
-      inputFile.close();
-      Sleep(100);
-    }
 	cout << "ono to funguje...";
 	Sleep(3000);
 }
@@ -138,10 +127,10 @@ int main(){
 	cout << endl << "                                         Press [ANY KEY] to Begin";
 	_getch();
 	cout << endl; narrator("Hello Player", 100); cout << endl;
-	Sleep(1000);
-	narrator("...", 500); cout << endl; Sleep(1000);
+	skip(1000);
+	narrator("...", 500); cout << endl; skip(1000);
 	narrator("Your name isn't Player, is it?", 80); cout << endl;
-	Sleep(1500);
+	skip(1500);
 	narrator("What's your name?", 80); cout << endl << "      [ENTER YOUR NAME NOW]" << endl;
 	string playerName;
 	flushInput();
@@ -149,16 +138,16 @@ int main(){
 	if (!input.empty()) {
 		narrator("Nice to meet you, "+input+"!", 100);
 	} else {
-		narrator("You...", 500); narratorclean("<<    You..."," don't have a name?", 125); Sleep(500); narratorclean("<<    You... don't have a name?"," I will give you one more chance to give me your name.", 80); cout << endl; 
+		narrator("You...", 500); narratorclean("<<    You..."," don't have a name?", 125); skip(500); narratorclean("<<    You... don't have a name?"," I will give you one more chance to give me your name.", 80); cout << endl; 
 		flushInput();
 		getInput();
 		if (!input.empty()) {
 		narrator("At last, nice to meet you, "+input+"!", 80);
 	} else {
-		narrator("You sure?", 125); cout << endl; Sleep(1000);
-		narrator("That's", 225); narratorclean("<<    That's","...", 500); Sleep(500); narratorclean("<<    That's..."," sad.", 200); cout << endl; Sleep(750);
-		narrator("I still need something to call you by, though", 80); cout << endl; Sleep(500);
-		narrator("Will Player suffice?", 75); Sleep(500); narratorclean("<<    Will Player suffice?"," I think it will be alright.", 75);
+		narrator("You sure?", 125); cout << endl; skip(1000);
+		narrator("That's", 225); narratorclean("<<    That's","...", 500); skip(500); narratorclean("<<    That's..."," sad.", 200); cout << endl; skip(750);
+		narrator("I still need something to call you by, though", 80); cout << endl; skip(500);
+		narrator("Will Player suffice?", 75); skip(500); narratorclean("<<    Will Player suffice?"," I think it will be alright.", 75);
 	}
 }
 	cout << endl << "      [PRESS ANY KEY TO CONTINUE]";
