@@ -160,6 +160,13 @@ int loop(){
 	}
 }
 int main(){
+		ofstream outputFile("testsave.txt");
+		if (!outputFile.is_open()) {
+		    cerr << "Error opening file for writing!" << endl;
+		    return 1; 
+		}
+		outputFile << "1" << endl;
+		outputFile.close();
 		srand((unsigned)time(0));
 		cout << "Pick max: ";
 		cin >> maxdmg;
@@ -257,4 +264,11 @@ int main(){
 		system("CLS");
 		cout << "Press [placeholder] to load the last save.";
 	}	
+	outputFile.open("testsave.txt");
+  if (!outputFile.is_open()) {
+      cerr << "Error opening file for writing!" << endl;
+      return 1; 
+  }
+  outputFile << "0" << endl;
+  outputFile.close();
 }
