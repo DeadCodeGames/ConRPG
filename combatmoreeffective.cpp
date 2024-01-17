@@ -160,7 +160,13 @@ int loop(){
 	}
 }
 int main(){
-	try{
+		ofstream outputFile("testsave.txt");
+		if (!outputFile.is_open()) {
+		    cerr << "Error opening file for writing!" << endl;
+		    return 1; 
+		}
+		outputFile << "1" << endl;
+		outputFile.close();
 		srand((unsigned)time(0));
 		cout << "Pick max: ";
 		cin >> maxdmg;
@@ -250,10 +256,6 @@ int main(){
 				loop();
 			}
 		}
-	} catch(...){
-		cout << "Exception";
-	}
-
 	if(!isdefeated){
 		system("CLS");
 		cout << "Gained xp and enemy items.";
@@ -261,13 +263,12 @@ int main(){
 	else{
 		system("CLS");
 		cout << "Press [placeholder] to load the last save.";
-	}
-	
-	ofstream outputFile("testsave.txt");
+	}	
+	outputFile.open("testsave.txt");
   if (!outputFile.is_open()) {
       cerr << "Error opening file for writing!" << endl;
       return 1; 
   }
-  outputFile << "1" << endl;
+  outputFile << "0" << endl;
   outputFile.close();
 }
