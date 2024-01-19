@@ -206,8 +206,8 @@ void sequence1(){
 	cout << endl;
 	cout << endl;
 	truenarrator("      You look around you. You see the following:", 50);
-	cout << endl;
-	truenarrator("      1) Trees",50); cout << endl; truenarrator("      2) Trees", 50); cout << endl; truenarrator("      3) Trees", 50); cout << endl; truenarrator("      4) A path", 50); cout << endl; truenarrator("      5) A strange place between the trees, where abandoned stuff can be seen.", 50); skip(500); cout << endl << endl; truenarrator("      What do you choose?", 50);
+	cout << endl << endl;
+	truenarrator("\t  1) Trees",50); cout << endl; truenarrator("\t  2) Trees", 50); cout << endl; truenarrator("\t  3) Trees", 50); cout << endl; truenarrator("\t  4) A path", 50); cout << endl; truenarrator("\t  5) A strange place between the trees, where abandoned stuff can be seen.", 50); skip(500); cout << endl << endl; truenarrator("\t  What do you choose?", 50);
 	cout << endl;	
 }
 int main(){
