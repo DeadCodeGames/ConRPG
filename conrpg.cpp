@@ -180,12 +180,11 @@ void d1n(){
 		truenarrator("\t  Behold Groot, the tree [BOSS] [10M HP] You stand no chance against this beast as it one hits you", 50); cout << endl;
 		truenarrator("\t  before the fight even has a chance to begin.", 50); skip(400); cout << endl;
 		truenarrator("\t  You get the tree picker ending.", 50); cout << endl;
-		cout << "\t  [Press F to load the latest save]";
+		cout << "\t  [Press F to load the latest save]"; isAlive = false;
 		while(true){
 			if(_kbhit()){
 		  	char key = _getch();
 		  	if(key=='f'){
-		  		isAlive = false;
 		  		break;
 				}
 			}
