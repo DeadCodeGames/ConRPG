@@ -467,8 +467,8 @@ public:
 int main(){
 	Game game;
 	srand(time(0));
-	bool ExistujeSave = game.CheckSave();
-		if (ExistujeSave) {
+	bool SaveExists = game.CheckSave();
+		if (SaveExists) {
 			game.SaveSequence();
 		}
 		else{
