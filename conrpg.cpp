@@ -7,13 +7,70 @@
 #include <conio.h>
 #include <stdlib.h>
 using namespace std;
+
 class Game{
 public:
-	string input, tb, decision1, decision1sub1;
-	int a=0, b=0;
+	string sequence, playerName, input, tb, decision1, decision1sub1, level, hp;
+	int a, b=0;
 	bool isAlive = true;
 	void clearLine(){
 		cout<<"\r                                              \r";
+	}
+	bool CheckSave() {
+		const wstring folderPath = L"save";
+		DWORD folderAttributes = GetFileAttributesW(folderPath.c_str());
+
+		if (folderAttributes == INVALID_FILE_ATTRIBUTES || !(folderAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+			if (CreateDirectoryW(folderPath.c_str(), nullptr) == 0 && GetLastError() != ERROR_ALREADY_EXISTS) {
+				cerr << "[!] Neda sa vytvorit zlozka" << endl;
+				return false;
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+	void SaveInfo(const string& data, const string& fileName) {
+		const string folderPath = "save";
+		const string filePath = folderPath + "\\" + fileName;
+
+		ofstream file(filePath);
+
+		if (file.is_open()) {
+			file << data;  
+
+			file.close();
+		}
+		else {
+			cout << "[!] vyskytol sa nejaky problem";
+		}
+	}
+	string ReadInfo(const string& fileName) {
+		const string folderPath = "save";
+		const string filePath = folderPath + "\\" + fileName;
+
+		ifstream file(filePath);
+
+		if (file.is_open()) {
+			string data;
+			getline(file, data);  
+
+			file.close();
+
+			return data;
+		}
+		else {
+			cout << "[!] vyskytol sa nejaky problem" << endl;
+			return ""; 
+		}
+	}
+	void ReadSave() {
+		level = ReadInfo("PlayerLevel.txt");
+		hp = ReadInfo("PlayerHealth.txt");
+		playerName = ReadInfo("PlayerName.txt");
+		sequence = ReadInfo("Sequence.txt");
 	}
 	void narrator(const string& text, int tickspeed) {
 	  bool a = false;
@@ -171,28 +228,28 @@ public:
 	
 	// Space saving
 	
-	void d1n(){
-		if(a==0) truenarrator("\t  Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
-		if(a==1) truenarrator("\t  For real? You visit the trees again, and... you don't find anything.", 50);
-		if(a==2) truenarrator("\t  There is something weird about those trees. They're... trees.", 50);
-		if(a>2){
-			truenarrator("\t  You visit the trees once more. Once again, you find nothin-", 50); cout << endl;
-			truenarrator("\t  w- what's that sound? It seems like... you have awakened something. It's angry.", 75); cout << endl; skip(300);
-			truenarrator("\t  Behold Mozz, the tree [BOSS] [10M HP] You stand no chance against this beast as it one hits you", 50); cout << endl;
-			truenarrator("\t  before the fight even has a chance to begin.", 50); skip(400); cout << endl; skip(400); system("cls"); cout << "\n\n\n\n";
-			truenarrator("\t  \033[1;31mYou get the tree picker ending.\033[0m", 50); cout << endl; skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
-			cout << "\t  [Press F to load the latest save]"; isAlive = false;
-			while(true){
-				if(_kbhit()){
-			  	char key = _getch();
-			  	if(key=='f'){
-			  		break;
+		void d1n(){
+			if(a==0) truenarrator("\t  Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
+			if(a==1) truenarrator("\t  For real? You visit the trees again, and... you don't find anything.", 50);
+			if(a==2) truenarrator("\t  There is something weird about those trees. They're... trees.", 50);
+			if(a>2){
+				truenarrator("\t  You visit the trees once more. Once again, you find nothin-", 50); cout << endl;
+				truenarrator("\t  w- what's that sound? It seems like... you have awakened something. It's angry.", 75); cout << endl; skip(300);
+				truenarrator("\t  Behold Mozz, the tree [BOSS] [10M HP] You stand no chance against this beast as it one hits you", 50); cout << endl;
+				truenarrator("\t  before the fight even has a chance to begin.", 50); skip(400); cout << endl; skip(400); system("cls"); cout << "\n\n\n\n";
+				truenarrator("\t  \033[1;31mYou get the tree picker ending.\033[0m", 50); cout << endl; skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
+				cout << "\t  [Press F to load the latest save]"; isAlive = false;
+				while(true){
+					if(_kbhit()){
+				  	char key = _getch();
+				  	if(key=='f'){
+				  		break;
+						}
 					}
 				}
+				
 			}
-			
 		}
-	}
 	
 	// Decisions
 	
@@ -204,7 +261,23 @@ public:
 	}
 	
 	// Sequences
+	void SaveSequence(){
+		ReadSave();
+		truenarrator("\tWelcome back, ", 50); truenarrator(playerName, 50); skip(250); cout << endl;
+		truenarrator("\tDo you wish to load the latest save or start a new game? [F to Load, L to start over]", 50);
+		while(true){
+			if(_kbhit()){
+				char keypressed = _getch();
+				if(keypressed=='f'){
+					if(sequence=="1" || sequence=="0") sequence1();
+				} 
+				else if(keypressed=='l') introsequence();
+			}
+		}
+	}
 	void introsequence(){
+		sequence = "0"; hp = "20"; level = "0";
+		SaveInfo(sequence, "Sequence.txt"); SaveInfo(hp, "PlayerHealth.txt"); SaveInfo(level, "PlayerLevel.txt");
 		cout << "                                          W E L C O M E    T O" << endl;
 	 	cout << " .----------------.    .----------------.  .----------------.  .-----------------.   .----------------. " << endl << "| .--------------. |  | .--------------. || .--------------. || .--------------. |  | .--------------. |" << endl << "| |              | |  | |     ______   | || |     ____     | || | ____  _____  | |  | |              | |" << endl << "| |              | |  | |   .' ___  |  | || |   .'    `.   | || ||_   \\|_   _| | |  | |              | |" << endl << "| |    ______    | |  | |  / .'   \\_|  | || |  /  .--.  \\  | || |  |   \\ | |   | |  | |    ______    | |" << endl << "| |   |______|   | |  | |  | |         | || |  | |    | |  | || |  | |\\ \\| |   | |  | |   |______|   | |" << endl << "| |              | |  | |  \\ `.___.'\\  | || |  \\  `--'  /  | || | _| |_\\   |_  | |  | |              | |" << endl << "| |              | |  | |   `._____.'  | || |   `.____.'   | || ||_____|\\____| | |  | |              | |" << endl << "| |              | |  | |              | || |              | || |              | |  | |              | |" << endl << "| '--------------' |  | '--------------' || '--------------' || '--------------' |  | '--------------' |" << endl << " '----------------'    '----------------'  '----------------'  '----------------'    '----------------' ";
 		cout << endl << "                                           The C++ Console RPG";
@@ -214,22 +287,21 @@ public:
 		narrator("...", 500); skip(1000); cout << endl;
 		narrator("Your name isn't Player, is it?", 80); skip(1500); cout << endl;
 		narrator("What's your name?", 80); skip(1000); cout << endl << "      [ENTER YOUR NAME NOW]" << endl;
-		string playerName;
 		flushInput();
-		getInput(); playerName = input;
+		getInput(); playerName = input; SaveInfo(playerName, "PlayerName.txt");
 		if (!playerName.empty()) {
 			narrator("Nice to meet you, "+playerName+"!", 100);
 		} else {
 			narrator("You...", 500); narratorclean(" don't have a name?", 125); skip(500); narratorclean(" I will give you one more chance to give me your name.", 80); cout << endl; 
 			flushInput();
-			getInput(); playerName = input;
+			getInput(); playerName = input; SaveInfo(playerName, "PlayerName.txt");
 			if (!playerName.empty()) {
 			narrator("At last, nice to meet you, "+playerName+"!", 80);
 		} else {
 			narrator("You sure?", 125); cout << endl; skip(1000);
 			narrator("That's", 225); narratorclean("...", 500); skip(500); narratorclean(" sad.", 200); cout << endl; skip(750);
 			narrator("I still need something to call you by, though", 80); cout << endl; skip(500);
-			narrator("Will Player suffice?", 75); skip(500); narratorclean(" I think it will be alright.", 75);
+			narrator("Will Player suffice?", 75); skip(500); narratorclean(" I think it will be alright.", 75); playerName = "Player"; SaveInfo(playerName, "PlayerName.txt");
 		}
 	}
 		skip(1000);
@@ -242,7 +314,10 @@ public:
 		}
 	}
 	void sequence1(){
+		system("cls");
 		Sleep(3500);
+		sequence = "1";
+		SaveInfo(sequence, "Sequence.txt");
 		MCS("Where am I?", 80); narratorclean(" How did I get here?",80); skip(1000);
 		cout << endl;
 		MCS("There is a thick forest all around me.", 80); skip(1000);
@@ -380,15 +455,27 @@ public:
 		}
 		cout << endl << endl;
 		narrator("Great.", 100); skip(250); narratorclean(" These things will come in handy. Grab them and let's get out of here.", 80); skip(1000);
-		
+		cout << endl << endl;
+		cout << "      "; truenarrator("You grab the stuff and it can now be found in your inventory, which is the backpack.", 50); skip(500);
+		cout << endl << endl;
+		MCS("Good idea, let's follow that path we saw earlier, it looks like it leads to a meadow.", 80); skip(1000);
+		cout << endl << endl;
+		cout << "      "; truenarrator("You are approached by a pack of wolves ready to attack you. You have to defend yourself.", 50); cout << endl << "      "; truenarrator("In a quick manner, you have to decide which weapon to use. Your weapons: ", 50); cout << endl << "      "; truenarrator("1) A stick",50); skip(200); cout << endl << "      "; truenarrator("2) An iron sword", 50); cout << endl << endl;
 	}
-};
+	};
 
 int main(){
-	Game GameDef;
+	Game game;
 	srand(time(0));
-//	GameDef.introsequence();
-	GameDef.sequence1();
+	bool SaveExists = game.CheckSave();
+		if (SaveExists) {
+			game.SaveSequence();
+		}
+		else{
+			game.introsequence();
+			game.sequence1();
+		}
+
 //	cout << "Now let's test multiple console windows..." << endl; Sleep(3000);
 //	ambush(); 
 	return 0;
