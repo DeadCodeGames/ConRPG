@@ -83,7 +83,7 @@ public:
 	      }
 	      if(_kbhit()){
 	      	char key = _getch();
-	      	if(key=='\r' or key==' '){
+	      	if(key=='\r' || key==' '){
 	      		clearLine();
 	      		cout << "<<    " << text;
 	      		break;
@@ -104,7 +104,7 @@ public:
 	      }
 	      if(_kbhit()){
 	      	char key = _getch();
-	      	if(key=='\r' or key==' '){
+	      	if(key=='\r' || key==' '){
 	      		clearLine();
 	      		cout << ">>    " << text;
 	      		break;
@@ -121,7 +121,7 @@ public:
 	      cout << c;
 		      if(_kbhit()){
 		      	char key = _getch();
-		      	if(key=='\r' or key==' '){
+		      	if(key=='\r' || key==' '){
 		      		clearLine();
 		      		cout << tb;
 		      		break;
@@ -136,7 +136,7 @@ public:
 	      cout << c;
 		      if(_kbhit()){
 		      	char key = _getch();
-		      	if(key=='\r' or key==' '){
+		      	if(key=='\r' || key==' '){
 		      		clearLine();
 		      		cout << text;
 		      		break;
@@ -149,7 +149,7 @@ public:
 		for(time; time>0; time-=50){
 		  if(_kbhit()){
 		  	char key = _getch();
-		  	if(key=='\r' or key==' '){
+		  	if(key=='\r' || key==' '){
 		  		break;
 				}
 			}
@@ -193,7 +193,7 @@ public:
 		}
 	  Sleep(2000);
 	
-	  const char *programName = "combatmoreeffective.exe";
+	  const char *programName = "con.combat.exe";
 	
 	  STARTUPINFO si;
 	  PROCESS_INFORMATION pi;
@@ -322,7 +322,7 @@ public:
 		cout << endl;
 		MCS("There is a thick forest all around me.", 80); skip(1000);
 		cout << endl;
-		MCS("I, ", 100); narratorclean("...", 200); skip(500); narratorclean(" can't remember anything.", 80); skip(1500);
+		MCS("I", 100); narratorclean("...", 200); skip(500); narratorclean(" can't remember anything.", 80); skip(1500);
 		cout << endl;
 		narrator("What's happening! ", 80); skip(600); narratorclean("Why can't I control my body? ", 100); skip(500); narratorclean("This... ", 175); skip(300); narratorclean("This is not my body!", 80);
 		cout << endl;
@@ -348,7 +348,7 @@ public:
 		cout << endl;
 		narrator("Meanwhile, I will try to explain what I meant by \"death\" and we'll try to figure out why I am in your mind", 80);
 		cout << endl;
-		narrator("and why you don't remember anything.", 80); skip(400); narratorclean(" Stand up before someone,", 100);skip(200); narratorclean(" or worse,", 125); skip(200); narratorclean(" something finds us.", 100); skip(1000);
+		narrator("and why you don't remember anything.", 80); skip(400); narratorclean(" Stand up before someone,", 100);skip(200); narratorclean(" or worse,", 125); skip(200); narratorclean(" \033[1;31msomething\033[0m finds us.", 100); skip(1000);
 		cout << endl;
 		MCS("Why should I listen to you?", 80); skip(1000);
 		cout << endl;
