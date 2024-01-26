@@ -193,7 +193,7 @@ public:
 		}
 	  Sleep(2000);
 	
-	  const char *programName = "con.combat.exe";
+	  const char *programName = "concombat.exe";
 	
 	  STARTUPINFO si;
 	  PROCESS_INFORMATION pi;
@@ -271,7 +271,7 @@ public:
 				if(keypressed=='f'){
 					if(sequence=="1" || sequence=="0") sequence1();
 				} 
-				else if(keypressed=='l') introsequence();
+				else if(keypressed=='l') {system("CLS"); introsequence();}
 			}
 		}
 	}
