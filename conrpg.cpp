@@ -432,22 +432,19 @@ public:
 		if(decision2=="1"){
 			cout << "      "; truenarrator("You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
 			ambush();
-			break;
 		}
 		else if(decision2=="2"){
 			cout << "      "; truenarrator("You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
 			ambush();
-			break;
 		}
 		else if(decision2=="3"){
 			int wolfescapechance = rand()%4;
 			if(wolfescapechance==1){
 				cout << "      "; truenarrator("You attempt to distract the wolves using a stick. You throw it and the wolves indeed do get distracted.", 50); // Achievement, 25% chance to work 
-				break;
 			}
 			else{
 				cout << "      "; truenarrator("You try to distract the wolves with the stick, but they fail to notice it and devour you.", 50); skip(400);
-				cout << endl << "      "; truenarrator("[Press F to pay respects(load last save)]");
+				cout << endl << "      "; truenarrator("[Press F to pay respects(load last save)]",50);
 				while(true){
 					if(_kbhit()){
 				  	char key = _getch();
@@ -459,9 +456,9 @@ public:
 				sequence1();
 			}
 		}
-	if(decision2=="3") // Unfinished
+//		if(decision2=="3")
+	}
 };
-
 int main(){
 	Game GameDef;
 	srand(time(0));
@@ -470,8 +467,5 @@ int main(){
 		GameDef.introsequence();
 		GameDef.sequence1();
 	}
-
-//	cout << "Now let's test multiple console windows..." << endl; Sleep(3000);
-//	ambush(); 
 	return 0;
 }
