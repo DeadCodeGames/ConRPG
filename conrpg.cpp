@@ -9,7 +9,7 @@
 using namespace std;
 class Game{
 public:
-	string playerName, input, tb, decision1, decision1sub1;
+	string playerName, input, tb, decision1, decision1sub1, decision2="";
 	int a=0, b=0, sequence, level, hp;
 	bool isAlive = true;
   void save() {
@@ -226,7 +226,7 @@ public:
 	// Sequences
 	void savesequence(){
 		load();
-		truenarrator("\tWelcome back, ", 50); truenarrator(playerName, 50); skip(250); cout << endl;
+		truenarrator("\tWelcome back, "+playerName, 50); skip(250); cout << endl;
 		truenarrator("\tDo you wish to load the latest save or start a new game? [F to Load, L to start over]", 50);
 		while(true){
 			if(_kbhit()){
@@ -428,7 +428,38 @@ public:
 		MCS("Good idea, let's follow that path we saw earlier, it looks like it leads to a meadow.", 80); skip(1000);
 		cout << endl << endl;
 		cout << "      "; truenarrator("You are approached by a pack of wolves ready to attack you. You have to defend yourself.", 50); cout << endl << "      "; truenarrator("In a quick manner, you have to decide which weapon to use. Your weapons: ", 50); cout << endl << "      "; truenarrator("1) A stick",50); skip(200); cout << endl << "      "; truenarrator("2) An iron sword", 50); cout << endl << "      "; truenarrator("3) Try to distract them with the stick instead of fighting.", 50); cout << endl << endl;
-	}
+		getline(cin, decision2);
+		if(decision2=="1"){
+			cout << "      "; truenarrator("You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
+			ambush();
+			break;
+		}
+		else if(decision2=="2"){
+			cout << "      "; truenarrator("You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
+			ambush();
+			break;
+		}
+		else if(decision2=="3"){
+			int wolfescapechance = rand()%4;
+			if(wolfescapechance==1){
+				cout << "      "; truenarrator("You attempt to distract the wolves using a stick. You throw it and the wolves indeed do get distracted.", 50); // Achievement, 25% chance to work 
+				break;
+			}
+			else{
+				cout << "      "; truenarrator("You try to distract the wolves with the stick, but they fail to notice it and devour you.", 50); skip(400);
+				cout << endl << "      "; truenarrator("[Press F to pay respects(load last save)]");
+				while(true){
+					if(_kbhit()){
+				  	char key = _getch();
+				  	if(key=='f'){
+				  		break;
+						}
+					}
+				}
+				sequence1();
+			}
+		}
+	if(decision2=="3") // Unfinished
 };
 
 int main(){
