@@ -7,11 +7,12 @@
 #include <fstream>
 #include <io.h>
 #include <fcntl.h>
+#include <limits>
 using namespace std;
 bool isfighting = false, isdefeated = false, attackstate = true, keyPressed = false, displaystats = true, gu = true, tobreak = false;
-int enemydmg = 5., lastphp, lastenemyhp, ecooldown, timeleft, maxdmg, blockbonus, easeofuse, tickspeed, x, i, z;
-float cooldown, hp = 20., enemyhp = 20., enemyrage = 1.25, enemyskill = 1., dmgdealt, edmgdealt, plvlbonusdmg, wlvlbonusdmg, enemyblock;
-string lastAttack, lastblock;
+int enemydmg, lastphp, lastenemyhp, ecooldown, timeleft, maxdmg, blockbonus, easeofuse, tickspeed, x, i, z;
+float cooldown, hp = 20., enemyhp, enemyrage, enemyskill, dmgdealt, edmgdealt, plvlbonusdmg, wlvlbonusdmg, enemyblock;
+string lastAttack, lastblock, attacker;
 map<int, string> attack_map {
   {1, "O--|---"},
   {2, "-O-|---"},
@@ -37,7 +38,7 @@ int checktime(){
 int savingspace(){
 	string currentattack = attack_map[z];
 	system("CLS");
-	cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+	cout << "Your HP: " << hp << "   <->   "+attacker+" HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
   cout << currentattack;
   lastAttack = currentattack;
   Sleep(tickspeed);
@@ -66,8 +67,8 @@ int isattackinge(){
 int savingspace1(){
 	string currentdef = attack_map[z];
 	system("CLS");
-	cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
-	cout << "Enemy is attacking you." << endl;
+	cout << "Your HP: " << hp << "   <->   "+attacker+" HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+	cout << ""+attacker+" is attacking you." << endl;
 	cout << currentdef;
 	lastblock = currentdef;
 	Sleep(tickspeed);
@@ -82,7 +83,7 @@ int isdefendinge(){
 	tobreak = false;
 	if(!attackstate){
 		system("CLS");
-		cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+		cout << "Your HP: " << hp << "   <->   "+attacker+" HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
 		cout << "Attack incoming...";
 		Sleep(500);
 		for(z=7; z<13 && !tobreak; z++) savingspace1();
@@ -92,15 +93,15 @@ int isdefendinge(){
 int dodisatk(){
 	for(cooldown=15; cooldown >= 0 && attackstate; cooldown-=1){
 		system("CLS");
-		cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+		cout << "Your HP: " << hp << "   <->   "+attacker+" HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
 		cout << "Last attack: " << lastAttack << endl;
 		if(x==1){
 			enemyblock = i;
-			cout << "\nEnemy blocked " << enemyblock << "% of your dmg";	
+			cout << "\n"+attacker+" blocked " << enemyblock << "% of your dmg";	
 		} 
 		else{
 			enemyblock = 0;
-			cout << "\nEnemy didn't dodge your attack.";
+			cout << "\n"+attacker+" didn't dodge your attack.";
 		} 
 		cout << "\nDamage dealt: " << dmgdealt;
 		cout << "\nCooldown: " << cooldown/10. << "s";
@@ -112,15 +113,15 @@ int dodisatk(){
 int checkdef(){
 	if(lastblock=="O--|"){
 		edmgdealt = enemydmg*0.75-(enemydmg*0.75*blockbonus/100);
-		cout << "You blocked 25% of the damage. Enemy dealt " << endl << edmgdealt << " dmg.";
+		cout << "You blocked 25% of the damage. "+attacker+" dealt " << endl << edmgdealt << " dmg.";
 	}
 	else if(lastblock=="-O-|"){
 		edmgdealt = enemydmg*0.50-(enemydmg*0.50*blockbonus/100);
-		cout << "You blocked 50% of the damage. Enemy dealt " << endl << edmgdealt << " dmg.";
+		cout << "You blocked 50% of the damage. "+attacker+" dealt " << endl << edmgdealt << " dmg.";
 	}
 	else if(lastblock=="--O|"){
 		edmgdealt = enemydmg*0.25-(enemydmg*0.25*blockbonus/100);
-		cout << "You blocked 75% of the damage. Enemy dealt " << endl << edmgdealt << " dmg.";
+		cout << "You blocked 75% of the damage. "+attacker+" dealt " << endl << edmgdealt << " dmg.";
 	}
 	else if(lastblock=="---I"){
 		edmgdealt = enemydmg*0.;
@@ -128,13 +129,13 @@ int checkdef(){
 	}
 	else{
 		edmgdealt = enemydmg*1.-(enemydmg*1.*blockbonus/100);
-		cout << "You didn't block any of the damage. Enemy dealt " << endl << edmgdealt << "dmg.";
+		cout << "You didn't block any of the damage. "+attacker+" dealt " << endl << edmgdealt << "dmg.";
 	}	
 }
 int dodisdef(){
 	for(cooldown=4; cooldown>=0 && !attackstate; cooldown-=1){
 		system("CLS");
-		cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+		cout << "Your HP: " << hp << "   <->   "+attacker+" HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
 		cout << "Last block: " << lastblock << endl;
 		checkdef();
 		cout << "\nCooldown: " << cooldown/10. << "s";
@@ -160,6 +161,17 @@ int loop(){
 	}
 }
 int main(){
+		ifstream file("savegame.txt");
+		file.seekg(ios::beg);
+		for(int i=0; i<6; ++i) {
+		   file.ignore(numeric_limits<streamsize>::max(), '\n'); 
+		}
+		file >> maxdmg;
+		file >> enemyhp;
+		file >> enemydmg;
+		file >> enemyskill;
+		file >> enemyrage;
+		file >> attacker;
 		ofstream outputFile("testsave.txt");
 		if (!outputFile.is_open()) {
 		    cerr << "Error opening file for writing!" << endl;
@@ -168,8 +180,6 @@ int main(){
 		outputFile << "1" << endl;
 		outputFile.close();
 		srand((unsigned)time(0));
-		cout << "Pick max: ";
-		cin >> maxdmg;
 		cout << "Blocking bonus: ";
 		cin >> blockbonus;
 		cout << "Ease of Use: ";
@@ -179,13 +189,13 @@ int main(){
 		cin >> plvlbonusdmg;
 		cout << "Weapon level dmg bonus: ";
 		cin >> wlvlbonusdmg;
-		tickspeed = easeofuse*50;
+		tickspeed = easeofuse*25;
 		isfighting = true;
 		ecooldown = 5000/enemyrage;
 		timeleft = ecooldown;
 		while(isfighting){
 			if(displaystats){
-				cout << "\nYour stats \n---------------------------- \nYour hp: " << hp << endl << "Your dmg: " << maxdmg << "Ease of use: " << easeofuse << endl << "Dmg bonus from player level: " << plvlbonusdmg << endl << "Dmg bonus from weapon level: " << wlvlbonusdmg << endl << "\nEnemy stats \n---------------------------- \nEnemy hp: " << enemyhp << endl << "Enemy dmg: " << enemydmg << endl;
+				cout << "\nYour stats \n---------------------------- \nYour hp: " << hp << endl << "Your dmg: " << maxdmg << endl << "Ease of use: " << easeofuse << endl << "Dmg bonus from player level: " << plvlbonusdmg << endl << "Dmg bonus from weapon level: " << wlvlbonusdmg << endl << "\n"+attacker+" stats \n---------------------------- \n"+attacker+" hp: " << enemyhp << endl << ""+attacker+" dmg: " << enemydmg << endl;
 				Sleep(3000);
 				cout << "\nPress a to begin the fight.";
 				while(true){
@@ -204,7 +214,7 @@ int main(){
 			isdefendinge(); 
 			if(attackstate){
 				system("CLS");
-				cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+				cout << "Your HP: " << hp << "   <->   "+attacker+" HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
 				cout << "Last attack: " << lastAttack;    
 				if(lastAttack == "O--|---" || lastAttack == "---|--O") dmgdealt = maxdmg*0.5;
 				else if(lastAttack == "-O-|---" || lastAttack == "---|-O-") dmgdealt = maxdmg*0.75;
@@ -222,8 +232,8 @@ int main(){
 				if(enemyhp<=0){
 					system("CLS");
 					enemyhp = 0;
-					cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
-					cout << "\nDamage dealt: " << dmgdealt << "\nEnemy has been defeated.";
+					cout << "Your HP: " << hp << "   <->   "+attacker+" HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+					cout << "\nDamage dealt: " << dmgdealt << "\n"+attacker+" defeated.";
 					Sleep(3500);
 					break;
 				}
@@ -236,7 +246,7 @@ int main(){
 				loop();
 			}
 			else{
-				cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+				cout << "Your HP: " << hp << "   <->   "+attacker+" HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
 				cout << "Last block: " << lastblock << endl;
 				checkdef();
 				cout << "\nCooldown: 0.5s";
@@ -244,7 +254,7 @@ int main(){
 				edmgdealt = 0;
 				if(hp<=0){
 					hp = 0;
-					cout << "Your HP: " << hp << "   <->   Enemy HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
+					cout << "Your HP: " << hp << "   <->   "+attacker+" HP: " << enemyhp << "\n-------------------------------"<< endl << endl;
 					cout << "You have been defeated. ";
 					isfighting = false;
 					isdefeated = true;
