@@ -167,7 +167,7 @@ public:
     file << attacker << "\n";
     file.close();
 	  Sleep(2000);
-	  cout << "      "; truenarrator("Prepare to fight...", 50); Sleep(500);
+	  cout << endl << "      "; truenarrator("Prepare to fight...", 50); Sleep(500);
 	  const char *programName = "combatmoreeffective.exe";
 	  STARTUPINFO si;
 	  PROCESS_INFORMATION pi;
