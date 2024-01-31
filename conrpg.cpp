@@ -167,7 +167,7 @@ public:
     file << attacker << "\n";
     file.close();
 	  Sleep(2000);
-	  cout << "      "; truenarrator("Prepare to fight...", 50);
+	  cout << "      "; truenarrator("Prepare to fight...", 50); Sleep(500);
 	  const char *programName = "combatmoreeffective.exe";
 	  STARTUPINFO si;
 	  PROCESS_INFORMATION pi;
@@ -484,7 +484,7 @@ public:
 		sequence2();
 	}
 	void sequence2(){
-		if(sequence==1) sequence++; save(); system("cls"); Sleep(500);
+		if(sequence==1) sequence++; save(); system("cls"); Sleep(1000);
 		cout << "\n\n\n\n\n\n\t\t{[()]} Sequence 2 {[()]}\n\n\n"; Sleep(1000); truenarrator("\t\tYou're doing great!(not)", 50); Sleep(2000); system("cls"); Sleep(2500);
 		cout << endl;
 		truenarrator("      You walk through a captivating meadow, full of birds, dead bodies and charred weapons.", 50); skip(1000);
