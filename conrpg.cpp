@@ -10,14 +10,17 @@ using namespace std;
 class Game{
 public:
 	string playerName, input, tb, decision1, decision1sub1, decision2="";
-	int a=0, b=0, sequence, level, hp;
+	int a=0, b=0, sequence, level, xp, requiredxp, initiallvl, hp, currenthp, maxdmg, plvlbonusdmg;
 	bool isAlive = true;
   void save() {
     ofstream file("savegame.txt");
     file << sequence << "\n";
     file << playerName << "\n";
     file << level << "\n";
+    file << xp << "\n";
     file << hp << "\n"; 
+    file << currenthp << "\n";
+    file << maxdmg << "\n";
     file.close();
   }
 
@@ -26,11 +29,29 @@ public:
     file >> sequence;
     file >> playerName;
     file >> level;
+    file >> xp;
     file >> hp;
+    file >> currenthp;
+    file >> maxdmg;
   }
   bool CheckSave(){
   	ifstream file("savegame.txt");
   	return file.good();
+	}
+
+	void checkLevelUp(){
+		if(xp>=requiredxp){
+			initiallvl = level;
+			hp = currenthp;
+			while(xp>=requiredxp){
+				hp += hp/10;
+				level += 1;
+				xp -= requiredxp;
+				requiredxp += requiredxp/5;
+			} 
+		cout << "Leveled up! Went from lvl " << initiallvl << " to lvl " << level << ". HP: " << hp << " -> " << currenthp << endl;
+		cout << "Current xp ->" << xp << "(" << xp << "/" << requiredxp << ")" << endl;
+		}
 	}
 	void clearLine(){
 		cout<<"\r                                              \r";
@@ -130,43 +151,30 @@ public:
 		    Sleep(50);
 	  }
 	}
-	int ambush(){
-		string decision;
-	  cout << "You are under attack by something. Flee or Fight?" << endl;
-		while(true){
-			flushInput();
-		  cin >> decision;
-		  for (char &c : decision) {
-	        c = tolower(c);
-	    }
-		  if(decision=="fight"){
-		  	break;
-		  	cout << endl;
-			}
-			else if(decision=="flee"){
-				cout << "Attempting fleeing...";
-				Sleep(500);
-				cout << " Fleeing unsuccessful" << endl;
-				continue;
-			}
-	
-			else{
-				cout << "Invalid choice. Try again." << endl;
-			}
-		}
+	int ambush(string attacker, int enemyhp, int enemydmg, int enemyskill, int enemyrage){
+		ofstream file("savegame.txt");
+    file << sequence << "\n";
+    file << playerName << "\n";
+    file << level << "\n";
+    file << xp << "\n";
+    file << hp << "\n"; 
+    file << currenthp << "\n";
+    file << maxdmg << "\n";
+    file << enemyhp << "\n";
+    file << enemydmg << "\n";
+    file << enemyskill << "\n";
+    file << enemyrage << "\n";
+    file << attacker << "\n";
+    file.close();
 	  Sleep(2000);
-	
+	  cout << "      "; truenarrator("Prepare to fight...", 50);
 	  const char *programName = "combatmoreeffective.exe";
-	
 	  STARTUPINFO si;
 	  PROCESS_INFORMATION pi;
-	
 	  ZeroMemory(&si, sizeof(si));
 	  si.cb = sizeof(si);
 	  ZeroMemory(&pi, sizeof(pi));
-	
 	  if (CreateProcess(NULL, const_cast<char*>(programName), NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi)) {
-	      cout << "Launching combat program in a new console window..." << endl;
 	      WaitForSingleObject(pi.hProcess, INFINITE); 
 	  } else {
 	      cout << "Error launching program" << endl;
@@ -178,19 +186,22 @@ public:
 	  }
 	  string filecontent;
 	  if (getline(inputFile, filecontent)) {
-	    if (filecontent == "1") {
-	        cout << "You aborted the fight. You automatically die." << endl;
+	    if (filecontent == "1") {	
+	      truenarrator("      You aborted the fight... You automatically die.", 50); cout << endl; skip(250); truenarrator("      [Press F to load the latest save/L to start over]",50);
+	      while(true){
+	      	if(_kbhit()){
+	      		char c = _getch();
+	      		if(c=='f') sequence1();
+						else if(c=='f') introsequence();
+					}
+				}
 	    }
 			else{
-	      cout << "You finished the fight." << endl;
+	      truenarrator("      You finished the fight.", 50); cout << endl;
 	    }
 	  }
-		cout << "ono to funguje...";
 		Sleep(3000);
 	}
-	
-	// Space saving
-	
 	void d1n(){
 		if(a==0) truenarrator("\t  Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
 		if(a==1) truenarrator("\t  For real? You visit the trees again, and... you don't find anything.", 50);
@@ -232,8 +243,8 @@ public:
 			if(_kbhit()){
 				char keypressed = _getch();
 				if(keypressed=='f'){
-					cout << sequence;
 					if(sequence==1) sequence1();
+					else if(sequence==2) sequence2();
 				} 
 				else if(keypressed=='l'){
 					introsequence(); sequence1();
@@ -243,7 +254,7 @@ public:
 	}
 	void introsequence(){
 		system("cls");
-		level = 0; hp = 20;
+		level = 0; hp = 20; xp = 0; currenthp = 20; maxdmg = 1;
 		cout << "                                          W E L C O M E    T O" << endl;
 	 	cout << " .----------------.    .----------------.  .----------------.  .-----------------.   .----------------. " << endl << "| .--------------. |  | .--------------. || .--------------. || .--------------. |  | .--------------. |" << endl << "| |              | |  | |     ______   | || |     ____     | || | ____  _____  | |  | |              | |" << endl << "| |              | |  | |   .' ___  |  | || |   .'    `.   | || ||_   \\|_   _| | |  | |              | |" << endl << "| |    ______    | |  | |  / .'   \\_|  | || |  /  .--.  \\  | || |  |   \\ | |   | |  | |    ______    | |" << endl << "| |   |______|   | |  | |  | |         | || |  | |    | |  | || |  | |\\ \\| |   | |  | |   |______|   | |" << endl << "| |              | |  | |  \\ `.___.'\\  | || |  \\  `--'  /  | || | _| |_\\   |_  | |  | |              | |" << endl << "| |              | |  | |   `._____.'  | || |   `.____.'   | || ||_____|\\____| | |  | |              | |" << endl << "| |              | |  | |              | || |              | || |              | |  | |              | |" << endl << "| '--------------' |  | '--------------' || '--------------' || '--------------' |  | '--------------' |" << endl << " '----------------'    '----------------'  '----------------'  '----------------'    '----------------' ";
 		cout << endl << "                                           The C++ Console RPG";
@@ -267,7 +278,7 @@ public:
 			narrator("You sure?", 125); cout << endl; skip(1000);
 			narrator("That's", 225); narratorclean("...", 500); skip(500); narratorclean(" sad.", 200); cout << endl; skip(750);
 			narrator("I still need something to call you by, though", 80); cout << endl; skip(500);
-			narrator("Will Player suffice?", 75); skip(500); narratorclean(" I think it will be alright.", 75); 
+			narrator("Will Player suffice?", 75); skip(500); narratorclean(" I think it will be alright.", 75); playerName = "Player"; save();
 		}
 	}
 		skip(1000);
@@ -284,7 +295,11 @@ public:
 		system("cls");
 		if(sequence==0) sequence++;
 		save();
-		Sleep(3500);
+		Sleep(500);
+		cout << "\n\n\n\n\n\n\t\t{[()]} Sequence 1 {[()]}\n\n\n"; Sleep(500);
+		truenarrator("\t\tThe game saves every sequence. Good luck on your journey.", 50);
+		Sleep(2000); system("cls");
+		Sleep(2500);
 		MCS("Where am I?", 80); narratorclean(" How did I get here?",80); skip(1000);
 		cout << endl;
 		MCS("There is a thick forest all around me.", 80); skip(1000);
@@ -431,11 +446,11 @@ public:
 		getline(cin, decision2);
 		if(decision2=="1"){
 			cout << "      "; truenarrator("You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
-			ambush();
+			ambush("Wolves", 20, 3, 1, 1);
 		}
 		else if(decision2=="2"){
-			cout << "      "; truenarrator("You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
-			ambush();
+			cout << "      "; truenarrator("You decide to take out the iron sword and use it to fight the wolves off. Commencing combat.", 50); skip(200);
+			ambush("Wolves", 20, 3, 1, 1);
 		}
 		else if(decision2=="3"){
 			int wolfescapechance = rand()%4;
@@ -456,7 +471,39 @@ public:
 				sequence1();
 			}
 		}
-//		if(decision2=="3")
+		if(decision2=="3"){
+			cout << endl << endl; narrator("That was really weird,", 80); narratorclean(" I never would have thought of that.", 80); narratorclean(" Great job.", 100); skip(1000);
+			cout << endl;
+			MCS("I too am surprised that worked.", 80); narratorclean(" Let's maybe get out of here.", 80); skip(1000);
+		}
+		else{
+			narrator("Good job fighting those wolves off.", 80); skip(250); narratorclean(" We should probably get out of here.", 80); skip(400);
+			cout << endl;
+			MCS("Thank you, yes, we should get out of here.", 80); skip(1000); cout << endl;			
+		}
+		sequence2();
+	}
+	void sequence2(){
+		if(sequence==1) sequence++; save(); system("cls"); Sleep(500);
+		cout << "\n\n\n\n\n\n\t\t{[()]} Sequence 2 {[()]}\n\n\n"; Sleep(1000); truenarrator("\t\tYou're doing great!(not)", 50); Sleep(2000); system("cls"); Sleep(2500);
+		cout << endl;
+		truenarrator("      You walk through a captivating meadow, full of birds, dead bodies and charred weapons.", 50); skip(1000);
+		cout << endl << endl;
+		MCS("What happened here?", 100); skip(750);
+		cout << endl;
+		narrator("A minor clash, it seems.", 80); skip(250);
+		cout << endl;
+		narrator("It reminds me of the field where they got me.", 75); skip(750);
+		cout << endl;
+		MCS("Got you?", 75); narratorclean(" When will you finally tell me what you meant by your death?", 80); skip(1000); 
+		cout << endl;
+		narrator("Very well.", 75); narratorclean(" My faction got into a fight with another faction. I was the general, leading an army.", 75); cout << endl;
+		narrator("While I was fighting, an arrow hit me. Instead of dying, I saw a strong flash followed by darkness.", 75); cout << endl;
+		narrator("I then woke up in a different body,", 75); skip(250); narratorclean(" your body.", 80); skip(400); narratorclean(" And now, we're here.", 75); skip(500);
+		cout << endl;
+		MCS("I don't remember what happened before we", 80); skip(200); narratorclean("...", 250); skip(250); narratorclean("merged.", 75); skip(1000); 
+		cout << endl << endl;
+		
 	}
 };
 int main(){
