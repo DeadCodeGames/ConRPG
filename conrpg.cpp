@@ -11,6 +11,7 @@ using namespace std;
 class Game{
 public:
 	string playerName, input, tb, decision1, decision1sub1, decision2="";
+	string diadec1, diadec2, diadec3, diadec4, diadec5;
 	int a=0, b=0, sequence, level, xp, requiredxp, initiallvl, hp, currenthp, maxdmg, plvlbonusdmg;
 	bool isAlive = true;
   void save() {
@@ -57,64 +58,74 @@ public:
 	void clearLine(){
 		cout<<"\r                                              \r";
 	}
-	void narrator(const string& text, int tickspeed) {
-	  bool a = false;
-	  tb="<<    ";
-	  tb+=text;
-	  for (char c : text) {
-	      if (!a) {
-	          cout << "<<    ";
-	          a = true;
-	      }
-	      if(_kbhit()){
-	      	char key = _getch();
-	      	if(key=='\r' or key==' '){
-	      		clearLine();
-	      		cout << "<<    " << text;
-	      		break;
-					}
-				}
-	      cout << c;
-	      this_thread::sleep_for(chrono::milliseconds(tickspeed));
-	  }
-	}
-	void MCS(const string& text, int tickspeed){
-		bool a = false;
-		tb=">>    ";
-		tb+=text;
-	  for (char c : text) {
-	      if (!a) {
-	          cout << ">>    ";
-	          a = true;
-	      }
-	      if(_kbhit()){
-	      	char key = _getch();
-	      	if(key=='\r' or key==' '){
-	      		clearLine();
-	      		cout << ">>    " << text;
-	      		break;
-					}
-				}
-	      cout << c;
-	      this_thread::sleep_for(chrono::milliseconds(tickspeed));
-	  }
-	}
-	void narratorclean(const string& text, int tickspeed) {
-	  bool a = false;
-	  tb+=text;
-	  for (char c : text) {
-	      cout << c;
-		      if(_kbhit()){
-		      	char key = _getch();
-		      	if(key=='\r' or key==' '){
-		      		clearLine();
-		      		cout << tb;
-		      		break;
-						}
-					}
-	      this_thread::sleep_for(chrono::milliseconds(tickspeed));
-	  }
-	}
+void narrator(const string& text, int tickspeed) {
+  bool a = false;
+  tb="<<    ";
+  tb+=text;
+  for (char c : text) {
+    if (!a) {
+      cout << "\033[36m" << "<<    "; 
+      a = true;
+    }
+    if(_kbhit()){
+      char key = _getch();
+      if(key=='\r' or key==' '){
+        clearLine(); 
+        cout << "\033[36m" << "<<    " << text;
+        break;
+      }
+    }
+    cout << c;
+    this_thread::sleep_for(chrono::milliseconds(tickspeed));
+  }
+  cout << "\033[0m";
+}
+void MCS(const string& text, int tickspeed){
+  bool a = false;
+  tb=">>    ";
+  tb+=text;
+  for (char c : text) {
+    if (!a) {
+      cout << "\033[33m" << ">>    ";  
+      a = true;
+    }
+    if(_kbhit()){
+      char key = _getch();
+      if(key=='\r' or key==' '){
+        clearLine();
+        cout << "\033[33m" << ">>    " << text;
+        break;  
+      }
+    }
+    cout << c;
+    this_thread::sleep_for(chrono::milliseconds(tickspeed));
+  }
+  cout << "\033[0m"; 
+}
+void narratorclean(string currentColor, const string& text, int tickspeed) {
+  bool a = false;
+  tb += text;
+  for(char c : text) {
+    if(currentColor != "") {
+      cout << currentColor; 
+    }
+    cout << c;  
+    if(_kbhit()) {
+      char key = _getch();
+      if(key=='\r' or key==' ') {
+        clearLine();
+        if(currentColor != "") {
+          cout << currentColor;
+        }
+        cout << tb;
+        break;
+      }
+    }
+    
+    this_thread::sleep_for(chrono::milliseconds(tickspeed));
+  }
+  cout << "\033[0m"; 
+}
 	void truenarrator(const string& text, int tickspeed) {
 	  bool a = false;
 	  for (char c : text) {
@@ -232,7 +243,6 @@ public:
 		truenarrator("      You look around you. You see the following:", 50);
 		cout << endl;
 		truenarrator("      1) Trees",50); cout << endl; truenarrator("      2) Trees", 50); cout << endl; truenarrator("      3) Trees", 50); cout << endl; truenarrator("      4) A path", 50); cout << endl; truenarrator("      5) A strange place between the trees, where abandoned stuff can be seen.", 50); skip(500); cout << endl << endl; truenarrator("      What do you choose?", 50);
-		cout << endl;
 	}
 	
 	// Sequences
@@ -261,7 +271,7 @@ public:
 		cout << endl << "                                           The C++ Console RPG";
 		cout << endl << "                                         Press [ANY KEY] to Begin";
 		_getch();
-		cout << endl; narrator("Hello Player", 100); skip(1000); cout << endl;
+/*		cout << endl; narrator("Hello Player", 100); skip(1000); cout << endl;
 		narrator("...", 500); skip(1000); cout << endl;
 		narrator("Your name isn't Player, is it?", 80); skip(1500); cout << endl;
 		narrator("What's your name?", 80); skip(1000); cout << endl << "      [ENTER YOUR NAME NOW]" << endl;
@@ -281,7 +291,7 @@ public:
 			narrator("I still need something to call you by, though", 80); cout << endl; skip(500);
 			narrator("Will Player suffice?", 75); skip(500); narratorclean(" I think it will be alright.", 75); playerName = "Player"; save();
 		}
-	}
+	} TO BE REDONE */
 		skip(1000);
 		cout << endl << "      [PRESS ANY KEY TO START THE GAME]";
 		while(true){
@@ -302,13 +312,13 @@ public:
 		truenarrator("\t\tThe game saves every sequence. Good luck on your journey.", 50);
 		Sleep(2000); system("cls");
 		Sleep(2500);
-		MCS("Where am I?", 80); narratorclean(" How did I get here?",80); skip(1000);
+		MCS("Where am I?", 80); narratorclean("\033[33m"," How did I get here?",80); skip(1000);
 		cout << endl;
 		MCS("There is a thick forest all around me.", 80); skip(1000);
 		cout << endl;
-		MCS("I, ", 100); narratorclean("...", 200); skip(500); narratorclean(" can't remember anything.", 80); skip(1500);
+		MCS("I, ", 100); narratorclean("\033[33m","...", 200); skip(500); narratorclean("\033[33m"," can't remember anything.", 80); skip(1500);
 		cout << endl;
-		narrator("What's happening! ", 80); skip(600); narratorclean("Why can't I control my body? ", 100); skip(500); narratorclean("This... ", 175); skip(300); narratorclean("This is not my body!", 80);
+		narrator("What's happening! ", 80); skip(600); narratorclean("\033[36m","Why can't I control my body? ", 100); skip(500); narratorclean("\033[36m","This... ", 175); skip(300); narratorclean("\033[36m","This is not my body!", 80);
 		cout << endl;
 		MCS("Who said that? ", 40); skip(750);
 		cout << endl;
@@ -318,21 +328,21 @@ public:
 		cout << endl;
 		MCS("What do you mean?", 80); skip(1000);
 		cout << endl;
-		narrator("I myself have no idea.", 80); skip(500); narratorclean(" It seems like...", 120); skip(400); narratorclean(" I am in you.", 100); skip(750);
+		narrator("I myself have no idea.", 80); skip(500); narratorclean("\033[36m"," It seems like...", 120); skip(400); narratorclean("\033[36m"," I am in you.", 100); skip(750);
 		cout << endl;
 		MCS("Why are you in me?", 80); skip(1000);
 		cout << endl;
-		narrator("Good question.", 80); skip(500); narratorclean(" All I can remember is my death,", 80); skip(250); narratorclean(" and now,", 125); narratorclean(" I find myself here,", 100); skip(500); narratorclean(" in your body.", 100); skip(1000);
+		narrator("Good question.", 80); skip(500); narratorclean("\033[36m"," All I can remember is my death,", 80); skip(250); narratorclean("\033[36m"," and now,", 125); narratorclean("\033[36m"," I find myself here,", 100); skip(500); narratorclean("\033[36m"," in your body.", 100); skip(1000);
 		cout << endl;
 		MCS("What do you mean your death?", 80); skip(1500);
 		cout << endl;
 		narrator("This has to be a nightmare.", 80); skip(1000);
 		cout << endl;
-		narrator("Well,", 125); skip(400); narratorclean(" we don't really have a choice,",80); skip(300); narratorclean(" stand up and look around.", 80 ); skip(250);
+		narrator("Well,", 125); skip(400); narratorclean("\033[36m"," we don't really have a choice,",80); skip(300); narratorclean("\033[36m"," stand up and look around.", 80 ); skip(250);
 		cout << endl;
 		narrator("Meanwhile, I will try to explain what I meant by \"death\" and we'll try to figure out why I am in your mind", 80);
 		cout << endl;
-		narrator("and why you don't remember anything.", 80); skip(400); narratorclean(" Stand up before someone,", 100);skip(200); narratorclean(" or worse,", 125); skip(200); narratorclean(" something finds us.", 100); skip(1000);
+		narrator("and why you don't remember anything.", 80); skip(400); narratorclean("\033[36m"," Stand up before someone,", 100);skip(200); narratorclean("\033[36m"," or worse,", 125); skip(200); narratorclean("\033[36m"," something finds us.", 100); skip(1000);
 		cout << endl;
 		MCS("Why should I listen to you?", 80); skip(1000);
 		cout << endl;
@@ -344,8 +354,8 @@ public:
 			if(a>0 || b>0) d1();
 			cout << endl << endl;
 			flushInput();
-			cout << ">>    ";
-			getline(cin, decision1);
+			cout << "\033[33m>>    ";
+			getline(cin, decision1); cout << "\033[0m";
 			cout << endl << endl;
 			if(decision1=="1"){
 				MCS("I want to see the trees.", 80);
@@ -396,12 +406,13 @@ public:
 				cout << endl << endl;
 				skip(250);
 				truenarrator("      1) Go through with your initial decision\n      2) Abort", 50);
-				cout << endl << endl << endl << ">>    ";
+				cout << endl << endl;
 				flushInput();
-				getline(cin, decision1sub1);
+				cout << "\033[33m>>    ";
+				getline(cin, decision1sub1); cout << "\033[0m" << endl << endl;
 				if(decision1sub1=="1"){
 					MCS("I really want to know where it leads.", 80);
-					cout << endl << endl << endl;
+					cout << endl << endl;
 					truenarrator("      Very well, you decide to embark on an adventurous journe- nevermind, you die. Reason: UNKN0WN", 50);
 					skip(400);
 					cout << endl << endl << endl;
@@ -438,14 +449,15 @@ public:
 			}
 		}
 		cout << endl << endl;
-		narrator("Great.", 100); skip(250); narratorclean(" These things will come in handy. Grab them and let's get out of here.", 80); skip(1000);
+		narrator("Great.", 100); skip(250); narratorclean("\033[36m"," These things will come in handy. Grab them and let's get out of here.", 80); skip(1000);
 		cout << endl << endl;
 		truenarrator("      You grab the stuff and it can now be found in your inventory, which is the backpack.", 50); skip(500);
 		cout << endl << endl;
 		MCS("Good idea, let's follow that path we saw earlier, it looks like it leads to a meadow.", 80); skip(1000);
 		cout << endl << endl;
-		truenarrator("      You are approached by a pack of wolves ready to attack you. You have to defend yourself.", 50); cout << endl; truenarrator("      In a quick manner, you have to decide which weapon to use. Your weapons: ", 50); cout << endl; truenarrator("      1) A stick",50); skip(200); cout << endl; truenarrator("      2) An iron sword", 50); cout << endl; truenarrator("      3) Try to distract them with the stick instead of fighting.", 50); cout << endl << endl;
-		getline(cin, decision2);
+		truenarrator("      You are approached by a pack of wolves ready to attack you. You have to defend yourself.", 50); cout << endl; truenarrator("      In a quick manner, you have to choose the action you take: ", 50); cout << endl << endl; truenarrator("      1) Use a stick to fight them",50); skip(200); cout << endl; truenarrator("      2) Use an iron sword to fight them", 50); cout << endl; truenarrator("      3) Try to distract them with the stick instead of fighting.", 50); cout << endl << endl;
+		cout << "\033[33m>>    ";
+		getline(cin, decision2); cout << "\033[0m" << endl;
 		if(decision2=="1"){
 			truenarrator("      You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
 			ambush("Wolves", 20, 3, 1, 1);
@@ -487,12 +499,12 @@ public:
 				sequence1();
 		}
 		if(decision2=="3"){
-			cout << endl << endl; narrator("That was really weird,", 80); narratorclean(" I never would have thought of that.", 80); narratorclean(" Great job.", 100); skip(1000);
+			cout << endl << endl; narrator("That was really weird,", 80); narratorclean("\033[36m"," I never would have thought of that.", 80); narratorclean("\033[36m"," Great job.", 100); skip(1000);
 			cout << endl;
-			MCS("I too am surprised that worked.", 80); narratorclean(" Let's maybe get out of here.", 80); skip(1000);
+			MCS("I too am surprised that worked.", 80); narratorclean("\033[33m"," Let's maybe get out of here.", 80); skip(1000);
 		}
 		else{
-			narrator("Good job fighting those wolves off.", 80); skip(250); narratorclean(" We should probably get out of here.", 80); skip(400);
+			narrator("Good job fighting those wolves off.", 80); skip(250); narratorclean("\033[36m"," We should probably get out of here.", 80); skip(400);
 			cout << endl;
 			MCS("Thank you, yes, we should get out of here.", 80); skip(1000); cout << endl;			
 		}
@@ -510,13 +522,13 @@ public:
 		cout << endl;
 		narrator("It reminds me of the field where they got me.", 75); skip(750);
 		cout << endl;
-		MCS("Got you?", 75); narratorclean(" When will you finally tell me what you meant by your death?", 80); skip(1000); 
+		MCS("Got you?", 75); narratorclean("\033[33m"," When will you finally tell me what you meant by your death?", 80); skip(1000); 
 		cout << endl;
-		narrator("Very well.", 75); narratorclean(" My faction got into a fight with another faction. I was the general, leading an army.", 75); cout << endl;
+		narrator("Very well.", 75); narratorclean("\033[36m"," My faction got into a fight with another faction. I was the general, leading an army.", 75); cout << endl;
 		narrator("While I was fighting, an arrow hit me. Instead of dying, I saw a strong flash followed by darkness.", 75); cout << endl;
-		narrator("I then woke up in a different body,", 75); skip(250); narratorclean(" your body.", 80); skip(400); narratorclean(" And now, we're here.", 75); skip(500);
+		narrator("I then woke up in a different body,", 75); skip(250); narratorclean("\033[36m"," your body.", 80); skip(400); narratorclean("\033[36m"," And now, we're here.", 75); skip(500);
 		cout << endl;
-		MCS("I don't remember what happened before we", 80); skip(200); narratorclean("...", 250); skip(250); narratorclean("merged.", 75); skip(1000); 
+		MCS("I don't remember what happened before we", 80); skip(200); narratorclean("\033[36m","...", 250); skip(250); narratorclean("\033[36m","merged.", 75); skip(1000); 
 		cout << endl << endl;
 		
 	}
