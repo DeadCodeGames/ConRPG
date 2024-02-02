@@ -1,3 +1,4 @@
+#define _WIN32_WINNT 0x0500
 #include <iostream>
 #include <windows.h>
 #include <string>
@@ -203,16 +204,16 @@ public:
 		Sleep(3000);
 	}
 	void d1n(){
-		if(a==0) truenarrator("\t  Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
-		if(a==1) truenarrator("\t  For real? You visit the trees again, and... you don't find anything.", 50);
-		if(a==2) truenarrator("\t  There is something weird about those trees. They're... trees.", 50);
+		if(a==0) truenarrator("      Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
+		if(a==1) truenarrator("      For real? You visit the trees again, and... you don't find anything.", 50);
+		if(a==2) truenarrator("      There is something weird about those trees. They're... trees.", 50);
 		if(a>2){
-			truenarrator("\t  You visit the trees once more. Once again, you find nothin-", 50); cout << endl;
-			truenarrator("\t  w- what's that sound? It seems like... you have awakened something. It's angry.", 75); cout << endl; skip(300);
-			truenarrator("\t  Behold Mozz, the tree [BOSS] [10M HP] You stand no chance against this beast as it one hits you", 50); cout << endl;
-			truenarrator("\t  before the fight even has a chance to begin.", 50); skip(400); cout << endl; skip(400); system("cls"); cout << "\n\n\n\n";
-			truenarrator("\t  \033[1;31mYou get the tree picker ending.\033[0m", 50); cout << endl; skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
-			cout << "\t  [Press F to load the latest save]"; isAlive = false;
+			truenarrator("      You visit the trees once more. Once again, you find nothin-", 50); cout << endl;
+			truenarrator("      w- what's that sound? It seems like... you have awakened something. It's angry.", 75); cout << endl; skip(300);
+			truenarrator("      Behold Mozz, the tree [BOSS] [10M HP] You stand no chance against this beast as it one hits you", 50); cout << endl;
+			truenarrator("      before the fight even has a chance to begin.", 50); skip(400); cout << endl; skip(400); system("cls"); cout << "\n\n\n\n";
+			truenarrator("      \033[1;31mYou get the tree picker ending.\033[0m", 50); cout << endl; skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
+			cout << "      [Press F to load the latest save]"; isAlive = false;
 			while(true){
 				if(_kbhit()){
 			  	char key = _getch();
@@ -228,17 +229,17 @@ public:
 	// Decisions
 	
 	void d1(){
-		truenarrator("\t  You look around you. You see the following:", 50);
+		truenarrator("      You look around you. You see the following:", 50);
 		cout << endl;
-		truenarrator("\t  1) Trees",50); cout << endl; truenarrator("\t  2) Trees", 50); cout << endl; truenarrator("\t  3) Trees", 50); cout << endl; truenarrator("\t  4) A path", 50); cout << endl; truenarrator("\t  5) A strange place between the trees, where abandoned stuff can be seen.", 50); skip(500); cout << endl << endl; truenarrator("\t  What do you choose?", 50);
+		truenarrator("      1) Trees",50); cout << endl; truenarrator("      2) Trees", 50); cout << endl; truenarrator("      3) Trees", 50); cout << endl; truenarrator("      4) A path", 50); cout << endl; truenarrator("      5) A strange place between the trees, where abandoned stuff can be seen.", 50); skip(500); cout << endl << endl; truenarrator("      What do you choose?", 50);
 		cout << endl;
 	}
 	
 	// Sequences
 	void savesequence(){
 		load();
-		truenarrator("\tWelcome back, "+playerName, 50); skip(250); cout << endl;
-		truenarrator("\tDo you wish to load the latest save or start a new game? [F to Load, L to start over]", 50);
+		truenarrator("      Welcome back, "+playerName, 50); skip(250); cout << endl;
+		truenarrator("      Do you wish to load the latest save or start a new game? [F to Load, L to start over]", 50);
 		while(true){
 			if(_kbhit()){
 				char keypressed = _getch();
@@ -290,6 +291,7 @@ public:
 			}
 		}
 		sequence=0;
+		sequence1();
 	}
 	void sequence1(){
 		system("cls");
@@ -390,20 +392,20 @@ public:
 			else if(decision1=="4"){
 				MCS("I would like to see where this path leads.", 80);
 				cout << endl << endl;
-				truenarrator("\t  Okay, you decide you want to see the destination of this path. Are you sure you don't want to check\n\t  the abandoned place where your stuff might lay out first?", 50);
+				truenarrator("      Okay, you decide you want to see the destination of this path. Are you sure you don't want to check\n      the abandoned place where your stuff might lay out first?", 50);
 				cout << endl << endl;
 				skip(250);
-				truenarrator("\t  1) Go through with your initial decision\n\t  2) Abort", 50);
+				truenarrator("      1) Go through with your initial decision\n      2) Abort", 50);
 				cout << endl << endl << endl << ">>    ";
 				flushInput();
 				getline(cin, decision1sub1);
 				if(decision1sub1=="1"){
 					MCS("I really want to know where it leads.", 80);
 					cout << endl << endl << endl;
-					truenarrator("\t  Very well, you decide to embark on an adventurous journe- nevermind, you die. Reason: UNKN0WN", 50);
+					truenarrator("      Very well, you decide to embark on an adventurous journe- nevermind, you die. Reason: UNKN0WN", 50);
 					skip(400);
 					cout << endl << endl << endl;
-					truenarrator("\n\t  [Press F to pay respects(load the last save)]", 50);
+					truenarrator("\n      [Press F to pay respects(load the last save)]", 50);
 					while(true){
 						if(_kbhit()){
 					  	char key = _getch();
@@ -419,17 +421,17 @@ public:
 				else if(decision1sub1=="2"){
 					MCS("I think we should check that strange abandoned place first.", 80);
 					cout << endl << endl;
-					truenarrator("\t  At last, you decide to check the strange place with abandoned stuff out. You see the following:",50); truenarrator("\n\t  - Tea",50); truenarrator("\n\t  - An iron sword",50); truenarrator("\n\t  - Golden armor with a low durability",50); truenarrator("\n\t  - A shield",50); truenarrator("\n\t  - Elixir of Love",50); truenarrator("\n\t  - A stick",50); truenarrator("\n\t  - Bandage x3",50); truenarrator("\n\t  - A small backpack", 50);
+					truenarrator("      At last, you decide to check the strange place with abandoned stuff out. You see the following:",50); cout << "\n\n"; truenarrator("      - Tea",50); cout << "\n"; truenarrator("      - An iron sword",50); cout << "\n"; truenarrator("      - Golden armor with a low durability",50); cout << "\n"; truenarrator("      - A shield",50); cout << "\n"; truenarrator("      - Elixir of Love",50); cout << "\n"; truenarrator("      - A stick",50); cout << "\n"; truenarrator("      - Bandage x3",50); cout << "\n"; truenarrator("      - A small backpack", 50);
 					break;
 				}
 			}
 			else if(decision1=="5"){
 				MCS("I would like to check the strange abandoned place out first.", 80);
 				cout << endl << endl;
-					truenarrator("\t  Great choice, better than \"trees\" atleast, you near the abandoned things and find the following:",50); truenarrator("\n\t  - Tea",50); truenarrator("\n\t  - An iron sword",50); truenarrator("\n\t  - Golden armor with a low durability",50); truenarrator("\n\t  - A shield",50); truenarrator("\n\t  - Elixir of Love",50); truenarrator("\n\t  - A stick",50); truenarrator("\n\t  - Bandage x3",50); truenarrator("\n\t  - A small backpack", 50);			break;
+					truenarrator("      Great choice, better than \"trees\" atleast, you near the abandoned things and find the following:",50); cout << "\n\n"; truenarrator("      - Tea",50); cout << "\n"; truenarrator("      - An iron sword",50); cout << "\n"; truenarrator("      - Golden armor with a low durability",50); cout << "\n"; truenarrator("      - A shield",50); cout << "\n"; truenarrator("      - Elixir of Love",50); cout << "\n"; truenarrator("      - A stick",50); cout << "\n"; truenarrator("      - Bandage x3",50); cout << "\n"; truenarrator("      - A small backpack", 50); break;
 			}
 			else{
-				truenarrator("\t  Invalid choice. Choose again.", 50);
+				truenarrator("      Invalid choice. Choose again.", 50);
 				cout << endl << endl;
 				b++;
 				continue;
@@ -438,28 +440,28 @@ public:
 		cout << endl << endl;
 		narrator("Great.", 100); skip(250); narratorclean(" These things will come in handy. Grab them and let's get out of here.", 80); skip(1000);
 		cout << endl << endl;
-		cout << "      "; truenarrator("You grab the stuff and it can now be found in your inventory, which is the backpack.", 50); skip(500);
+		truenarrator("      You grab the stuff and it can now be found in your inventory, which is the backpack.", 50); skip(500);
 		cout << endl << endl;
 		MCS("Good idea, let's follow that path we saw earlier, it looks like it leads to a meadow.", 80); skip(1000);
 		cout << endl << endl;
-		cout << "      "; truenarrator("You are approached by a pack of wolves ready to attack you. You have to defend yourself.", 50); cout << endl << "      "; truenarrator("In a quick manner, you have to decide which weapon to use. Your weapons: ", 50); cout << endl << "      "; truenarrator("1) A stick",50); skip(200); cout << endl << "      "; truenarrator("2) An iron sword", 50); cout << endl << "      "; truenarrator("3) Try to distract them with the stick instead of fighting.", 50); cout << endl << endl;
+		truenarrator("      You are approached by a pack of wolves ready to attack you. You have to defend yourself.", 50); cout << endl; truenarrator("      In a quick manner, you have to decide which weapon to use. Your weapons: ", 50); cout << endl; truenarrator("      1) A stick",50); skip(200); cout << endl; truenarrator("      2) An iron sword", 50); cout << endl; truenarrator("      3) Try to distract them with the stick instead of fighting.", 50); cout << endl << endl;
 		getline(cin, decision2);
 		if(decision2=="1"){
-			cout << "      "; truenarrator("You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
+			truenarrator("      You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
 			ambush("Wolves", 20, 3, 1, 1);
 		}
 		else if(decision2=="2"){
-			cout << "      "; truenarrator("You decide to take out the iron sword and use it to fight the wolves off. Commencing combat.", 50); skip(200);
+			truenarrator("      You decide to take out the iron sword and use it to fight the wolves off. Commencing combat.", 50); skip(200);
 			ambush("Wolves", 20, 3, 1, 1);
 		}
 		else if(decision2=="3"){
 			int wolfescapechance = rand()%4;
 			if(wolfescapechance==1){
-				cout << "      "; truenarrator("You attempt to distract the wolves using a stick. You throw it and the wolves indeed do get distracted.", 50); // Achievement, 25% chance to work 
+				truenarrator("      You attempt to distract the wolves using a stick. You throw it and the wolves indeed do get distracted.", 50); // Achievement, 25% chance to work 
 			}
 			else{
-				cout << "      "; truenarrator("You try to distract the wolves with the stick, but they fail to notice it and devour you.", 50); skip(400);
-				cout << endl << "      "; truenarrator("[Press F to pay respects(load last save)]",50);
+				truenarrator("      You try to distract the wolves with the stick, but they fail to notice it and devour you.", 50); skip(400); cout << endl;
+				truenarrator("      [Press F to pay respects(load last save)]",50);
 				while(true){
 					if(_kbhit()){
 				  	char key = _getch();
@@ -470,6 +472,19 @@ public:
 				}
 				sequence1();
 			}
+		}
+		else{
+			truenarrator("      You fail to make a valid decision in time. The wolves tear you to pieces.", 50); skip(400); cout << endl;
+			truenarrator("      [Press F to load latest save]", 50);
+			while(true){
+					if(_kbhit()){
+				  	char key = _getch();
+				  	if(key=='f'){
+				  		break;
+						}
+					}
+				}
+				sequence1();
 		}
 		if(decision2=="3"){
 			cout << endl << endl; narrator("That was really weird,", 80); narratorclean(" I never would have thought of that.", 80); narratorclean(" Great job.", 100); skip(1000);
@@ -485,7 +500,7 @@ public:
 	}
 	void sequence2(){
 		if(sequence==1) sequence++; save(); system("cls"); Sleep(1000);
-		cout << "\n\n\n\n\n\n\t\t{[()]} Sequence 2 {[()]}\n\n\n"; Sleep(1000); truenarrator("\t\tYou're doing great!(not)", 50); Sleep(2000); system("cls"); Sleep(2500);
+		cout << "\n\n\n\n\n\n        {[()]} Sequence 2 {[()]}\n\n\n"; Sleep(1000); truenarrator("        You're doing great!(not)", 50); Sleep(2000); system("cls"); Sleep(2500);
 		cout << endl;
 		truenarrator("      You walk through a captivating meadow, full of birds, dead bodies and charred weapons.", 50); skip(1000);
 		cout << endl << endl;
@@ -510,9 +525,6 @@ int main(){
 	Game GameDef;
 	srand(time(0));
 	if(GameDef.CheckSave()) GameDef.savesequence();
-	else{
-		GameDef.introsequence();
-		GameDef.sequence1();
-	}
+	else GameDef.introsequence();
 	return 0;
 }
