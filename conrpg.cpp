@@ -434,7 +434,7 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 					truenarrator("Very well, you decide to embark on an adventurous journe- nevermind, you die. Reason: UNKN0WN", 50);
 					skip(400);
 					cout << endl << endl << endl;
-					truenarrator("\n      [Press F to pay respects(load the last save)]", 50);
+					truenarrator("\n      [Press F to Pay Respects (load the last save)]", 50);
 					while(true){
 						if(_kbhit()){
 					  	char key = _getch();
@@ -491,7 +491,7 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 			}
 			else{
 				truenarrator("You try to distract the wolves with the stick, but they fail to notice it and devour you.", 50); skip(400); cout << endl;
-				truenarrator("[Press F to pay respects(load last save)]",50);
+				truenarrator("[Press F to load the latest save]",50);
 				while(true){
 					if(_kbhit()){
 				  	char key = _getch();
