@@ -7,12 +7,13 @@
 #include <chrono>
 #include <conio.h>
 #include <stdlib.h>
+#include <cmath>
 using namespace std;
 class Game{
 public:
-	string playerName, input, tb, decision1, decision1sub1, decision2="";
+	string playerName, fightstatus, input, tb, decision1, decision1sub1, decision2="";
 	string diadec1, diadec2, diadec3, diadec4, diadec5;
-	int a=0, b=0, sequence, level, xp, requiredxp, initiallvl, hp, currenthp, maxdmg, plvlbonusdmg;
+	int a=0, b=0, sequence, level, xp, requiredxp, xpgained, initiallvl, hp, currenthp, maxdmg, plvlbonusdmg;
 	bool isAlive = true;
   void save() {
     ofstream file("savegame.txt");
@@ -35,12 +36,12 @@ public:
     file >> hp;
     file >> currenthp;
     file >> maxdmg;
+    requiredxp=10*pow(1.2, level);
   }
   bool CheckSave(){
   	ifstream file("savegame.txt");
   	return file.good();
 	}
-
 	void checkLevelUp(){
 		if(xp>=requiredxp){
 			initiallvl = level;
@@ -51,9 +52,10 @@ public:
 				xp -= requiredxp;
 				requiredxp += requiredxp/5;
 			} 
-		cout << "Leveled up! Went from lvl " << initiallvl << " to lvl " << level << ". HP: " << hp << " -> " << currenthp << endl;
-		cout << "Current xp ->" << xp << "(" << xp << "/" << requiredxp << ")" << endl;
+		cout << "\n      Leveled up! Went from lvl " << initiallvl << " to lvl " << level << ". HP: " << currenthp << " -> " << hp << endl;
+		cout << "      Current xp ->" << xp << "(" << xp << "/" << requiredxp << ")" << endl;
 		}
+		save();
 	}
 	void clearLine(){
 		cout<<"\r                                              \r";
@@ -175,6 +177,18 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 		getline(cin, input);
 		skip(1000);
 	}
+	string GVI(int min, int max) {
+		string dinput;
+	  while (true) {
+      char input = _getch();  
+      if (input >= min+'0' && input <= max+'0') {
+          dinput = string(1, input);  
+          cout << dinput;  
+          break;
+      }
+    }
+    return dinput;
+	}
 	void flushInput() {
 			while(_kbhit()) {
 		    _getch(); 
@@ -214,23 +228,25 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 	    cerr << "Error opening file for reading!" << endl;
 	    return 1;
 	  }
-	  string filecontent;
-	  if (getline(inputFile, filecontent)) {
-	    if (filecontent == "1") {	
-	      truenarrator("You aborted the fight... You automatically die.", 50); cout << endl; skip(250); truenarrator("[Press F to load the latest save/L to start over]",50);
-	      while(true){
-	      	if(_kbhit()){
-	      		char c = _getch();
-	      		if(c=='f') sequence1();
-						else if(c=='f') introsequence();
-					}
+	  inputFile >> fightstatus;
+	  inputFile >> xpgained;
+	  if(fightstatus=="1"){
+	  	truenarrator("You aborted the fight... You automatically die.", 50); cout << endl; skip(250); truenarrator("[Press F to load the latest save/L to start over]",50);
+			while(true){
+      	if(_kbhit()){
+      		char c = _getch();
+      		if(c=='f') sequence1();
+					else if(c=='f') introsequence();
 				}
-	    }
-			else{
-	      truenarrator("You finished the fight.", 50); cout << endl;
-	    }
-	  }
+			}
+		}
+		else{
+      truenarrator("You finished the fight.", 50); cout << endl;
+    }
 		Sleep(3000);
+		xp+=xpgained;
+		checkLevelUp();
+		Sleep(2000);
 	}
 	void d1n(){
 		if(a==0) truenarrator("Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
@@ -373,8 +389,9 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 			cout << endl << endl;
 			flushInput();
 			cout << "\033[33m>>    ";
-			getline(cin, decision1); cout << "\033[0m";
-			cout << endl << endl;
+			decision1 = GVI(1,5);
+			cout << "\033[0m";
+    	cout << endl << endl;
 			if(decision1=="1"){
 				MCS("I want to see the trees.", 80);
 				cout << endl << endl;
@@ -427,14 +444,15 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 				cout << endl << endl;
 				flushInput();
 				cout << "\033[33m>>    ";
-				getline(cin, decision1sub1); cout << "\033[0m" << endl << endl;
+				decision1sub1 = GVI(1,2);
+				cout << "\033[0m" << endl << endl;
 				if(decision1sub1=="1"){
 					MCS("I really want to know where it leads.", 80);
 					cout << endl << endl;
 					truenarrator("Very well, you decide to embark on an adventurous journe- nevermind, you die. Reason: UNKN0WN", 50);
 					skip(400);
 					cout << endl << endl << endl;
-					truenarrator("\n      [Press F to Pay Respects (load the last save)]", 50);
+					truenarrator("\n      [Press F to pay respects(load the last save)]", 50);
 					while(true){
 						if(_kbhit()){
 					  	char key = _getch();
@@ -459,12 +477,6 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 				cout << endl << endl;
 					truenarrator("Great choice, better than \"trees\" atleast, you near the abandoned things and find the following:",50); cout << "\n\n"; truenarrator("- Tea",50); cout << "\n"; truenarrator("- An iron sword",50); cout << "\n"; truenarrator("- Golden armor with a low durability",50); cout << "\n"; truenarrator("- A shield",50); cout << "\n"; truenarrator("- Elixir of Love",50); cout << "\n"; truenarrator("- A stick",50); cout << "\n"; truenarrator("- Bandage x3",50); cout << "\n"; truenarrator("- A small backpack", 50); break;
 			}
-			else{
-				truenarrator("Invalid choice. Choose again.", 50);
-				cout << endl << endl;
-				b++;
-				continue;
-			}
 		}
 		cout << endl << endl;
 		narrator("Great.", 100); skip(250); narratorclean("\033[36m"," These things will come in handy. Grab them and let's get out of here.", 80); skip(1000);
@@ -475,14 +487,15 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 		cout << endl << endl;
 		truenarrator("You are approached by a pack of wolves ready to attack you. You have to defend yourself.", 50); cout << endl; truenarrator("In a quick manner, you have to choose the action you take: ", 50); cout << endl << endl; truenarrator("1) Use a stick to fight them",50); skip(200); cout << endl; truenarrator("2) Use an iron sword to fight them", 50); cout << endl; truenarrator("3) Try to distract them with the stick instead of fighting.", 50); cout << endl << endl;
 		cout << "\033[33m>>    ";
-		getline(cin, decision2); cout << "\033[0m" << endl;
+		decision2 = GVI(1,3);
+		cout << "\033[0m" << endl;
 		if(decision2=="1"){
 			truenarrator("You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); skip(200);
-			ambush("Wolves", 20, 3, 1, 1);
+			ambush("Wolves", 20, 3, 1, 1); 
 		}
 		else if(decision2=="2"){
 			truenarrator("You decide to take out the iron sword and use it to fight the wolves off. Commencing combat.", 50); skip(200);
-			ambush("Wolves", 20, 3, 1, 1);
+			ambush("Wolves", 20, 3, 1, 1); 
 		}
 		else if(decision2=="3"){
 			int wolfescapechance = rand()%4;
@@ -491,7 +504,7 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 			}
 			else{
 				truenarrator("You try to distract the wolves with the stick, but they fail to notice it and devour you.", 50); skip(400); cout << endl;
-				truenarrator("[Press F to load the latest save]",50);
+				truenarrator("[Press F to pay respects(load last save)]",50);
 				while(true){
 					if(_kbhit()){
 				  	char key = _getch();
@@ -503,17 +516,6 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 				sequence1();
 			}
 		}
-		else{
-			truenarrator("You fail to make a valid decision in time. The wolves tear you to pieces.", 50); skip(400); cout << endl;
-			truenarrator("[Press F to load latest save]", 50);
-			while(true){
-					if(_kbhit()){
-				  	char key = _getch();
-				  	if(key=='f'){
-				  		break;
-						}
-					}
-				}
 				sequence1();
 		}
 		if(decision2=="3"){
@@ -548,7 +550,6 @@ void narratorclean(string currentColor, const string& text, int tickspeed) {
 		cout << endl;
 		MCS("I don't remember what happened before we", 80); skip(200); narratorclean("\033[33m","...", 250); skip(250); narratorclean("\033[33m","merged.", 75); skip(1000); 
 		cout << endl << endl;
-		
 	}
 };
 int main(){
