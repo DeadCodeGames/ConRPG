@@ -1,7 +1,7 @@
 const { Octokit } = require('@octokit/rest');
 
 // Initialize Octokit with GitHub token
-const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+const octokit = new Octokit({ auth: process.env.ISSUES_TOKEN });
 
 async function updateIssueDates(eventPayload) {
   try {
