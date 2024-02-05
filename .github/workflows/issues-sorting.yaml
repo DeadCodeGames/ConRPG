@@ -1,0 +1,26 @@
+name: Update Issue Dates
+
+on:
+  issues:
+    types: [opened, closed]
+
+jobs:
+  update_issue_dates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install octokit/rest.js
+        run: npm install @octokit/rest
+
+      - name: Update issue dates
+        run: node .github/scripts/update_issue_dates.js ${{ toJson(github.event) }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ISSUES_TOKEN }}
