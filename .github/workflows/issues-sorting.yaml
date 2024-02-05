@@ -23,4 +23,4 @@ jobs:
       - name: Update issue dates
         run: node .github/scripts/update_issue_dates.js ${{ toJson(github.event) }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ISSUES_TOKEN }}
