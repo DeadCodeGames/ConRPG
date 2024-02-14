@@ -10,8 +10,8 @@
 #include <limits>
 using namespace std;
 bool isfighting = false, isdefeated = false, attackstate = true, keyPressed = false, displaystats = true, gu = true, tobreak = false;
-int enemydmg, lastphp, lastenemyhp, ecooldown, timeleft, maxdmg, blockbonus, easeofuse, tickspeed, x, i, z;
-float cooldown, hp = 20., enemyhp, enemyrage, enemyskill, dmgdealt, edmgdealt, plvlbonusdmg, wlvlbonusdmg, enemyblock;
+int enemydmg, lastphp, lastenemyhp, ecooldown, timeleft, maxdmg, blockbonus, easeofuse, tickspeed, x, i, z, level, xp, blocked=0, fhit=0;
+float cooldown, hp, currenthp, enemyhp, enemyrage, enemyskill, dmgdealt, edmgdealt, plvlbonusdmg, wlvlbonusdmg, enemyblock;
 string lastAttack, lastblock, attacker;
 map<int, string> attack_map {
   {1, "O--|---"},
@@ -126,6 +126,7 @@ int checkdef(){
 	else if(lastblock=="---I"){
 		edmgdealt = enemydmg*0.;
 		cout << "You blocked 100% of the damage.";
+		blocked++;
 	}
 	else{
 		edmgdealt = enemydmg*1.-(enemydmg*1.*blockbonus/100);
@@ -163,15 +164,21 @@ int loop(){
 int main(){
 		ifstream file("savegame.txt");
 		file.seekg(ios::beg);
-		for(int i=0; i<6; ++i) {
+		for(int i=0; i<2; ++i) {
 		   file.ignore(numeric_limits<streamsize>::max(), '\n'); 
 		}
+		file >> level;
+		file >> xp;
+		file >> hp;
+		file >> currenthp;
 		file >> maxdmg;
 		file >> enemyhp;
 		file >> enemydmg;
 		file >> enemyskill;
 		file >> enemyrage;
 		file >> attacker;
+		lastenemyhp = enemyhp;
+		hp = currenthp;
 		ofstream outputFile("testsave.txt");
 		if (!outputFile.is_open()) {
 		    cerr << "Error opening file for writing!" << endl;
@@ -221,6 +228,7 @@ int main(){
 				else if(lastAttack == "--O|---" || lastAttack == "---|O--") dmgdealt = maxdmg;
 				else{
 					dmgdealt = maxdmg+wlvlbonusdmg+plvlbonusdmg;
+					fhit++;
 				}
 				x = (rand()%2)+1;
 				i = (rand()%15*enemyskill)+1;
@@ -269,6 +277,7 @@ int main(){
 	if(!isdefeated){
 		system("CLS");
 		cout << "Gained xp and enemy items.";
+		xp+=10+(lastenemyhp*enemyrage*enemyskill*enemydmg)/(10/(1+(1+blocked)*(1+fhit)));
 	}
 	else{
 		system("CLS");
@@ -280,5 +289,6 @@ int main(){
       return 1; 
   }
   outputFile << "0" << endl;
+  outputFile << xp << endl;
   outputFile.close();
 }
