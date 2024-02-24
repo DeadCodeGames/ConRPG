@@ -88,7 +88,6 @@ int isdefendinge(){
 		Sleep(500);
 		for(z=7; z<13 && !tobreak; z++) savingspace1();
 	}
-
 }
 int dodisatk(){
 	for(cooldown=15; cooldown >= 0 && attackstate; cooldown-=1){
@@ -161,24 +160,78 @@ int loop(){
 		}
 	}
 }
-int main(){
-		ifstream file("savegame.txt");
-		file.seekg(ios::beg);
-		for(int i=0; i<2; ++i) {
-		   file.ignore(numeric_limits<streamsize>::max(), '\n'); 
+bool CheckSave() {
+	const wstring folderPath = L"save";
+	DWORD folderAttributes = GetFileAttributesW(folderPath.c_str());
+
+	if (folderAttributes == INVALID_FILE_ATTRIBUTES || !(folderAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+		if (CreateDirectoryW(folderPath.c_str(), nullptr) == 0 && GetLastError() != ERROR_ALREADY_EXISTS) {
+			cerr << "[!] Save File Cannot be created!" << endl;
+			return false;
 		}
-		file >> level;
-		file >> xp;
-		file >> hp;
-		file >> currenthp;
-		file >> maxdmg;
-		file >> enemyhp;
-		file >> enemydmg;
-		file >> enemyskill;
-		file >> enemyrage;
-		file >> attacker;
-		lastenemyhp = enemyhp;
-		hp = currenthp;
+
+		return false;
+	}
+
+	return true;
+}
+
+void UlozitInfo(const string& data, const string& fileName) {
+	const string folderPath = "save";
+	const string filePath = folderPath + "\\" + fileName;
+
+	ofstream file(filePath);
+
+	if (file.is_open()) {
+		file << data;
+
+		file.close();
+	}
+	else {
+		cout << "[!] vyskytol sa nejaky problem";
+	}
+}
+string PrecitatInfo(const string& fileName) {
+	const string folderPath = "save";
+	const string filePath = folderPath + "\\" + fileName;
+
+	ifstream file(filePath);
+
+	if (file.is_open()) {
+		string data;
+		getline(file, data);
+
+		file.close();
+
+		return data;
+	}
+	else {
+		cout << "[!] vyskytol sa nejaky problem" << endl;
+		return "";
+	}
+}
+void load() {
+	string strLevel = PrecitatInfo("PlayerLevel.txt");
+	string strXp = PrecitatInfo("PlayerXp.txt");
+	string strHp = PrecitatInfo("PlayerHp.txt");
+	string strCurrenthp = PrecitatInfo("PlayerCurrentHp.txt");
+	string strMaxdmg = PrecitatInfo("PlayerMaxDmg.txt");
+	
+	attacker = PrecitatInfo("attacker.txt");
+	level = stoi(strLevel);
+	xp = stoi(strXp);
+	hp = stoi(strHp);
+	currenthp = stoi(strCurrenthp);
+	maxdmg = stoi(strMaxdmg);
+}
+int main(){
+		load();
+		if(attacker=="Wolves"){
+			enemyhp = 20;
+			enemyrage = 1;
+			enemydmg = 3;
+			enemyskill = 1;
+		}
 		ofstream outputFile("testsave.txt");
 		if (!outputFile.is_open()) {
 		    cerr << "Error opening file for writing!" << endl;
