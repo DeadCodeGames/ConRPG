@@ -7,7 +7,7 @@
 #include <chrono>
 #include <conio.h>
 #include <stdlib.h>
-
+#include <clocale>
 #include "CONFunctions.h"
 
 using namespace std;
@@ -29,7 +29,7 @@ public:
 
 		if (folderAttributes == INVALID_FILE_ATTRIBUTES || !(folderAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
 			if (CreateDirectoryW(folderPath.c_str(), nullptr) == 0 && GetLastError() != ERROR_ALREADY_EXISTS) {
-				cerr << "[!] Save File Cannot be created!" << endl;
+				cerr << "[!] Nie je možné vyvtoriť úložný súbor." << endl;
 				return false;
 			}
 
@@ -51,7 +51,7 @@ public:
 			file.close();
 		}
 		else {
-			cout << "[!] vyskytol sa nejaky problem";
+			cout << "[!] vyskytol sa nejaký problém";
 		}
 	}
 	string PrecitatInfo(const string& fileName) {
@@ -69,7 +69,7 @@ public:
 			return data;
 		}
 		else {
-			cout << "[!] vyskytol sa nejaky problem" << endl;
+			cout << "[!] vyskytol sa nejaký problém" << endl;
 			return "";
 		}
 	}
@@ -108,8 +108,8 @@ public:
 			xp -= requiredxp;
 			requiredxp += requiredxp/5;
 		} 
-	cout << "\n      Leveled up! Went from lvl " << initiallvl << " to lvl " << level << ". HP: " << currenthp << " -> " << hp << endl;
-	cout << "      Current xp ->" << xp << "(" << xp << "/" << requiredxp << ")" << endl;
+	cout << "\n      Zvýšil si svoju úroveň! Navýšenie z úrovne " << initiallvl << " na úroveň " << level << ". HP: " << currenthp << " -> " << hp << endl;
+	cout << "      Aktuálny počet sk. bodov ->" << xp << "(" << xp << "/" << requiredxp << ")" << endl;
 	}
 	save();
 }
@@ -126,7 +126,7 @@ public:
 		UlozitInfo(attacker, "attacker.txt");
 
 		Sleep(2000);
-		cout << endl << "      "; FunctionDef.truenarrator("Prepare to fight...", 50); Sleep(500);
+		cout << endl << "      "; FunctionDef.truenarrator("Priprav sa na boj...", 50); Sleep(500);
 		const char* programName = "combatmoreeffective.exe";
 		STARTUPINFO si;
 		PROCESS_INFORMATION pi;
@@ -141,17 +141,17 @@ public:
 			WaitForSingleObject(pi.hProcess, INFINITE);
 		}
 		else {
-			cout << "Error launching program" << endl;
+			cout << "Chyba pri spustení programu." << endl;
 		}
 		ifstream inputFile("testsave.txt");
 	  if (!inputFile.is_open()) {
-	    cerr << "Error opening file for reading!" << endl;
+	    cerr << "Chyba pri otvorení súboru na načítanie údajov." << endl;
 	    return 1;
 	  }
 	  inputFile >> fightstatus;
 	  inputFile >> xpgained;
 	  if(fightstatus=="1"){
-	  	FunctionDef.truenarrator("You aborted the fight... You automatically die.", 50); cout << endl; FunctionDef.skip(250); FunctionDef.truenarrator("[Press F to load the latest save/L to start over]",50);
+	  	FunctionDef.truenarrator("Prerušil si súboj... Automaticky umieraš.", 50); cout << endl; FunctionDef.skip(250); FunctionDef.truenarrator("[Stlač F pre načítanie poslednej uloženej pozície alebo stlač L pre načítanie novej hry.]",50);
 			while(true){
       	if(_kbhit()){
       		char c = _getch();
@@ -161,7 +161,7 @@ public:
 			}
 		}
 		else{
-      FunctionDef.truenarrator("You finished the fight.", 50); cout << endl;
+      FunctionDef.truenarrator("Dokončil si súboj.", 50); cout << endl;
     }
 		Sleep(3000);
 		xp+=xpgained;
@@ -169,16 +169,16 @@ public:
 		Sleep(2000);
 	}
 	void d1n() {
-		if (a == 0) FunctionDef.truenarrator("\t  Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
-		if (a == 1) FunctionDef.truenarrator("\t  For real? You visit the trees again, and... you don't find anything.", 50);
-		if (a == 2) FunctionDef.truenarrator("\t  There is something weird about those trees. They're... trees.", 50);
+		if (a == 0) FunctionDef.truenarrator("\t  Stromy, zaujímavá voľba. Išiel si bližšie ku stromom, ale nič si nenašiel.", 50);
+		if (a == 1) FunctionDef.truenarrator("\t  Vážne? Prišiel si znova ku stromom, a... znova si nič nenašiel.", 50);
+		if (a == 2) FunctionDef.truenarrator("\t  Niečo je divné na tých stromoch. Sú ako... stromy.", 50);
 		if (a > 2) {
-			FunctionDef.truenarrator("\t  You visit the trees once more. Once again, you find nothin-", 50); cout << endl;
-			FunctionDef.truenarrator("\t  w- what's that sound? It seems like... you have awakened something. It's angry.", 75); cout << endl; FunctionDef.skip(300);
-			FunctionDef.truenarrator("\t  Behold Mozz, the tree [BOSS] [10M HP] You stand no chance against this beast as it one hits you", 50); cout << endl;
-			FunctionDef.truenarrator("\t  before the fight even has a chance to begin.", 50); FunctionDef.skip(400); cout << endl; FunctionDef.skip(400); system("cls"); cout << "\n\n\n\n";
-			FunctionDef.truenarrator("\t  \033[1;31mYou get the tree picker ending.\033[0m", 50); cout << endl; FunctionDef.skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
-			cout << "\t  [Press F to load the latest save]"; isAlive = false;
+			FunctionDef.truenarrator("\t  Išiel si k stromom ešteb raz.A opäť si nič nenašie-", 50); cout << endl;
+			FunctionDef.truenarrator("\t  Č- čo to je za zvuk? Vyzerá to tak... že si niečo zobudil. A je to naštvané.", 75); cout << endl; FunctionDef.skip(300);
+			FunctionDef.truenarrator("\t  Axir, The Lord of the Forbidden Forest [BOSS] [10M HP] Nemáš šancu proti tomuto monštru zvíťaziť, keďže ťa zabije", 50); cout << endl;
+			FunctionDef.truenarrator("\t  ešte predtým, než má súboj vôbec šancu začať.", 50); FunctionDef.skip(400); cout << endl; FunctionDef.skip(400); system("cls"); cout << "\n\n\n\n";
+			FunctionDef.truenarrator("\t  \033[1;31mZískal si koniec Zberač Stromov.\033[0m", 50); cout << endl; FunctionDef.skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
+			cout << "\t  [Stlač F pre načítanie poslednej uloženej pozície.]"; isAlive = false;
 			while (true) {
 				if (_kbhit()) {
 					char key = _getch();
@@ -194,17 +194,17 @@ public:
 	// Decisions
 
 	void d1() {
-		FunctionDef.truenarrator("\t  You look around you. You see the following:", 50);
+		FunctionDef.truenarrator("\t  Poobzeráš sa okolo seba a vidíš:", 50);
 		cout << endl;
-		FunctionDef.truenarrator("\t  1) Trees", 50); cout << endl; FunctionDef.truenarrator("\t  2) Trees", 50); cout << endl; FunctionDef.truenarrator("\t  3) Trees", 50); cout << endl; FunctionDef.truenarrator("\t  4) A path", 50); cout << endl; FunctionDef.truenarrator("\t  5) A strange place between the trees, where abandoned stuff can be seen.", 50); FunctionDef.skip(500); cout << endl << endl; FunctionDef.truenarrator("\t  What do you choose?", 50);
+		FunctionDef.truenarrator("\t  1) Stromy", 50); cout << endl; FunctionDef.truenarrator("\t  2) Stromy", 50); cout << endl; FunctionDef.truenarrator("\t  3) Stromy", 50); cout << endl; FunctionDef.truenarrator("\t  4) Cestu", 50); cout << endl; FunctionDef.truenarrator("\t  5) Divné miesto medzi stromami, kde môžeš vidieť pohodené veci.", 50); FunctionDef.skip(500); cout << endl << endl; FunctionDef.truenarrator("\t  What do you choose?", 50);
 		cout << endl;
 	}
 
 	// Sequences
 	void savesequence() {
 		load();
-		FunctionDef.truenarrator("\tWelcome back, " + playerName, 50); FunctionDef.skip(250); cout << endl;
-		FunctionDef.truenarrator("\tDo you wish to load the latest save or start a new game? [F to Load, L to start over]", 50);
+		FunctionDef.truenarrator("\tVitaj späť, " + playerName, 50); FunctionDef.skip(250); cout << endl;
+		FunctionDef.truenarrator("\tChceš načítať poslednú uloženú pozíciu alebo začať novú hru? [F pre načítanie pozície, L pre novú hru]", 50);
 		while (true) {
 			if (_kbhit()) {
 				char keypressed = _getch();
@@ -221,10 +221,10 @@ public:
 	void introsequence(){
 		system("cls");
 		level = 0; hp = 20; xp = 0; currenthp = 20; maxdmg = 1;
-		cout << "                                          W E L C O M E    T O" << endl;
+		cout << "                                            V I T A J    V" << endl;
 	 	cout << " .----------------.    .----------------.  .----------------.  .-----------------.   .----------------. " << endl << "| .--------------. |  | .--------------. || .--------------. || .--------------. |  | .--------------. |" << endl << "| |              | |  | |     ______   | || |     ____     | || | ____  _____  | |  | |              | |" << endl << "| |              | |  | |   .' ___  |  | || |   .'    `.   | || ||_   \\|_   _| | |  | |              | |" << endl << "| |    ______    | |  | |  / .'   \\_|  | || |  /  .--.  \\  | || |  |   \\ | |   | |  | |    ______    | |" << endl << "| |   |______|   | |  | |  | |         | || |  | |    | |  | || |  | |\\ \\| |   | |  | |   |______|   | |" << endl << "| |              | |  | |  \\ `.___.'\\  | || |  \\  `--'  /  | || | _| |_\\   |_  | |  | |              | |" << endl << "| |              | |  | |   `._____.'  | || |   `.____.'   | || ||_____|\\____| | |  | |              | |" << endl << "| |              | |  | |              | || |              | || |              | |  | |              | |" << endl << "| '--------------' |  | '--------------' || '--------------' || '--------------' |  | '--------------' |" << endl << " '----------------'    '----------------'  '----------------'  '----------------'    '----------------' ";
 		cout << endl << "                                           The C++ Console RPG";
-		cout << endl << "                                         Press [ANY KEY] to Begin";
+		cout << endl << "                                         Stlač [čokoľvek] a začni hru"; //posledné miesto
 		_getch();
 		cout << endl;FunctionDef.truenarrator("Hello Player", 100); FunctionDef.skip(1000); cout << endl;
 		FunctionDef.truenarrator("...", 500); FunctionDef.skip(1000); cout << endl;
@@ -989,6 +989,7 @@ public:
 	}
 };
 int main() {
+	std::setlocale(LC_ALL, "sk_SK.UTF-8");
 	Functions FunctionsDef;
 	Game GameDef;
 	srand(time(0));
