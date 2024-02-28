@@ -319,25 +319,25 @@ public:
 					cout << endl;
 					FunctionDef.narrator("Nemusíš mi veriť.", 75); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " Stačí, keď sa postavíš a pohneš tým svojim zadkom predtým než nás niečo nájde a obidvoch nás zabije.", 75); FunctionDef.skip(1000);
 					cout << endl;
-					FunctionDef.MCS("Fajn.", 100); FunctionDef.skip(1500); relwvoid = 2; //translated
+					FunctionDef.MCS("Fajn.", 100); FunctionDef.skip(1500); relwvoid = 2;
 				}
 				if(diadec4=="3"){
-					FunctionDef.MCSC(mc,"Is this a nigthmare?", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Toto je nočná mora,že?", 80); FunctionDef.skip(1000);
 					cout << endl;
-					FunctionDef.narrator("Oh, come on.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," No, this is not a nightmare.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Or maybe it is, but it doesn't matter.", 80); FunctionDef.skip(200); cout << endl;
-					FunctionDef.narrator("Dying in a dream sucks as well.", 80);  FunctionDef.skip(400);FunctionDef.narratorclean(vc," So please, just stand up and we'll figure it out together.", 80); FunctionDef.skip(1000);
-					FunctionDef.MCS("Okay, I'll comply.", 80); FunctionDef.skip(1500); relwvoid = 3;
+					FunctionDef.narrator("Ale no tak, vschop sa.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Jasné, že toto nie je nočná mora.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Aj keď možno aj je, ale na tom nezáleží.", 80); FunctionDef.skip(200); cout << endl;
+					FunctionDef.narrator("Umierať vo sne tiež stojí za nič.", 80);  FunctionDef.skip(400);FunctionDef.narratorclean(vc," Tak sa prosím ťa postav a spolu na to prídeme.", 80); FunctionDef.skip(1000);
+					FunctionDef.MCS("Dobre, vyhoviem ti.", 80); FunctionDef.skip(1500); relwvoid = 3;
 				}
 				if(diadec4=="4"){
-					FunctionDef.MCSC(mc,"Okay, we should get going.", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Oukej, mali by sme sa pohnúť.", 80); FunctionDef.skip(1000);
 					cout << endl;
-					FunctionDef.narrator("Great, let's go that way.", 80);  FunctionDef.skip(500);FunctionDef.narratorclean(vc," It looks like there might be something there.", 75); FunctionDef.skip(1500); relwvoid = 4;
+					FunctionDef.narrator("Výborne, poďme tadiaľto.", 80);  FunctionDef.skip(500);FunctionDef.narratorclean(vc," It looks like there might be something there.", 75); FunctionDef.skip(1500); relwvoid = 4;
 				}
 			}
 			else if(diadec3=="2"){
-				FunctionDef.MCSC(mc,"Hold on, you're dead?", 70); FunctionDef.skip(1000);
+				FunctionDef.MCSC(mc,"Počkať, ty si mŕtvy?", 70); FunctionDef.skip(1000);
 				cout << endl;
-				FunctionDef.narrator("Affirmative, it does seem that way.", 80); FunctionDef.skip(1000);
+				FunctionDef.narrator("Potvrdzujem. Teda aspoň to tak vyzerá.", 80); FunctionDef.skip(1000); //translated
 				cout << endl;
 				FunctionDef.narrator("Well,", 125); FunctionDef.skip(400);FunctionDef.narratorclean(vc," we don't really have time and a choice,",80); FunctionDef.skip(300);FunctionDef.narratorclean(vc," stand up and look around.", 80 ); FunctionDef.skip(250);
 				cout << endl;
