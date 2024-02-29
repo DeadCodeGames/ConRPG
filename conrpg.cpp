@@ -302,7 +302,7 @@ public:
 				cout << endl;
 				FunctionDef.narrator("Nuž,", 125); FunctionDef.skip(400);FunctionDef.narratorclean(vc," nemáme moc na výber,",80); FunctionDef.skip(300);FunctionDef.narratorclean(vc," postav sa a poobzeraj sa tu trochu.", 80 ); FunctionDef.skip(250);
 				cout << endl;
-				FunctionDef.narrator("Medzitým ti skúsim vysvetliť čo som myslel pod \"smrťou\" a skúsime zistiť, prečo som v tvojej hlave ", 80);
+				FunctionDef.narrator("Medzitým ti skúsim vysvetliť čo som myslel pod \"smrťou\" a taktiež skúsime zistiť, prečo som v tvojej hlave ", 80);
 				cout << endl;
 				FunctionDef.narrator("a prečo si nič nepamätáš.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Postav sa a poďme inde, skôr než nás niekto", 100);FunctionDef.skip(200);FunctionDef.narratorclean(vc," alebo horšie,", 125); FunctionDef.skip(200);FunctionDef.narratorclean(vc," niečo nájde.", 100); FunctionDef.skip(1000);
 				cout << endl << endl;FunctionDef.truenarrator("1) Prečo by som ťa mmal počúvať?", 50); cout << "\n";FunctionDef.truenarrator("2) Neverím ti.",50); cout << "\n";FunctionDef.truenarrator("3) Toto je nočná mora,že?",50); cout << "\n";FunctionDef.truenarrator("4) Dobre, mali by sme sa pohnúť.",50); 		
@@ -331,69 +331,69 @@ public:
 				if(diadec4=="4"){
 					FunctionDef.MCSC(mc,"Oukej, mali by sme sa pohnúť.", 80); FunctionDef.skip(1000);
 					cout << endl;
-					FunctionDef.narrator("Výborne, poďme tadiaľto.", 80);  FunctionDef.skip(500);FunctionDef.narratorclean(vc," It looks like there might be something there.", 75); FunctionDef.skip(1500); relwvoid = 4;
+					FunctionDef.narrator("Výborne, poďme tadiaľto.", 80);  FunctionDef.skip(500);FunctionDef.narratorclean(vc," Vyzerá to tam sľubne.", 75); FunctionDef.skip(1500); relwvoid = 4;
 				}
 			}
 			else if(diadec3=="2"){
 				FunctionDef.MCSC(mc,"Počkať, ty si mŕtvy?", 70); FunctionDef.skip(1000);
 				cout << endl;
-				FunctionDef.narrator("Potvrdzujem. Teda aspoň to tak vyzerá.", 80); FunctionDef.skip(1000); //translated
+				FunctionDef.narrator("Potvrdzujem. Teda aspoň to tak vyzerá.", 80); FunctionDef.skip(1000);
 				cout << endl;
-				FunctionDef.narrator("Well,", 125); FunctionDef.skip(400);FunctionDef.narratorclean(vc," we don't really have time and a choice,",80); FunctionDef.skip(300);FunctionDef.narratorclean(vc," stand up and look around.", 80 ); FunctionDef.skip(250);
+				FunctionDef.narrator("No,", 125); FunctionDef.skip(400);FunctionDef.narratorclean(vc," nemáme zrovna čas na zbytočné premýšľania,",80); FunctionDef.skip(300);FunctionDef.narratorclean(vc," postav sa a poobzeraj sa.", 80 ); FunctionDef.skip(250);
 				cout << endl;
-				FunctionDef.narrator("Meanwhile, I will try to explain what I meant by \"death\" and we'll try to figure out why I am in your mind", 80);
+				FunctionDef.narrator("Medzitým, ti skúsim vysvetliť čo som myslel pod \"smrťou\" a taktiež skúsime zistiť, prečo som v tvojej hlave", 80);
 				cout << endl;
-				FunctionDef.narrator("and why you don't remember anything.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Stand up before someone,", 100);FunctionDef.skip(200);FunctionDef.narratorclean(vc," or worse,", 125); FunctionDef.skip(200);FunctionDef.narratorclean(vc," something finds us.", 100); FunctionDef.skip(1000);
-				cout << endl << endl;FunctionDef.truenarrator("1) Why should I listen to you?", 50); cout << "\n";FunctionDef.truenarrator("2) I don't trust you.",50); cout << "\n";FunctionDef.truenarrator("3) Is this a nightmare?",50); cout << "\n";FunctionDef.truenarrator("4) Okay, we should get going.",50); 		
+				FunctionDef.narrator("a prečo si nič nepamätáš.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Postav sa skôr než nás niekto", 100);FunctionDef.skip(200);FunctionDef.narratorclean(vc," alebo horšie,", 125); FunctionDef.skip(200);FunctionDef.narratorclean(vc," niečo nájde.", 100); FunctionDef.skip(1000);
+				cout << endl << endl;FunctionDef.truenarrator("1) Prečo by som ťa mal počúvať?", 50); cout << "\n";FunctionDef.truenarrator("2) Neverím ti.",50); cout << "\n";FunctionDef.truenarrator("3) Toto je nočná mora, že?",50); cout << "\n";FunctionDef.truenarrator("4) Dobre, mali by sme sa pohnúť.",50); 		
 				cout << "\n\n\033[33m>>    ";
 				diadec4 = FunctionDef.GVIclean(1,4);
 				cout << "\033[0m";
 				if(diadec4=="1"){
-					FunctionDef.MCSC(mc,"Why should I listen to you?", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Prečo by som ťa mal počúvať?", 80); FunctionDef.skip(1000);
 					cout << endl;
-					FunctionDef.narrator("Does it look like you have a choice? What else do you want to do?", 75); FunctionDef.skip(1500); relwvoid = 2;
+					FunctionDef.narrator("Myslíš, že máš na výber? čo iné chceš robiť?", 75); FunctionDef.skip(1500); relwvoid = 2;
 				}
 				if(diadec4=="2"){
-					FunctionDef.MCSC(mc,"I don't trust you.", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Neverím ti.", 80); FunctionDef.skip(1000);
 					cout << endl;
-					FunctionDef.narrator("You don't have to trust me.", 75); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " Just get up and move your ass before something kills us both.", 75); FunctionDef.skip(1000);
+					FunctionDef.narrator("Nemusíš mi veriť.", 75); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " Stačí, keď sa pohneš s tým svojím zadkom predtým, než nás niečo zabije..", 75); FunctionDef.skip(1000);
 					cout << endl;
-					FunctionDef.MCS("Fine.", 100); FunctionDef.skip(1500); relwvoid = 2;
+					FunctionDef.MCS("Fajn.", 100); FunctionDef.skip(1500); relwvoid = 2;
 				}
 				if(diadec4=="3"){
-					FunctionDef.MCSC(mc,"Is this a nightmare?", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Toto je nočná mora, že?", 80); FunctionDef.skip(1000);
 					cout << endl;
-					FunctionDef.narrator("Oh, come on.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," No, this is not a nightmare.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Or maybe it is, but it doesn't matter.", 80); FunctionDef.skip(200); cout << endl;
-					FunctionDef.narrator("Dying in a dream sucks as well.", 80);  FunctionDef.skip(400);FunctionDef.narratorclean(vc," So please, just stand up and we'll figure it out together.", 80); FunctionDef.skip(1000);
-					FunctionDef.MCS("Okay, I'll comply.", 80); FunctionDef.skip(1500); relwvoid = 3;
+					FunctionDef.narrator("Ale no tak, vzchop sa.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Jasné, že toto nie je nočná mora.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Aj keď, možno aj je, ale na tom nezáleží.", 80); FunctionDef.skip(200); cout << endl;
+					FunctionDef.narrator("Umieranie v sne tiež stojí za nič.", 80);  FunctionDef.skip(400);FunctionDef.narratorclean(vc," Tak sa prosím ťa postav a spolu na to prídeme.", 80); FunctionDef.skip(1000);
+					FunctionDef.MCS("Dobre, vyhoviem ti.", 80); FunctionDef.skip(1500); relwvoid = 3;
 				}
 				if(diadec4=="4"){
-					FunctionDef.MCSC(mc,"Okay, we should get going.", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Dobre, mali by sme sa pohnúť.", 80); FunctionDef.skip(1000);
 					cout << endl;
-					FunctionDef.narrator("Great, let's go that way.", 80);  FunctionDef.skip(500);FunctionDef.narratorclean(vc," It looks like there might be something there.", 75); FunctionDef.skip(1500); relwvoid = 4;
+					FunctionDef.narrator("Výborne, poďme tadiaľto.", 80);  FunctionDef.skip(500);FunctionDef.narratorclean(vc," Vyzerá to tam sľubne.", 75); FunctionDef.skip(1500); relwvoid = 4;
 				}
 			}
 			else if(diadec3=="3"){
-				FunctionDef.MCSC(mc,"That's not possible!", 70);FunctionDef.narratorclean(mc," Am I dreaming?", 100); FunctionDef.skip(1000);
+				FunctionDef.MCSC(mc,"To nie je možné!", 70);FunctionDef.narratorclean(mc," Snívam?", 100); FunctionDef.skip(1000);
 				cout << endl;
-				FunctionDef.narrator("I understand the difficulty of comprehending a situation like this,", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," however,", 100); FunctionDef.skip(250);FunctionDef.narratorclean(mc," dream or not,", 100); FunctionDef.skip(250);
+				FunctionDef.narrator("Chápem, že je ťažké pochopiť takúto situáciu,", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," ale každopádne,", 100); FunctionDef.skip(250);FunctionDef.narratorclean(mc," či už sen alebo realita,", 100); FunctionDef.skip(250);
 				cout << endl;
-				FunctionDef.narrator("we have to move. So, I would advise you to get up before someone,", 125); FunctionDef.skip(400);FunctionDef.narratorclean(vc," or worse,",80); FunctionDef.skip(300);FunctionDef.narratorclean(vc," something,", 80 ); FunctionDef.skip(250);FunctionDef.narratorclean(vc," finds us.", 80 );
+				FunctionDef.narrator("musíme sa pohnúť. Takže by som ti navrhoval vsať skôr než nás niekto", 125); FunctionDef.skip(400);FunctionDef.narratorclean(vc," alebo horšie,",80); FunctionDef.skip(300);FunctionDef.narratorclean(vc," niečo,", 80 ); FunctionDef.skip(250);FunctionDef.narratorclean(vc," nájde.", 80 );
 				cout << endl;
-				FunctionDef.narrator("Meanwhile, I will try to explain what I meant by \"death\" and we'll try to figure out why I am in your mind", 80);
+				FunctionDef.narrator("Medzitým, ti skúsim vysvetliť, čo som myslel pod \"smrťou\" a taktiež skúsime zistiť, prečo som v tvojej hlave", 80);
 				cout << endl;
-				FunctionDef.narrator("and why you don't remember anything.", 80);
-				cout << endl << endl;FunctionDef.truenarrator("1) Why should I listen to you?", 50); cout << "\n";FunctionDef.truenarrator("2) I don't trust you.",50); cout << "\n";FunctionDef.truenarrator("3) This is insane.",50); cout << "\n";FunctionDef.truenarrator("4) Okay, we should get going.",50); 		
+				FunctionDef.narrator("a prečo si nič nepamätáš.", 80);// translated
+				cout << endl << endl;FunctionDef.truenarrator("1) Prečo by som ťa mal počúvať?", 50); cout << "\n";FunctionDef.truenarrator("2) Neverím ti.",50); cout << "\n";FunctionDef.truenarrator("3) This is insane.",50); cout << "\n";FunctionDef.truenarrator("4) Dobre, mali by sme sa pohnúť.",50); 		
 				cout << "\n\n\033[33m>>    ";
 				diadec4 = FunctionDef.GVIclean(1,4);
 				cout << "\033[0m";
 				if(diadec4=="1"){
-					FunctionDef.MCSC(mc,"Why should I listen to you?", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Prečo by som ťa mal počúvať?", 80); FunctionDef.skip(1000);
 					cout << endl;
 					FunctionDef.narrator("Does it look like you have a choice? What else do you want to do?", 75); FunctionDef.skip(1500); relwvoid = 2;
 				}
 				if(diadec4=="2"){
-					FunctionDef.MCSC(mc,"I don't trust you.", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Neverím ti.", 80); FunctionDef.skip(1000);
 					cout << endl;
 					FunctionDef.narrator("You don't have to trust me.", 75); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " Just get up and move your ass before something kills us both.", 75); FunctionDef.skip(1000);
 					cout << endl;
@@ -405,7 +405,7 @@ public:
 					FunctionDef.narrator("I'll explain what I know once we get out of here.", 80); FunctionDef.skip(1500); relwvoid = 3;
 				}
 				if(diadec4=="4"){
-					FunctionDef.MCSC(mc,"Okay, we should get going.", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Dobre, mali by sme sa pohnúť.", 80); FunctionDef.skip(1000);
 					cout << endl;
 					FunctionDef.narrator("Great, let's go that way.", 80);  FunctionDef.skip(500);FunctionDef.narratorclean(vc," It looks like there might be something there.", 75); FunctionDef.skip(1500); relwvoid = 4;
 				}
@@ -420,31 +420,31 @@ public:
 				FunctionDef.narrator("Meanwhile, I will try to explain what I meant by \"death\" and we'll try to figure out why I am in your mind", 80);
 				cout << endl;
 				FunctionDef.narrator("and why you don't remember anything.", 80);
-				cout << endl << endl;FunctionDef.truenarrator("1) Why should I listen to you?", 50); cout << "\n";FunctionDef.truenarrator("2) I don't trust you.",50); cout << "\n";FunctionDef.truenarrator("3) Is this a nightmare?",50); cout << "\n";FunctionDef.truenarrator("4) Okay, we should get going.",50); 		
+				cout << endl << endl;FunctionDef.truenarrator("1) Prečo by som ťa mal počúvať?", 50); cout << "\n";FunctionDef.truenarrator("2) Neverím ti.",50); cout << "\n";FunctionDef.truenarrator("3) Toto je nočná mora, že?",50); cout << "\n";FunctionDef.truenarrator("4) Dobre, mali by sme sa pohnúť.",50); 		
 				cout << "\n\n\033[33m>>    ";
 				diadec4 = FunctionDef.GVIclean(1,4);
 				cout << "\033[0m";
 				if(diadec4=="1"){
-					FunctionDef.MCSC(mc,"Why should I listen to you?", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Prečo by som ťa mal počúvať?", 80); FunctionDef.skip(1000);
 					cout << endl;
 					FunctionDef.narrator("Does it look like you have a choice? What else do you want to do?", 75); FunctionDef.skip(1500); relwvoid = 2;
 				}
 				if(diadec4=="2"){
-					FunctionDef.MCSC(mc,"I don't trust you.", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Neverím ti.", 80); FunctionDef.skip(1000);
 					cout << endl;
 					FunctionDef.narrator("You don't have to trust me.", 75); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " Just get up and move your ass before something kills us both.", 75); FunctionDef.skip(1000);
 					cout << endl;
 					FunctionDef.MCS("Fine.", 100); FunctionDef.skip(1500); relwvoid = 2;
 				}
 				if(diadec4=="3"){
-					FunctionDef.MCSC(mc,"Is this a nightmare?", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Toto je nočná mora, že?", 80); FunctionDef.skip(1000);
 					cout << endl;
 					FunctionDef.narrator("Oh, come on.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," No, this is not a nightmare.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Or maybe it is, but it doesn't matter.", 80); FunctionDef.skip(200); cout << endl;
 					FunctionDef.narrator("Dying in a dream sucks as well.", 80);  FunctionDef.skip(400);FunctionDef.narratorclean(vc," So please, just stand up and we'll figure it out together.", 80); FunctionDef.skip(1000); cout << endl;
 					FunctionDef.MCS("Okay, I'll comply.", 80); FunctionDef.skip(1500); relwvoid = 3;
 				}
 				if(diadec4=="4"){
-					FunctionDef.MCSC(mc,"Okay, we should get going.", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc,"Dobre, mali by sme sa pohnúť.", 80); FunctionDef.skip(1000);
 					cout << endl;
 					FunctionDef.narrator("Great, let's go that way.", 80);  FunctionDef.skip(500);FunctionDef.narratorclean(vc," It looks like there might be something there.", 75); FunctionDef.skip(1500); relwvoid = 4;
 				}
@@ -454,17 +454,17 @@ public:
 			FunctionDef.MCSC(mc, "How is that possible?", 80); FunctionDef.skip(1000);
 			cout << endl;
 			FunctionDef.narrator("I don't know.", 80); FunctionDef.skip(500);FunctionDef.narratorclean(vc," But what I do know,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc," is,", 125);FunctionDef.narratorclean(vc," that we should get out of here,", 100); FunctionDef.skip(500); cout << endl;FunctionDef.narrator("we don't want anyone or anything to find us, do we now?", 80); FunctionDef.skip(1000);FunctionDef.narratorclean(vc," I'll tell you the answers on the way out of here,", 80); FunctionDef.skip(250); cout << endl;FunctionDef.narrator("just get up and move,", 80); FunctionDef.skip(200);FunctionDef.narratorclean(vc, " please.", 100); FunctionDef.skip(1000);
-			cout << endl << endl;FunctionDef.truenarrator("1) Why should I listen to you?", 50); cout << "\n";FunctionDef.truenarrator("2) I don't trust you.",50); cout << "\n";FunctionDef.truenarrator("3) Is this a nightmare?",50); cout << "\n";FunctionDef.truenarrator("4) Okay, we should get going.",50); 		
+			cout << endl << endl;FunctionDef.truenarrator("1) Prečo by som ťa mal počúvať?", 50); cout << "\n";FunctionDef.truenarrator("2) Neverím ti.",50); cout << "\n";FunctionDef.truenarrator("3) Toto je nočná mora, že?",50); cout << "\n";FunctionDef.truenarrator("4) Dobre, mali by sme sa pohnúť.",50); 		
 			cout << "\n\n\033[33m>>    ";
 			diadec3 = FunctionDef.GVIclean(1,4);
 			cout << "\033[0m";
 			if(diadec3=="1"){
-				FunctionDef.MCSC(mc,"Why should I listen to you?", 80); FunctionDef.skip(1000);
+				FunctionDef.MCSC(mc,"Prečo by som ťa mal počúvať?", 80); FunctionDef.skip(1000);
 				cout << endl;
 				FunctionDef.narrator("Does it look like you have a choice? What else do you want to do?", 75); FunctionDef.skip(1500); relwvoid = 2;
 			}
 			if(diadec3=="2"){
-				FunctionDef.MCSC(mc,"I don't trust you.", 80); FunctionDef.skip(1000);
+				FunctionDef.MCSC(mc,"Neverím ti.", 80); FunctionDef.skip(1000);
 				cout << endl;
 				FunctionDef.narrator("You don't have to trust me.", 75); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " Just get up and move your ass before something kills us both.", 75); FunctionDef.skip(1000);
 				cout << endl;
@@ -478,7 +478,7 @@ public:
 				FunctionDef.MCS("Okay, I'll comply.", 80); FunctionDef.skip(1500); relwvoid = 3;
 			}
 			if(diadec3=="4"){
-				FunctionDef.MCSC(mc,"Okay, we should get going.", 80); FunctionDef.skip(1000);
+				FunctionDef.MCSC(mc,"Dobre, mali by sme sa pohnúť.", 80); FunctionDef.skip(1000);
 				cout << endl;
 				FunctionDef.narrator("Great, let's go that way.", 80);  FunctionDef.skip(500);FunctionDef.narratorclean(vc," It looks like there might be something there.", 75); FunctionDef.skip(1500); relwvoid = 4;
 			}
@@ -487,17 +487,17 @@ public:
 			FunctionDef.MCSC(mc, "But where are my memories?", 80); FunctionDef.skip(400);FunctionDef.narratorclean(mc," You just came here into my mind, and all of them are gone.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(mc, " What have you done to them?", 80); FunctionDef.skip(1000);
 			cout << endl;
 			FunctionDef.narrator("I haven't done anything to your memories.", 80); FunctionDef.skip(500);FunctionDef.narratorclean(vc," I know nothing,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc," same as you.", 125); FunctionDef.skip(400);FunctionDef.narratorclean(vc," Do you think I want to be here?", 100); FunctionDef.skip(500); cout << endl;FunctionDef.narrator("I somehow died and now I am here,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " in your body,", 100);FunctionDef.narratorclean(vc, " which I can't control.", 100); FunctionDef.skip(250); cout << endl;FunctionDef.narrator("But,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc," here we are,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc," so move your ass and get up.", 80); FunctionDef.skip(1000);
-			cout << endl << endl;FunctionDef.truenarrator("1) Why should I listen to you?", 50); cout << "\n";FunctionDef.truenarrator("2) I don't trust you.",50); cout << "\n";FunctionDef.truenarrator("3) This has to be a nightmare.",50); cout << "\n";FunctionDef.truenarrator("4) Okay, we should get going.",50); 	
+			cout << endl << endl;FunctionDef.truenarrator("1) Prečo by som ťa mal počúvať?", 50); cout << "\n";FunctionDef.truenarrator("2) Neverím ti.",50); cout << "\n";FunctionDef.truenarrator("3) This has to be a nightmare.",50); cout << "\n";FunctionDef.truenarrator("4) Dobre, mali by sme sa pohnúť.",50); 	
 			cout << "\n\n\033[33m>>    ";
 			diadec3 = FunctionDef.GVIclean(1,4);
 			cout << "\033[0m";
 			if(diadec3=="1"){
-				FunctionDef.MCSC(mc,"Why should I listen to you?", 80); FunctionDef.skip(1000);
+				FunctionDef.MCSC(mc,"Prečo by som ťa mal počúvať?", 80); FunctionDef.skip(1000);
 				cout << endl;
 				FunctionDef.narrator("Does it look like you have a choice? What else do you want to do?", 75); FunctionDef.skip(1500); relwvoid = 2;
 			}
 			if(diadec3=="2"){
-				FunctionDef.MCSC(mc,"I don't trust you.", 80); FunctionDef.skip(1000);
+				FunctionDef.MCSC(mc,"Neverím ti.", 80); FunctionDef.skip(1000);
 				cout << endl;
 				FunctionDef.narrator("You don't have to trust me.", 75); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " Just get up and move your ass before something kills us both.", 75); FunctionDef.skip(1000);
 				cout << endl;
@@ -570,12 +570,12 @@ public:
 				FunctionDef.MCSC(mc, "I will need a further explanation in order to comply.", 80); FunctionDef.skip(1000);
 				cout << endl;
 				FunctionDef.narrator("I told you,", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc, " I don't know.", 80);FunctionDef.narratorclean(vc, " All I know is that I am stuck here in your mind and that you're gonna get us", 80); cout << endl;FunctionDef.narrator("killed if you don't move,",80); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " so please,", 100); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " move,", 100); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " and I'll tell you more when we're on the move.", 80); FunctionDef.skip(1000); 
-				cout << endl << endl;FunctionDef.truenarrator("1) Why should I listen to you?", 50); cout << "\n";FunctionDef.truenarrator("2) Nope, still don't trust you. I refuse to believe this.", 50); cout << "\n";FunctionDef.truenarrator("3) Alright, I'll move", 50);
+				cout << endl << endl;FunctionDef.truenarrator("1) Prečo by som ťa mal počúvať?", 50); cout << "\n";FunctionDef.truenarrator("2) Nope, still don't trust you. I refuse to believe this.", 50); cout << "\n";FunctionDef.truenarrator("3) Alright, I'll move", 50);
 				cout << "\n\n\033[33m>>    ";
 				diadec4 = FunctionDef.GVIclean(1,3);
 				cout << "\033[0m";
 				if(diadec4=="1"){
-					FunctionDef.MCSC(mc, "Why should I listen to you?", 80); FunctionDef.skip(1000);
+					FunctionDef.MCSC(mc, "Prečo by som ťa mal počúvať?", 80); FunctionDef.skip(1000);
 					FunctionDef.narrator("You don't have a choice.", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " Or maybe you do,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " do whatever you want,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " you want to die?", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc, " Fine, then.", 80); FunctionDef.skip(1000);
 					cout << endl << endl;FunctionDef.truenarrator("1) I'll go my own way.", 50); cout << "\n";FunctionDef.truenarrator("2) Okay, I'm sorry. I'll do what you want now.", 50);
 					cout << "\n\n\033[33m>>    ";
