@@ -2015,7 +2015,10 @@ public:
 						cout << "\n";
 						FunctionDef.narrator("Thank you,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " for the apology", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " I understand,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " it's okay", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " We should probably move quick though,", 80); FunctionDef.skip(250); cout << "\n"; FunctionDef.narrator("and find find a shelter or somewhere to hole up and then we can talk in peace.", 80); FunctionDef.skip(1000);
 					}
-				}				
+				}
+				else{
+					FunctionDef.MCSC("I'm sorry I didn't trust you before.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(mc, " I was being careful.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(mc, "Also,", 100); FunctionDef.skip(250); FunctionDef.narratorclean(mc, " what did you mean by \"got you?\"", 80); FunctionDef.skip(1000);
+				}
 			}
 			else if(d=="3"){
 				FunctionDef.MCS("What the glyph happened here?", 80); FunctionDef.skip(1000);
