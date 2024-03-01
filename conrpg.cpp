@@ -281,12 +281,24 @@ public:
 			}
 		}
 		else{
-      FunctionDef.truenarrator("Dokončil si súboj.", 50); cout << endl;
+      			FunctionDef.truenarrator("Dokončil si súboj.", 50); cout << endl;
 		}
 		Sleep(3000);
 		xp+=xpgained;
-		checkLevelUp();
+		checkLevelUp(lang);
 		Sleep(2000);
+	}
+	function endingplaceholder1(string language){
+		if(language=="en"){
+			cout << "\n\n";
+			FunctionDef.truenarrator("You went your own way. You will never know what happened next.", 50); FunctionDef.skip(250); cout << "\n\n";
+			FunctionDef.truenarrator("\tEnding: You went your own path", 50);
+		}
+		else{
+			cout << "\n\n";
+			FunctionDef.truenarrator("Išiel si vlastnout cestou. Nikdy sa nedozvieš čo sa stalo.", 50); FunctionDef.skip(250); cout << "\n\n";
+			FunctionDef.truenarrator("\Koniec: Vlastná cesta", 50);
+		}
 	}
 	void d1n(string language) {
 		if(language=="en"){
@@ -299,7 +311,7 @@ public:
 				FunctionDef.truenarrator("\t  Behold Mozz, the tree [BOSS] [10M HP] You stand no chance against this beast as it one hits you", 50); cout << "\n";
 				FunctionDef.truenarrator("\t  before the fight even has a chance to begin.", 50); FunctionDef.skip(400); cout << "\n"; FunctionDef.skip(400); system("cls"); cout << "\n\n\n\n";
 				FunctionDef.truenarrator("\t  \033[1;31mYou get the tree picker ending.\033[0m", 50); cout << "\n"; FunctionDef.skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
-				lives--; UlozitInfo(to_string(lives), "Lives.txt"); deathsequence();
+				lives--; UlozitInfo(to_string(lives), "Lives.txt"); deathsequence(lang);
 			}
 		}
 		else{
@@ -312,16 +324,7 @@ public:
 				FunctionDef.truenarrator("\t  Axir, The Lord of the Forbidden Forest [BOSS] [10M HP] Nemáš šancu proti tomuto monštru zvíťaziť, keďže ťa zabije", 50); cout << endl;
 				FunctionDef.truenarrator("\t  ešte predtým, než má súboj vôbec šancu začať.", 50); FunctionDef.skip(400); cout << endl; FunctionDef.skip(400); system("cls"); cout << "\n\n\n\n";
 				FunctionDef.truenarrator("\t  \033[1;31mZískal si koniec Zberač Stromov.\033[0m", 50); cout << endl; FunctionDef.skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
-				cout << "\t  [Stlač F pre načítanie poslednej uloženej pozície.]"; isAlive = false;
-				while (true) {
-					if (_kbhit()) {
-						char key = _getch();
-						if (key == 'f') {
-							break;
-						}
-					}
-				}
-	
+				lives--; UlozitInfo(to_string(lives), "Lives.txt"); deathsequence(lang);
 			}
 		}
 	}
@@ -358,8 +361,8 @@ public:
 				char keypressed = _getch();
 				if (keypressed == 'f') {
 					saveload = 1;
-					if (sequence == 1) sequence1();
-					else if (sequence == 2) sequence2();
+					if (sequence == 1) sequence1(lang);
+					else if (sequence == 2) sequence2(lang);
 				}
 				else if (keypressed == 'l') {
 					picklanguage();
@@ -791,7 +794,7 @@ public:
 						FunctionDef.MCSC(mc,"No! I want to go my own way.", 80); FunctionDef.skip(1000);
 						cout << "\n";
 						FunctionDef.narrator("You know what, fine, go your own way, we'll see how that goes.", 75); FunctionDef.skip(1500);
-						// endingplaceholder1();
+						endingplaceholder1(lang);
 					}
 					if(diadec4=="4"){
 						FunctionDef.MCSC(mc,"I'm not moving unless you tell me who you are.", 80); FunctionDef.skip(1000);
@@ -843,7 +846,7 @@ public:
 							FunctionDef.MCSC(mc, "I'll go my own way.", 50); FunctionDef.skip(1000);
 							cout << "\n";
 							FunctionDef.narrator("You know what, fine, go your own way, we'll see how that goes.", 80);
-							// endingplaceholder1();
+							endingplaceholder1(lang);
 						}
 						else{
 							FunctionDef.MCSC(mc, "Okay,", 100); FunctionDef.skip(250);FunctionDef.narratorclean(mc, " I'm sorry.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(mc, " I'll do what you want now.", 80); FunctionDef.skip(1000);
@@ -863,7 +866,7 @@ public:
 							FunctionDef.MCSC(mc, "I'll be on my own way.", 50); FunctionDef.skip(1000);
 							cout << "\n";
 							FunctionDef.narrator("You know what, fine, go your own way, we'll see how that goes.", 80);
-							// endingplaceholder1();
+							endingplaceholder1(lang);
 						}
 						else{
 							FunctionDef.MCSC(mc, "You know what,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(mc, " fine,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(mc, " I'll listen to you for now.", 80); FunctionDef.skip(1000);
@@ -902,7 +905,7 @@ public:
 							FunctionDef.MCSC(mc, "Yes, I want to go my own way.", 80); FunctionDef.skip(1000);
 							cout << "\n";
 							FunctionDef.narrator("You know what, fine, go your own way, we'll see how that goes.", 80); FunctionDef.skip(1500);
-							// endingplaceholder1();
+							endingplaceholder1(lang);
 						}
 						else{
 							FunctionDef.MCSC(mc, "I changed my mind,",80); FunctionDef.skip(250);FunctionDef.narratorclean(mc, " I'm sorry,", 100); FunctionDef.skip(250);FunctionDef.narratorclean(mc, " I'll listen to you.", 80); FunctionDef.skip(1000);
@@ -923,7 +926,7 @@ public:
 						FunctionDef.MCSC(mc, "Stop talking to me,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(mc, " I want to go my own way.", 80); FunctionDef.skip(1000);
 						cout << "\n";
 						FunctionDef.narrator("You know what, fine, go your own way, we'll see how that goes.", 80); FunctionDef.skip(1500);
-						// endingplaceholder1();
+						endingplaceholder1(lang);
 					}
 					else if(diadec4=="2"){
 						FunctionDef.MCSC(mc, "Fine.", 80); FunctionDef.skip(1000);
@@ -941,7 +944,7 @@ public:
 			cout << "\n";
 			d1();
 			while(true){
-				if(a>0 || b>0) d1();
+				if(a>0 || b>0) d1(lang);
 				cout << endl << "\n";
 				FunctionDef.flushInput();
 				cout << "\033[33m>>    ";
@@ -950,12 +953,7 @@ public:
 				if(decision1=="1"){
 					FunctionDef.MCSC(mc, "I want to see the trees.", 80);
 					cout << endl << "\n";
-					d1n();
-					if(!isAlive){
-						system("cls");
-						sequence1();
-						break;
-					}
+					d1n(lang);
 					FunctionDef.skip(500);
 					cout << endl << "\n";
 					a++;
@@ -964,12 +962,7 @@ public:
 				else if(decision1=="2"){
 					FunctionDef.MCSC(mc, "I want to see those trees.", 80);
 					cout << endl << "\n";
-					d1n();
-					if(!isAlive){
-						system("cls");
-						sequence1();
-						break;
-					}
+					d1n(lang);
 					FunctionDef.skip(500);
 					cout << endl << "\n";
 					a++;
@@ -979,11 +972,6 @@ public:
 					FunctionDef.MCSC(mc, "I must see these trees.", 80);
 					cout << endl << "\n";
 					d1n();
-					if(!isAlive){
-						system("cls");
-						sequence1();
-						break;
-					}
 					FunctionDef.skip(500);
 					cout << endl << "\n";
 					a++;
@@ -1007,7 +995,7 @@ public:
 						FunctionDef.truenarrator("Very well, you decide to embark on an adventurous journe- nevermind, you die. Reason: UNKN0WN", 50);
 						FunctionDef.skip(400);
 						cout << endl << endl << "\n";
-						lives--; UlozitInfo(to_string(lives), "Lives.txt"); deathsequence();
+						lives--; UlozitInfo(to_string(lives), "Lives.txt"); deathsequence(lang);
 					}
 					else if(decision1sub1=="2"){
 						FunctionDef.MCSC(mc, "I think we should check that strange abandoned place first.", 80);
@@ -1632,7 +1620,7 @@ public:
 		cout << endl;
 		d1();
 		while(true){
-			if(a>0 || b>0) d1();
+			if(a>0 || b>0) d1(lang);
 			cout << endl << endl;
 			FunctionDef.flushInput();
 			cout << "\033[33m>>    ";
@@ -1641,12 +1629,7 @@ public:
 			if(decision1=="1"){
 				FunctionDef.MCSC(mc, "Chcem sa pozrieť na tie stromy.", 80);
 				cout << endl << endl;
-				d1n();
-				if(!isAlive){
-					system("cls");
-					sequence1();
-					break;
-				}
+				d1n(lang);
 				FunctionDef.skip(500);
 				cout << endl << endl;
 				a++;
@@ -1655,12 +1638,7 @@ public:
 			else if(decision1=="2"){
 				FunctionDef.MCSC(mc, "Chcem sa pozrieť na tie stromy.", 80);
 				cout << endl << endl;
-				d1n();
-				if(!isAlive){
-					system("cls");
-					sequence1();
-					break;
-				}
+				d1n(lang);
 				FunctionDef.skip(500);
 				cout << endl << endl;
 				a++;
@@ -1669,12 +1647,7 @@ public:
 			else if(decision1=="3"){
 				FunctionDef.MCSC(mc, "Musím vidieť tie stromy.", 80);
 				cout << endl << endl;
-				d1n();
-				if(!isAlive){
-					system("cls");
-					sequence1();
-					break;
-				}
+				d1n(lang);
 				FunctionDef.skip(500);
 				cout << endl << endl;
 				a++;
@@ -1697,19 +1670,7 @@ public:
 					cout << endl << endl;
 					FunctionDef.truenarrator("Nuž dobre, rozhodol si sa vydať na dobrodrúžnu cest- hups, tak nič, umrel si. Dôvod: NEZNÁMY", 50);
 					FunctionDef.skip(400);
-					cout << endl << endl << endl;
-					FunctionDef.truenarrator("\n      [Press F to pay respects(stlač F a načítaš poslednú uloženú pozíciu)]", 50);
-					while(true){
-						if(_kbhit()){
-					  	char key = _getch();
-					  	if(key=='f'){
-					  		break;
-							}
-						}
-					}
-					system("CLS");
-					sequence1();
-					break;
+					lives--; deathsequence(lang);
 				}
 				else if(decision1sub1=="2"){
 					FunctionDef.MCSC(mc, "Myslím, že by sme mali najskôr skontrolovať to opustené miesto.", 80);
@@ -1781,7 +1742,7 @@ public:
 			cout << endl << endl;FunctionDef.truenarrator("Zobral si veci a odteraz ho môžeš nájsť vo svojom inventári, ktorým je batoh.", 50); FunctionDef.skip(500);
 			cout << endl << endl;FunctionDef.truenarrator("1) Ospravedlňujem sa za to...", 50); cout << "\n";FunctionDef.truenarrator("2) ...", 50); cout << endl << endl;
 			cout << "\033[33m>>    ";
-			diadec1 = FunctionDef.GVIclean(1,2); //translated
+			diadec1 = FunctionDef.GVIclean(1,2); 
 			cout << "\033[0m";			 
 			if(diadec1=="1"){
 				FunctionDef.MCSC(mc, "I'm sorry about that...", 80); FunctionDef.skip(400);FunctionDef.narratorclean(mc, " I didn't mean what I said before,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(mc, " I was just being careful.", 80); FunctionDef.skip(400); cout << endl;FunctionDef.MCS("But I see that you're not a bad guy and that you are actually in my mind now.", 80); FunctionDef.skip(1000);
@@ -1851,11 +1812,11 @@ public:
 			cout << "\033[0m" << endl;
 			if(decision2=="1"){
 				FunctionDef.truenarrator("You decide to take out the stick and use it to fight the wolves off. Commencing combat.", 50); FunctionDef.skip(200);
-				ambush("Wolves"); 
+				ambush("Wolves", lang); 
 			}
 			else if(decision2=="2"){
 				FunctionDef.truenarrator("You decide to take out the iron sword and use it to fight the wolves off. Commencing combat.", 50); FunctionDef.skip(200);
-				ambush("Wolves"); 
+				ambush("Wolves", lang); 
 			}
 			else if(decision2=="3"){
 				int wolfescapechance = rand()%4;
@@ -1864,16 +1825,7 @@ public:
 				}
 				else{
 					FunctionDef.truenarrator("You try to distract the wolves with the stick, but they fail to notice it and devour you.", 50); FunctionDef.skip(400); cout << endl;
-					FunctionDef.truenarrator("[Press F to pay respects(load last save)]",50);
-					while(true){
-						if(_kbhit()){
-					  	char key = _getch();
-					  	if(key=='f'){
-					  		break;
-							}
-						}
-					}
-					sequence1();
+					lives--; deathsequence();
 				}
 			}
 		}
@@ -1963,7 +1915,7 @@ int main() {
 	GameDef.ExistujeSave = GameDef.CheckSave();
 	if (GameDef.ExistujeSave) {
 		GameDef.load();
-		if(GameDef.playerName!=""&&(GameDef.mode!="speedrun"&&GameDef.mode!=""))	GameDef.savesequence();
+		if(GameDef.playerName!=""&&(GameDef.mode!="speedrun"&&GameDef.mode!=""))	GameDef.savesequence(lang);
 		else GameDef.introsequence(GameDef.lang);
 	}
 	else {
