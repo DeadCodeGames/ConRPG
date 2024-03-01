@@ -8,6 +8,8 @@
 #include <chrono>
 #include <conio.h>
 #include <stdlib.h>
+#include <clocale>
+
 
 
 using namespace std;
