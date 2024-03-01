@@ -102,57 +102,106 @@ public:
 		maxdmg = stoi(strMaxdmg);
 		requiredxp=10*pow(1.2, level);
 	}
-	void checkLevelUp(){
-	if(xp>=requiredxp){
-		initiallvl = level;
-		hp = currenthp;
-		while(xp>=requiredxp){
-			hp += hp/10;
-			level += 1;
-			xp -= requiredxp;
-			requiredxp += requiredxp/5;
-		} 
-	cout << "\n      Leveled up! Went from lvl " << initiallvl << " to lvl " << level << ". HP: " << currenthp << " -> " << hp << "\n";
-	cout << "      Current xp ->" << xp << "(" << xp << "/" << requiredxp << ")" << "\n";
+	void checkLevelUp(string language){
+		if(xp>=requiredxp){
+			initiallvl = level;
+			hp = currenthp;
+			while(xp>=requiredxp){
+				hp += hp/10;
+				level += 1;
+				xp -= requiredxp;
+				requiredxp += requiredxp/5;
+			} 
+		if(language=="en"){
+			cout << "\n      Leveled up! Went from lvl " << initiallvl << " to lvl " << level << ". HP: " << currenthp << " -> " << hp << "\n";
+			cout << "      Current xp ->" << xp << "(" << xp << "/" << requiredxp << ")" << "\n";
+		}
+		else{
+			cout << "\n      Zvýšila sa it úroveň " << initiallvl << " na úroveň " << level << ". HP: " << currenthp << " -> " << hp << "\n";
+			cout << "      Momentálne xp ->" << xp << "(" << xp << "/" << requiredxp << ")" << "\n";
+		}
 	}
 	save();
 	}
 	void statreset(){
 		playerName="", mode="", fightstatus="", input="", tb="", decision1="", decision1sub1="", b1pathdec="", decision2="", diadec1="", diadec2="", diadec3="", diadec4="", diadec5="", hp=20, level=0, xp=0, currenthp=20;
 	}
-	void deathsequence(){
-		system("cls");
-		cout << "\n\n"; FunctionDef.truenarrator("\tWhoops...", 50); FunctionDef.skip(200); FunctionDef.TNC(" it lowkey seems like someone has lost a life.", 50); FunctionDef.skip(200); cout << "\n";
-		if(lives!=0){
-			FunctionDef.truenarrator("\tDon't worry though, brave traveller.", 50); FunctionDef.skip(200); FunctionDef.TNC(" Death is experience, and experience is life.", 50); FunctionDef.skip(200); 
-			if(lives!=1) FunctionDef.TNC("You have " + to_string(lives) + " lives remaining.", 50);
-			else FunctionDef.TNC("You have 1 life remaining...", 50);
-			cout << "\n"; FunctionDef.skip(250);
-			FunctionDef.truenarrator("\t[Press F to respawn, L to start new game]", 50);
-			while(true){
-				if(_kbhit()){
-			  	char key = _getch();
-			  	if(key=='f'){
-			  		if(sequence==1) sequence1();
-			  		else if(sequence==2) sequence2();
+	void deathsequence(string language){
+		if(language=="en"){
+			system("cls");
+			cout << "\n\n"; FunctionDef.truenarrator("\tWhoops...", 50); FunctionDef.skip(200); FunctionDef.TNC(" it lowkey seems like someone has lost a life.", 50); FunctionDef.skip(200); cout << "\n";
+			if(lives!=0){
+				FunctionDef.truenarrator("\tDon't worry though, brave traveller.", 50); FunctionDef.skip(200); FunctionDef.TNC(" Death is experience, and experience is life.", 50); FunctionDef.skip(200); 
+				if(lives!=1) FunctionDef.TNC("You have " + to_string(lives) + " lives remaining.", 50);
+				else FunctionDef.TNC("You have 1 life remaining...", 50);
+				cout << "\n"; FunctionDef.skip(250);
+				FunctionDef.truenarrator("\t[Press F to respawn, L to start new game]", 50);
+				while(true){
+					if(_kbhit()){
+				  	char key = _getch();
+				  	if(key=='f'){
+				  		if(sequence==1) sequence1();
+				  		else if(sequence==2) sequence2();
+						}
+						else{
+							statreset();
+							picklanguage();
+						}
 					}
-					else{
-						statreset();
-						picklanguage();
+				}
+			}
+			else{
+				FunctionDef.truenarrator("\tAnd it was your last one...", 50); FunctionDef.skip(250); FunctionDef.TNC("I'm sorry this happened to you.", 50); FunctionDef.skip(250);
+				cout << "\n";
+				FunctionDef.truenarrator("\t[Press L to start new game.]", 50); 
+				while(true){
+					if(_kbhit()){
+				  	char key = _getch();
+						if(key=='l'){
+							statreset();
+							picklanguage();
+						}
 					}
 				}
 			}
 		}
 		else{
-			FunctionDef.truenarrator("\tAnd it was your last one...", 50); FunctionDef.skip(250); FunctionDef.TNC("I'm sorry this happened to you.", 50); FunctionDef.skip(250);
-			cout << "\n";
-			FunctionDef.truenarrator("\t[Press L to start new game.]", 50); 
-			while(true){
-				if(_kbhit()){
-			  	char key = _getch();
-					if(key=='l'){
-						statreset();
-						picklanguage();
+			system("cls");
+			cout << "\n\n"; FunctionDef.truenarrator("\Ups...", 50); FunctionDef.skip(200); FunctionDef.TNC(" Vypadá to trochu tak, že niekto prišiel o jeden život.", 50); FunctionDef.skip(200); cout << "\n";
+			if(lives!=0){
+				FunctionDef.truenarrator("\tNemusíš sa ale báť, odvážny cestovateľ!", 50); FunctionDef.skip(200); FunctionDef.TNC(" Smrť je skúsenosť a skúsenosť je život.", 50); FunctionDef.skip(200); 
+				if(lives==2) FunctionDef.TNC("Ostávaju ti " + to_string(lives) + " životy", 50);
+				else if(lives==1) FunctionDef.TNC("Ostáva ti 1 život.", 50);
+				else{
+					FunctionDef.TNC("Máš nekonečno životov.", 50);
+				}
+				cout << "\n"; FunctionDef.skip(250);
+				FunctionDef.truenarrator("\t[Stlač F na oživenie, L na začatie novej hry.]", 50);
+				while(true){
+					if(_kbhit()){
+				  	char key = _getch();
+				  	if(key=='f'){
+				  		if(sequence==1) sequence1();
+				  		else if(sequence==2) sequence2();
+						}
+						else{
+							statreset();
+							picklanguage();
+						}
+					}
+				}
+			}
+			else{
+				FunctionDef.truenarrator("\tA bol to tvoj posledný život...", 50); FunctionDef.skip(250); FunctionDef.TNC(" Je mi ľúto že sa ti toto stalo.", 50); FunctionDef.skip(250);
+				cout << "\n";
+				FunctionDef.truenarrator("\t[Stlač L na začatie novej hry.]", 50); 
+				while(true){
+					if(_kbhit()){
+				  	char key = _getch();
+						if(key=='l'){
+							statreset();
+							picklanguage();
+						}
 					}
 				}
 			}
@@ -171,7 +220,8 @@ public:
 		UlozitInfo(attacker, "attacker.txt");
 
 		Sleep(2000);
-		cout << endl << "      "; FunctionDef.truenarrator("Prepare to fight...", 50); Sleep(500);
+		if(language=="en") cout << endl << "      "; FunctionDef.truenarrator("Prepare to fight...", 50); Sleep(500);
+		else cout << endl << "      "; FunctionDef.truenarrator("Priprav sa na boj...", 50); Sleep(500);
 		const char* programName = "combatmoreeffective.exe";
 		STARTUPINFO si;
 		PROCESS_INFORMATION pi;
@@ -238,7 +288,7 @@ public:
 		checkLevelUp();
 		Sleep(2000);
 	}
-	void d1n() {
+	void d1n(string language) {
 		if (a == 0) FunctionDef.truenarrator("\t  Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
 		if (a == 1) FunctionDef.truenarrator("\t  For real? You visit the trees again, and... you don't find anything.", 50);
 		if (a == 2) FunctionDef.truenarrator("\t  There is something weird about those trees. They're... trees.", 50);
@@ -254,7 +304,7 @@ public:
 
 	// Decisions
 
-	void d1() {
+	void d1(string language) {
 		FunctionDef.truenarrator("\t  You look around you. You see the following:", 50);
 		cout << "\n";
 		FunctionDef.truenarrator("\t  1) Trees", 50); cout << "\n"; FunctionDef.truenarrator("\t  2) Trees", 50); cout << "\n"; FunctionDef.truenarrator("\t  3) Trees", 50); cout << "\n"; FunctionDef.truenarrator("\t  4) A path", 50); cout << "\n"; FunctionDef.truenarrator("\t  5) A strange place between the trees, where abandoned stuff can be seen.", 50); FunctionDef.skip(500); cout << endl << "\n"; FunctionDef.truenarrator("\t  What do you choose?", 50);
@@ -262,8 +312,7 @@ public:
 	}
 
 	// Sequences
-	void savesequence() {
-		load();
+	void savesequence(string language) {
 		FunctionDef.truenarrator("\tWelcome back, " + playerName, 50); FunctionDef.skip(250); cout << "\n";
 		FunctionDef.truenarrator("\tDo you wish to load the latest save or start a new game? [F to Load, L to start over]", 50);
 		while (true) {
