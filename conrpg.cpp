@@ -289,32 +289,70 @@ public:
 		Sleep(2000);
 	}
 	void d1n(string language) {
-		if (a == 0) FunctionDef.truenarrator("\t  Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
-		if (a == 1) FunctionDef.truenarrator("\t  For real? You visit the trees again, and... you don't find anything.", 50);
-		if (a == 2) FunctionDef.truenarrator("\t  There is something weird about those trees. They're... trees.", 50);
-		if (a > 2) {
-			FunctionDef.truenarrator("\t  You visit the trees once more. Once again, you find nothin-", 50); cout << "\n";
-			FunctionDef.truenarrator("\t  w- what's that sound? It seems like... you have awakened something. It's angry.", 75); cout << "\n"; FunctionDef.skip(300);
-			FunctionDef.truenarrator("\t  Behold Mozz, the tree [BOSS] [10M HP] You stand no chance against this beast as it one hits you", 50); cout << "\n";
-			FunctionDef.truenarrator("\t  before the fight even has a chance to begin.", 50); FunctionDef.skip(400); cout << "\n"; FunctionDef.skip(400); system("cls"); cout << "\n\n\n\n";
-			FunctionDef.truenarrator("\t  \033[1;31mYou get the tree picker ending.\033[0m", 50); cout << "\n"; FunctionDef.skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
-			lives--; UlozitInfo(to_string(lives), "Lives.txt"); deathsequence();
+		if(language=="en"){
+			if (a == 0) FunctionDef.truenarrator("\t  Trees, interesting choice. You come closer to the trees but you don't find anything.", 50);
+			if (a == 1) FunctionDef.truenarrator("\t  For real? You visit the trees again, and... you don't find anything.", 50);
+			if (a == 2) FunctionDef.truenarrator("\t  There is something weird about those trees. They're... trees.", 50);
+			if (a > 2) {
+				FunctionDef.truenarrator("\t  You visit the trees once more. Once again, you find nothin-", 50); cout << "\n";
+				FunctionDef.truenarrator("\t  w- what's that sound? It seems like... you have awakened something. It's angry.", 75); cout << "\n"; FunctionDef.skip(300);
+				FunctionDef.truenarrator("\t  Behold Mozz, the tree [BOSS] [10M HP] You stand no chance against this beast as it one hits you", 50); cout << "\n";
+				FunctionDef.truenarrator("\t  before the fight even has a chance to begin.", 50); FunctionDef.skip(400); cout << "\n"; FunctionDef.skip(400); system("cls"); cout << "\n\n\n\n";
+				FunctionDef.truenarrator("\t  \033[1;31mYou get the tree picker ending.\033[0m", 50); cout << "\n"; FunctionDef.skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
+				lives--; UlozitInfo(to_string(lives), "Lives.txt"); deathsequence();
+			}
+		}
+		else{
+			if (a == 0) FunctionDef.truenarrator("\t  Stromy, zaujímavá voľba. Išiel si bližšie ku stromom, ale nič si nenašiel.", 50);
+			if (a == 1) FunctionDef.truenarrator("\t  Vážne? Prišiel si znova ku stromom, a... znova si nič nenašiel.", 50);
+			if (a == 2) FunctionDef.truenarrator("\t  Niečo je divné na tých stromoch. Sú ako... stromy.", 50);
+			if (a > 2) {
+				FunctionDef.truenarrator("\t  Išiel si k stromom ešteb raz.A opäť si nič nenašie-", 50); cout << endl;
+				FunctionDef.truenarrator("\t  Č- čo to je za zvuk? Vyzerá to tak... že si niečo zobudil. A je to naštvané.", 75); cout << endl; FunctionDef.skip(300);
+				FunctionDef.truenarrator("\t  Axir, The Lord of the Forbidden Forest [BOSS] [10M HP] Nemáš šancu proti tomuto monštru zvíťaziť, keďže ťa zabije", 50); cout << endl;
+				FunctionDef.truenarrator("\t  ešte predtým, než má súboj vôbec šancu začať.", 50); FunctionDef.skip(400); cout << endl; FunctionDef.skip(400); system("cls"); cout << "\n\n\n\n";
+				FunctionDef.truenarrator("\t  \033[1;31mZískal si koniec Zberač Stromov.\033[0m", 50); cout << endl; FunctionDef.skip(400); cout << "\n\n\n\n\n\n\n\n\n\n";
+				cout << "\t  [Stlač F pre načítanie poslednej uloženej pozície.]"; isAlive = false;
+				while (true) {
+					if (_kbhit()) {
+						char key = _getch();
+						if (key == 'f') {
+							break;
+						}
+					}
+				}
+	
+			}
 		}
 	}
 
 	// Decisions
 
 	void d1(string language) {
-		FunctionDef.truenarrator("\t  You look around you. You see the following:", 50);
-		cout << "\n";
-		FunctionDef.truenarrator("\t  1) Trees", 50); cout << "\n"; FunctionDef.truenarrator("\t  2) Trees", 50); cout << "\n"; FunctionDef.truenarrator("\t  3) Trees", 50); cout << "\n"; FunctionDef.truenarrator("\t  4) A path", 50); cout << "\n"; FunctionDef.truenarrator("\t  5) A strange place between the trees, where abandoned stuff can be seen.", 50); FunctionDef.skip(500); cout << endl << "\n"; FunctionDef.truenarrator("\t  What do you choose?", 50);
-		cout << "\n";
+		if(language=="en"){
+			FunctionDef.truenarrator("\t  You look around you. You see the following:", 50);
+			cout << "\n";
+			FunctionDef.truenarrator("\t  1) Trees", 50); cout << "\n"; FunctionDef.truenarrator("\t  2) Trees", 50); cout << "\n"; FunctionDef.truenarrator("\t  3) Trees", 50); cout << "\n"; FunctionDef.truenarrator("\t  4) A path", 50); cout << "\n"; FunctionDef.truenarrator("\t  5) A strange place between the trees, where abandoned stuff can be seen.", 50); FunctionDef.skip(500); cout << endl << "\n"; FunctionDef.truenarrator("\t  What do you choose?", 50);
+			cout << "\n";
+		}
+		else{
+			FunctionDef.truenarrator("\t  Poobzeráš sa okolo seba a vidíš:", 50);
+			cout << endl;
+			FunctionDef.truenarrator("\t  1) Stromy", 50); cout << endl; FunctionDef.truenarrator("\t  2) Stromy", 50); cout << endl; FunctionDef.truenarrator("\t  3) Stromy", 50); cout << endl; FunctionDef.truenarrator("\t  4) Cestu", 50); cout << endl; FunctionDef.truenarrator("\t  5) Divné miesto medzi stromami, kde môžeš vidieť pohodené veci.", 50); FunctionDef.skip(500); cout << endl << endl; FunctionDef.truenarrator("\t  What do you choose?", 50);
+			cout << endl;
+		}
 	}
 
 	// Sequences
 	void savesequence(string language) {
-		FunctionDef.truenarrator("\tWelcome back, " + playerName, 50); FunctionDef.skip(250); cout << "\n";
-		FunctionDef.truenarrator("\tDo you wish to load the latest save or start a new game? [F to Load, L to start over]", 50);
+		if(language=="en"){
+			FunctionDef.truenarrator("\tWelcome back, " + playerName, 50); FunctionDef.skip(250); cout << "\n";
+			FunctionDef.truenarrator("\tDo you wish to load the latest save or start a new game? [F to Load, L to start over]", 50);
+		}
+		else{
+			FunctionDef.truenarrator("\tVitaj späť, " + playerName, 50); FunctionDef.skip(250); cout << endl;
+			FunctionDef.truenarrator("\tChceš načítať poslednú uloženú pozíciu alebo začať novú hru? [F pre načítanie pozície, L pre novú hru]", 50);
+		}
 		while (true) {
 			if (_kbhit()) {
 				char keypressed = _getch();
