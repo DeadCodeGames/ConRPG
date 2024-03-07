@@ -131,9 +131,10 @@ public:
 			system("cls");
 			cout << "\n\n"; FunctionDef.truenarrator("\tWhoops...", 50); FunctionDef.skip(200); FunctionDef.TNC(" it lowkey seems like someone has lost a life.", 50); FunctionDef.skip(200); cout << "\n";
 			if(lives!=0){
-				FunctionDef.truenarrator("\tDon't worry though, brave traveller.", 50); FunctionDef.skip(200); FunctionDef.TNC(" Death is experience, and experience is life.", 50); FunctionDef.skip(200); 
-				if(lives!=1) FunctionDef.TNC("You have " + to_string(lives) + " lives remaining.", 50);
-				else FunctionDef.TNC("You have 1 life remaining...", 50);
+				FunctionDef.truenarrator("\tDon't worry though, brave traveller.", 50); FunctionDef.skip(200); FunctionDef.TNC(" Death is experience, and experience is life.", 50); FunctionDef.skip(200); cout << "\n";
+				if(lives<0) FunctionDef.truenarrator("You have infinite lives remaining", 50);
+				else if(lives!=1) FunctionDef.truenarrator("You have " + to_string(lives) + " lives remaining.", 50);
+				else FunctionDef.truenarrator("You have 1 life remaining...", 50);
 				cout << "\n"; FunctionDef.skip(250);
 				FunctionDef.truenarrator("\t[Press F to respawn, L to start new game]", 50);
 				while(true){
@@ -221,10 +222,10 @@ public:
 
 		Sleep(2000);
 		if(language=="en"){
-			cout << endl << "      "; FunctionDef.truenarrator("Prepare to fight...", 50); Sleep(500);
+			FunctionDef.truenarrator("Prepare to fight...", 50); Sleep(500);
 		}
 		else if(language=="sk"){
-			cout << endl << "      "; FunctionDef.truenarrator("Priprav sa na boj...", 50); Sleep(500);
+			FunctionDef.truenarrator("Priprav sa na boj...", 50); Sleep(500);
 		}
 		const char* programName = "combatmoreeffective.exe";
 		STARTUPINFO si;
@@ -347,7 +348,7 @@ public:
 			FunctionDef.truenarrator("\tDo you wish to load the latest save or start a new game? [F to Load, L to start over]", 50);
 		}
 		/*else{
-			FunctionDef.truenarrator("\tVitaj spä, " + playerName, 50); FunctionDef.skip(250); cout << "\n";
+			FunctionDef.truenarrator("\tVitaj späť, " + playerName, 50); FunctionDef.skip(250); cout << "\n";
 			FunctionDef.truenarrator("\tChceš nacíta? poslednú uloženú pozíciu alebo zaca? novú hru? [F pre nacítanie pozície, L pre novú hru]", 50);
 		}*/
 		while (true) {
@@ -979,9 +980,8 @@ public:
 					FunctionDef.skip(250);
 					FunctionDef.truenarrator("1) Go through with your initial decision\n      2) Abort", 50);
 					cout << endl << "\n";
-					FunctionDef.flushInput();
 					cout << "\033[33m>>    ";
-					decision1sub1 = FunctionDef.GVI(1,2);
+					decision1sub1 = FunctionDef.GVIclean(1,2);
 					cout << "\033[0m";
 					if(decision1sub1=="1"){
 						FunctionDef.MCSC(mc, "I really want to know where it leads.", 80);
@@ -2022,7 +2022,7 @@ public:
 				cout << "\n";
 				FunctionDef.MCS("Got you?", 80); FunctionDef.skip(400); FunctionDef.narratorclean(mc, " Will you tell me what happened already?", 80); FunctionDef.skip(1000);
 				cout << "\n";
-				FunctionDef.narrator("Very well, then.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " The name's Void.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " I was a general of a faction called Terragnis.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " I was leading an army into a battle.", 80); FunctionDef.skip(400); cout << "\n"; FunctionDef.narrator("We found ourselves in a confrontation with an enemy of our faction,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " the faction of Slofridi.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " We were fighting,", 80); FunctionDef.skip(250); cout << "\n"; FunctionDef.narrator("and then I got hit by an arrow.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " It was followed by a bright flash,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " and then,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " all I saw was darkness.", 80); FunctionDef.skip(400); cout << "\n"; FunctionDef.narrator("And,", 100); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " I guess then I just woke up here,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " in your body and mind.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, "That's all I know.", 80); FunctionDef.skip(1000);
+				FunctionDef.narrator("Very well, then.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " The name's Void.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " I was a general of a faction called Terragnis.", 80); cout << "\n"; FunctionDef.skip(400); FunctionDef.narrator("I was leading an army into a battle.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, "We found ourselves in a confrontation with an enemy of our faction,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " the faction of Slofridi.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " We were fighting,", 80); FunctionDef.skip(250); cout << "\n"; FunctionDef.narrator("and then I got hit by an arrow.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " It was followed by a bright flash,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " and then,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " all I saw was darkness.", 80); FunctionDef.skip(400); cout << "\n"; FunctionDef.narrator("And,", 100); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " I guess then I just woke up here,", 80); FunctionDef.skip(250); FunctionDef.narratorclean(vc, " in your body and mind.", 80); FunctionDef.skip(400); FunctionDef.narratorclean(vc, " That's all I know.", 80); FunctionDef.skip(1000);
 				cout << "\n\n"; FunctionDef.truenarrator("1) That's sad. We should probably move though and talk about it later.", 50); cout << "\n"; FunctionDef.truenarrator("2) That's all you know?", 50); cout << "\n"; FunctionDef.truenarrator("3) Wow, I'm sorry that happened to you.", 50); cout << "\n";
 				cout << "\033[33m>>    ";
 				diadec1 = FunctionDef.GVIclean(1,3);
