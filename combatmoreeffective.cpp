@@ -253,6 +253,7 @@ int main(){
 		    cerr << "Error opening file for writing!" << endl;
 		    return 1; 
 		}
+		lastenemyhp = enemyhp;
 		outputFile << "1" << endl;
 		outputFile.close();
 		srand((unsigned)time(0));
@@ -264,14 +265,14 @@ int main(){
 			if(displaystats){
 				cout << "\nYour stats \n---------------------------- \nYour hp: " << hp << endl << "Your dmg: " << maxdmg << endl << "Ease of use: " << easeofuse << endl << "Dmg bonus from player level: " << plvlbonusdmg << endl << "Dmg bonus from weapon level: " << wlvlbonusdmg << endl << "\n"+attacker+" stats \n---------------------------- \n"+attacker+" hp: " << enemyhp << endl << ""+attacker+" dmg: " << enemydmg << endl;
 				Sleep(3000);
-				cout << endl; FunctionDef.truenarrator("Press a to begin the fight.", 50); cout << endl; FunctionDef.truenarrator("Controls are A for attack, B for defense.", 50);
+				cout << endl; FunctionDef.TNC("Press a to begin the fight.", 50); cout << endl; FunctionDef.TNC("Controls are A for attack, B for defense.", 50);
 				while(true){
 					if(_kbhit()){
 						char key1 = _getch();
 						if(key1 == 'a') break;
 					}
 				}
-				cout << "\nFight begins...";
+				cout << "\n\nFight begins...";
 				Sleep(500);
 				cout << "\n\nYou are attacking...      ";
 				Sleep(250);
@@ -337,7 +338,9 @@ int main(){
 	if(!isdefeated){
 		system("CLS");
 		cout << "Gained xp and enemy items.";
+		cout << lastenemyhp << " " << enemyrage << " " << enemyskill << " " << enemydmg << " " << blocked << " " << fhit;
 		xp+=10+(lastenemyhp*enemyrage*enemyskill*enemydmg)/(10/(1+(1+blocked)*(1+fhit)));
+		cout << endl << xp;
 	}
 	else{
 		system("CLS");
