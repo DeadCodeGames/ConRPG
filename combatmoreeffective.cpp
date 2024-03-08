@@ -8,11 +8,13 @@
 #include <io.h>
 #include <fcntl.h>
 #include <limits>
+#include "CONFunctions.h"
 using namespace std;
+Functions FunctionDef;
 bool isfighting = false, isdefeated = false, attackstate = true, keyPressed = false, displaystats = true, gu = true, tobreak = false;
-int enemydmg, lastphp, lastenemyhp, ecooldown, timeleft, maxdmg, blockbonus, easeofuse, tickspeed, x, i, z, level, xp, blocked=0, fhit=0;
+int lives, enemydmg, lastphp, lastenemyhp, ecooldown, timeleft, maxdmg, blockbonus, easeofuse, tickspeed, x, i, z, level, xp, blocked=0, fhit=0;
 float cooldown, hp, currenthp, enemyhp, enemyrage, enemyskill, dmgdealt, edmgdealt, plvlbonusdmg, wlvlbonusdmg, enemyblock;
-string lastAttack, lastblock, attacker;
+string lastAttack, lastblock, attacker, currentweapon;
 map<int, string> attack_map {
   {1, "O--|---"},
   {2, "-O-|---"},
@@ -188,7 +190,7 @@ void UlozitInfo(const string& data, const string& fileName) {
 		file.close();
 	}
 	else {
-		cout << "[!] vyskytol sa nejaky problem";
+		cout << "[!] An error occurred";
 	}
 }
 string PrecitatInfo(const string& fileName) {
@@ -206,7 +208,7 @@ string PrecitatInfo(const string& fileName) {
 		return data;
 	}
 	else {
-		cout << "[!] vyskytol sa nejaky problem" << endl;
+		cout << "[!] An error occurred" << endl;
 		return "";
 	}
 }
@@ -216,39 +218,45 @@ void load() {
 	string strHp = PrecitatInfo("PlayerHp.txt");
 	string strCurrenthp = PrecitatInfo("PlayerCurrentHp.txt");
 	string strMaxdmg = PrecitatInfo("PlayerMaxDmg.txt");
+	string strLives = PrecitatInfo("Lives.txt");
 	
+	currentweapon = PrecitatInfo("CurrentWeapon.txt");
 	attacker = PrecitatInfo("attacker.txt");
 	level = stoi(strLevel);
 	xp = stoi(strXp);
 	hp = stoi(strHp);
 	currenthp = stoi(strCurrenthp);
 	maxdmg = stoi(strMaxdmg);
+	lives = stoi(strLives);
 }
 int main(){
 		load();
+		plvlbonusdmg = 1+(level/10*maxdmg);
 		if(attacker=="Wolves"){
 			enemyhp = 20;
 			enemyrage = 1;
 			enemydmg = 3;
 			enemyskill = 1;
 		}
+		if(currentweapon=="Stick"){
+			maxdmg=1;
+			easeofuse=3;
+			wlvlbonusdmg=1;
+		}
+		else if(currentweapon=="IronSword"){
+			maxdmg=3;
+			easeofuse=2;
+			wlvlbonusdmg=2;
+		}
 		ofstream outputFile("testsave.txt");
 		if (!outputFile.is_open()) {
 		    cerr << "Error opening file for writing!" << endl;
 		    return 1; 
 		}
+		lastenemyhp = enemyhp;
 		outputFile << "1" << endl;
 		outputFile.close();
 		srand((unsigned)time(0));
-		cout << "Blocking bonus: ";
-		cin >> blockbonus;
-		cout << "Ease of Use: ";
-		cin >> easeofuse;
-		if(easeofuse<1) easeofuse = 1;
-		cout << "Player level dmg bonus: ";
-		cin >> plvlbonusdmg;
-		cout << "Weapon level dmg bonus: ";
-		cin >> wlvlbonusdmg;
 		tickspeed = easeofuse*25;
 		isfighting = true;
 		ecooldown = 5000/enemyrage;
@@ -257,14 +265,14 @@ int main(){
 			if(displaystats){
 				cout << "\nYour stats \n---------------------------- \nYour hp: " << hp << endl << "Your dmg: " << maxdmg << endl << "Ease of use: " << easeofuse << endl << "Dmg bonus from player level: " << plvlbonusdmg << endl << "Dmg bonus from weapon level: " << wlvlbonusdmg << endl << "\n"+attacker+" stats \n---------------------------- \n"+attacker+" hp: " << enemyhp << endl << ""+attacker+" dmg: " << enemydmg << endl;
 				Sleep(3000);
-				cout << "\nPress a to begin the fight.";
+				cout << endl; FunctionDef.TNC("Press a to begin the fight.", 50); cout << endl; FunctionDef.TNC("Controls are A for attack, B for defense.", 50);
 				while(true){
 					if(_kbhit()){
 						char key1 = _getch();
 						if(key1 == 'a') break;
 					}
 				}
-				cout << "\nFight begins...";
+				cout << "\n\nFight begins...";
 				Sleep(500);
 				cout << "\n\nYou are attacking...      ";
 				Sleep(250);
@@ -330,11 +338,14 @@ int main(){
 	if(!isdefeated){
 		system("CLS");
 		cout << "Gained xp and enemy items.";
+		cout << lastenemyhp << " " << enemyrage << " " << enemyskill << " " << enemydmg << " " << blocked << " " << fhit;
 		xp+=10+(lastenemyhp*enemyrage*enemyskill*enemydmg)/(10/(1+(1+blocked)*(1+fhit)));
+		cout << endl << xp;
 	}
 	else{
 		system("CLS");
-		cout << "Press [placeholder] to load the last save.";
+		if(lives!=-1) lives--;
+		UlozitInfo(to_string(lives), "Lives.txt");
 	}	
 	outputFile.open("testsave.txt");
   if (!outputFile.is_open()) {
