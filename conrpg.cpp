@@ -15,7 +15,7 @@ using namespace std;class Game {
 public:
 
 	Functions FunctionDef;
-	string lang, playerName="", mode, fightstatus, input, tb, decision1, decision1sub1, b1pathdec, decision2="";
+	string lang, playerName="", mode, fightstatus, input, tb, decision1, decision1sub1, b1pathdec, decision2;
 	string diadec1, diadec2, diadec3, diadec4, diadec5;
 	string b0, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z;
 	const string mc = "\033[33m", vc = "\033[36m";
@@ -82,6 +82,12 @@ public:
 		UlozitInfo(to_string(maxdmg), "PlayerMaxDmg.txt");
 		UlozitInfo(playerName, "PlayerName.txt");
 		UlozitInfo(mode, "Mode.txt");
+		ifstream fin("main.txt");
+		fin >> relwvoid;
+		fin >> decision1;
+		fin >> decision1sub1;
+		fin >> decision2;
+		fin.close();
 	}
 	void load() {
 		string strSequence = PrecitatInfo("sequence.txt");
@@ -93,7 +99,12 @@ public:
 		playerName = PrecitatInfo("PlayerName.txt");
 		mode = PrecitatInfo("Mode.txt");
 		lang = PrecitatInfo("Language.txt");
-
+		ofstream file("main.txt");
+		file << relwvoid;
+		file << decision1;
+		file << decision1sub1;
+		file << decision2;
+		file.close();
 		sequence = stoi(strSequence);
 		level = stoi(strLevel);
 		xp = stoi(strXp);
@@ -112,7 +123,7 @@ public:
 				xp -= requiredxp;
 				requiredxp += requiredxp/5;
 			} 
-		if(language=="en"){
+		if(lang=="en"){
 			cout << "\n      Leveled up! Went from lvl " << initiallvl << " to lvl " << level << ". HP: " << currenthp << " -> " << hp << "\n";
 			cout << "      Current xp ->" << xp << "(" << xp << "/" << requiredxp << ")" << "\n";
 		}
@@ -121,7 +132,6 @@ public:
 			cout << "      Momentálne xp ->" << xp << "(" << xp << "/" << requiredxp << ")" << "\n";
 		}*/
 	}
-	save();
 	}
 	void statreset(){
 		playerName="", mode="", fightstatus="", input="", tb="", decision1="", decision1sub1="", b1pathdec="", decision2="", diadec1="", diadec2="", diadec3="", diadec4="", diadec5="", hp=20, level=0, xp=0, currenthp=20;
@@ -220,7 +230,7 @@ public:
 
 		UlozitInfo(attacker, "attacker.txt");
 
-		Sleep(2000);
+		Sleep(2000); cout << "\n";
 		if(language=="en"){
 			FunctionDef.truenarrator("Prepare to fight...", 50); Sleep(500);
 		}
@@ -366,6 +376,7 @@ public:
 		}
 	}
 	void picklanguage(){
+		level = 0; hp = 20; xp = 0; currenthp = 20; maxdmg = 1; decision1=""; relwvoid=0; decision1sub1=""; decision2="";save();
 		system("cls");
 		FunctionDef.truenarrator("\tPick a language.", 50); FunctionDef.skip(200); cout << "\n"; FunctionDef.truenarrator("1 < English-EN >", 50); FunctionDef.skip(200); cout << "\n"; FunctionDef.truenarrator("2 < Slovak-SK >", 50);
 		lang = FunctionDef.GVIclean(1,2);
@@ -383,7 +394,6 @@ public:
 				system("cls");
 			}
 			
-			level = 0; hp = 20; xp = 0; currenthp = 20; maxdmg = 1;
 			cout << "                                          W E L C O M E    T O" << "\n";
 		 	cout << " .----------------.    .----------------.  .----------------.  .-----------------.   .----------------. " << endl << "| .--------------. |  | .--------------. || .--------------. || .--------------. |  | .--------------. |" << endl << "| |              | |  | |     ______   | || |     ____     | || | ____  _____  | |  | |              | |" << endl << "| |              | |  | |   .' ___  |  | || |   .'    `.   | || ||_   \\|_   _| | |  | |              | |" << endl << "| |    ______    | |  | |  / .'   \\_|  | || |  /  .--.  \\  | || |  |   \\ | |   | |  | |    ______    | |" << endl << "| |   |______|   | |  | |  | |         | || |  | |    | |  | || |  | |\\ \\| |   | |  | |   |______|   | |" << endl << "| |              | |  | |  \\ `.___.'\\  | || |  \\  `--'  /  | || | _| |_\\   |_  | |  | |              | |" << endl << "| |              | |  | |   `._____.'  | || |   `.____.'   | || ||_____|\\____| | |  | |              | |" << endl << "| |              | |  | |              | || |              | || |              | |  | |              | |" << endl << "| '--------------' |  | '--------------' || '--------------' || '--------------' |  | '--------------' |" << endl << " '----------------'    '----------------'  '----------------'  '----------------'    '----------------' ";
 			cout << endl << "                                           The C++ Console RPG";
@@ -1118,7 +1128,7 @@ public:
 				FunctionDef.narrator("Good,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " you can walk now,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " try to be stealthy,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(vc, " we don't know what might be here with us.", 80); FunctionDef.skip(1000);			
 			}
 			else if(b0=="9"){
-				FunctionDef.narrator("Why would you pick the trees frist?", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc, " Such a waste of time.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc, " Let's just grab these and let's keep moving.", 80); FunctionDef.skip(1000);
+				FunctionDef.narrator("Why would you pick the trees first?", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc, " Such a waste of time.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(vc, " Let's just grab these and let's keep moving.", 80); FunctionDef.skip(1000);
 				cout << "\n";
 				FunctionDef.MCS("Sorry about that,", 80); FunctionDef.skip(250);FunctionDef.narratorclean(mc, " yes.", 100); FunctionDef.skip(250);FunctionDef.narratorclean(mc, " let's keep moving after I grab those.", 80); FunctionDef.skip(400);FunctionDef.narratorclean(mc, " We should take that path we saw earlier.", 80); FunctionDef.skip(1000);
 				cout << endl << "\n";FunctionDef.truenarrator("You grab the stuff and it can now be found in your inventory, which is the backpack.", 50); FunctionDef.skip(500);
@@ -2101,10 +2111,6 @@ int main() {
 		if(GameDef.playerName!=""&&(GameDef.mode!="speedrun"&&GameDef.mode!=""))	GameDef.savesequence(GameDef.lang);
 		else GameDef.introsequence(GameDef.lang);
 	}
-	else {
-		GameDef.save();
-		GameDef.picklanguage();
-	}
-
+	else GameDef.picklanguage();
 	return 0;
 }
